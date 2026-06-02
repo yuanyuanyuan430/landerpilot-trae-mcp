@@ -1,0 +1,77 @@
+---
+import Container from "../atoms/Container.astro";
+
+interface RatingItem {
+  label: string;
+  score: number;
+  max?: number;
+  description?: string;
+}
+
+interface Props {
+  title?: string;
+  description?: string;
+  items: RatingItem[];
+  columns?: 1 | 2 | 3;
+  containerSize?: "default" | "tight";
+}
+
+const { title, description, items, columns = 2, containerSize = "tight" } = Astro.props;
+
+const colClass = columns === 1 ? "" : columns === 3 ? "md:grid-cols-3" : "sm:grid-cols-2";
+
+function barColor(score: number, max: number) {
+  const pct = (score / max) * 100;
+  if (pct >= 90) return "var(--color-success)";
+  if (pct >= 75) return "var(--color-primary)";
+  if (pct >= 60) return "var(--color-warning)";
+  return "var(--color-error)";
+}
+---
+
+<section class="py-10 md:py-12" data-automation-id="section-rating-breakdown">
+  <Container size={containerSize}>
+    {title && (
+      <div class="mb-6">
+        <h2 class="font-display text-[1.4rem] font-[560] tracking-[-0.018em] text-base-content">{title}</h2>
+        {description && (
+          <p class="mt-2 text-[0.95rem] leading-[1.55] text-[color:var(--ganhuo-text-muted)]">{description}</p>
+        )}
+      </div>
+    )}
+    <div class:list={["grid gap-x-7 gap-y-5 rounded-[var(--ganhuo-radius)] border border-[color:var(--border)] bg-base-100 p-6 shadow-sm", colClass]}>
+      {items.map((item) => {
+        const max = item.max ?? 10;
+        const pct = Math.max(0, Math.min(100, (item.score / max) * 100));
+        const color = barColor(item.score, max);
+        return (
+          <div data-rating-item={item.label.toLowerCase().replace(/\s+/g, "-")}>
+            <div class="flex items-baseline justify-between gap-3">
+              <span class="font-display text-[0.95rem] font-[560] text-base-content">{item.label}</span>
+              <span class="font-display text-[0.95rem] font-bold tabular-nums" style={`color:${color}`}>
+                {item.score.toFixed(1)}
+                <span class="ml-0.5 text-[0.78rem] font-medium text-[color:var(--ganhuo-text-muted)]">/{max}</span>
+              </span>
+            </div>
+            <div
+              class="mt-2 h-1.5 overflow-hidden rounded-full bg-base-200"
+              role="progressbar"
+              aria-valuenow={item.score}
+              aria-valuemin={0}
+              aria-valuemax={max}
+              aria-label={item.label}
+            >
+              <div
+                class="h-full rounded-full transition-[width] duration-500"
+                style={`width:${pct}%;background:${color}`}
+              ></div>
+            </div>
+            {item.description && (
+              <p class="mt-1.5 text-[0.82rem] leading-[1.4] text-[color:var(--ganhuo-text-muted)]">{item.description}</p>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  </Container>
+</section>

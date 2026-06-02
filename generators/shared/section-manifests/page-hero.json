@@ -1,0 +1,73 @@
+{
+  "id": "page-hero",
+  "component": "PageHero",
+  "category": "hero",
+  "displayName": "Interior page hero",
+  "description": "Lightweight hero for interior pages (about, pricing, blog, contact). Smaller and less visual than HeroSplit/HeroCentered. Three sizes (compact/default/tall), three backgrounds (default/tinted/gradient), optional breadcrumbs.",
+  "industries": [
+    "all"
+  ],
+  "pageRoles": [
+    "about",
+    "pricing",
+    "blog-index",
+    "contact",
+    "product"
+  ],
+  "props": {
+    "eyebrow": {
+      "type": "string",
+      "required": false
+    },
+    "title": {
+      "type": "string",
+      "required": true,
+      "hint": "Page title. 2-7 words."
+    },
+    "description": {
+      "type": "string",
+      "required": false,
+      "hint": "1 sentence framing what's on this page."
+    },
+    "align": {
+      "type": "enum",
+      "values": [
+        "start",
+        "center"
+      ],
+      "required": false,
+      "default": "start"
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "compact",
+        "default",
+        "tall"
+      ],
+      "required": false,
+      "default": "default"
+    },
+    "breadcrumbs": {
+      "type": "array<{ text, href? }>",
+      "required": false,
+      "hint": "Optional inline crumbs above the title. 2-4 items. The last one is the current page (no href)."
+    },
+    "background": {
+      "type": "enum",
+      "values": [
+        "default",
+        "tinted",
+        "gradient"
+      ],
+      "required": false,
+      "default": "default"
+    }
+  },
+  "preview": {
+    "eyebrow": "Stories",
+    "title": "Writing about building.",
+    "description": "Notes from the team on AI tools, design systems, and the craft of shipping fast.",
+    "background": "gradient"
+  }
+}

@@ -1,0 +1,133 @@
+---
+import Container from "../atoms/Container.astro";
+import SectionHeader from "../atoms/SectionHeader.astro";
+
+interface Coupon {
+  code?: string;
+  title?: string;
+  description?: string;
+  expiry?: string;
+  href?: string;
+  type?: "code" | "deal" | "cashback";
+  discount?: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  coupons: Coupon[];
+  ctaLabel?: string;
+  copyLabel?: string;
+  expiryPrefix?: string;
+  containerSize?: "default" | "tight" | "wide";
+}
+
+const {
+  eyebrow,
+  title,
+  description,
+  coupons,
+  ctaLabel = "Get deal",
+  copyLabel = "Copy code",
+  expiryPrefix = "Expires",
+  containerSize = "default",
+} = Astro.props;
+---
+
+<section class="py-16 md:py-20" data-automation-id="section-coupon-list">
+  <Container size={containerSize}>
+    {title && (
+      <SectionHeader
+        eyebrow={eyebrow}
+        title={title}
+        description={description}
+        class="mb-10"
+      />
+    )}
+
+    <div class="grid gap-4">
+      {coupons.map((coupon, idx) => {
+        const type = coupon.type || (coupon.code ? "code" : "deal");
+        return (
+          <article
+            class="lp-inview grid gap-5 rounded-[var(--ganhuo-radius)] border border-[color:var(--border)] bg-base-100 p-5 sm:grid-cols-[auto_1fr_auto] sm:items-center sm:p-6"
+            data-automation-id={`coupon-${idx}`}
+          >
+            <div
+              class:list={[
+                "flex h-14 shrink-0 items-center justify-center rounded-[var(--radius-field,8px)] px-4 font-display text-[0.95rem] font-bold sm:h-16 sm:px-5",
+                type === "code"
+                  ? "border-2 border-dashed border-[color:color-mix(in_srgb,var(--color-primary)_40%,var(--border))] bg-[color:color-mix(in_srgb,var(--color-primary)_6%,transparent)] tracking-[0.1em] text-primary"
+                  : type === "cashback"
+                    ? "bg-primary text-primary-content"
+                    : "bg-base-200 text-base-content",
+              ]}
+            >
+              {coupon.discount || coupon.code || (type === "deal" ? "DEAL" : "OFFER")}
+            </div>
+            <div class="min-w-0">
+              <h3 class="font-display text-[1.05rem] font-[560] tracking-[-0.015em] text-base-content">
+                {coupon.title || coupon.description || (coupon.code ? `Use code ${coupon.code}` : "Deal")}
+              </h3>
+              {coupon.description && coupon.title && (
+                <p class="mt-1 text-[0.9rem] leading-[1.5] text-[color:var(--ganhuo-text-muted)]">{coupon.description}</p>
+              )}
+              {coupon.expiry && (
+                <p class="mt-2 text-[0.78rem] text-[color:var(--ganhuo-text-muted)]">
+                  {expiryPrefix} <time>{coupon.expiry}</time>
+                </p>
+              )}
+            </div>
+            <div class="flex shrink-0 flex-wrap items-center gap-2">
+              {coupon.code && type === "code" && (
+                <button
+                  type="button"
+                  class="lp-coupon-copy inline-flex items-center gap-1.5 rounded-[var(--radius-field,8px)] border border-[color:var(--border)] bg-base-100 px-3.5 py-2 text-[0.85rem] font-semibold text-base-content transition hover:border-primary hover:text-primary"
+                  data-coupon-code={coupon.code}
+                  aria-label={`${copyLabel}: ${coupon.code}`}
+                >
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                    <rect x="3.5" y="3.5" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.4" />
+                    <path d="M1.5 8.5V2a.5.5 0 01.5-.5h6.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+                  </svg>
+                  {copyLabel}
+                </button>
+              )}
+              {coupon.href && (
+                <a
+                  href={coupon.href}
+                  rel="sponsored noopener"
+                  class="inline-flex items-center justify-center gap-1 rounded-[var(--radius-field,8px)] bg-primary px-4 py-2 text-[0.85rem] font-semibold text-primary-content transition hover:-translate-y-0.5"
+                >
+                  {ctaLabel}
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                    <path d="M3 6h6m0 0L6 3m3 3L6 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </a>
+              )}
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </Container>
+</section>
+
+<script is:inline>
+  // Best-effort clipboard copy. No-op on browsers without clipboard API.
+  document.querySelectorAll(".lp-coupon-copy").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const code = btn.getAttribute("data-coupon-code");
+      if (!code) return;
+      try {
+        await navigator.clipboard.writeText(code);
+        const orig = btn.textContent;
+        btn.textContent = "Copied!";
+        setTimeout(() => { btn.textContent = orig; }, 1500);
+      } catch (_) {
+        /* clipboard unavailable */
+      }
+    });
+  });
+</script>

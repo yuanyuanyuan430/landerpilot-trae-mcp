@@ -1,0 +1,69 @@
+---
+interface Option {
+  value: string;
+  label: string;
+  disabled?: boolean;
+}
+
+interface Props {
+  name?: string;
+  id?: string;
+  value?: string;
+  required?: boolean;
+  disabled?: boolean;
+  placeholder?: string;
+  error?: string;
+  options: Option[];
+  size?: "md" | "sm" | "lg";
+  class?: string;
+  automationId?: string;
+}
+
+const {
+  name,
+  id,
+  value,
+  required,
+  disabled,
+  placeholder,
+  error,
+  options,
+  size = "md",
+  class: extra = "",
+  automationId,
+} = Astro.props;
+
+const hasError = !!error;
+const sizeClass =
+  size === "sm" ? "h-9 px-3 text-[0.85rem]" : size === "lg" ? "h-12 px-4 text-base" : "h-11 px-3.5 text-[0.93rem]";
+---
+
+<select
+  name={name}
+  id={id ?? name}
+  required={required}
+  disabled={disabled}
+  aria-invalid={hasError ? "true" : undefined}
+  data-automation-id={automationId}
+  class:list={[
+    "w-full appearance-none rounded-[var(--radius-field,8px)] border bg-base-100 text-base-content font-sans",
+    "border-[color:var(--border)] cursor-pointer pr-10",
+    "transition-[border-color,box-shadow] duration-150",
+    "focus:outline-none focus:border-primary focus:shadow-[0_0_0_3px_color-mix(in_srgb,var(--color-primary)_18%,transparent)]",
+    "disabled:cursor-not-allowed disabled:opacity-60",
+    hasError && "border-error",
+    sizeClass,
+    "bg-[right_0.9rem_center] bg-no-repeat",
+    extra,
+  ]}
+  style="background-image: url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'><path d='M1 1.5L6 6.5L11 1.5' stroke='%231c1a17' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>&quot;); background-size: 12px 8px;"
+>
+  {placeholder && (
+    <option value="" disabled selected={!value}>{placeholder}</option>
+  )}
+  {options.map((opt) => (
+    <option value={opt.value} disabled={opt.disabled} selected={value === opt.value}>
+      {opt.label}
+    </option>
+  ))}
+</select>

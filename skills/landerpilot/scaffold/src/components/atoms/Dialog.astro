@@ -1,0 +1,97 @@
+---
+/**
+ * CSS-only modal dialog using the checkbox-toggle pattern (zero JS). To open
+ * the dialog, render a label anywhere on the page pointing to its id:
+ *   <label for="my-dialog" class="cursor-pointer">Open dialog</label>
+ *   <Dialog id="my-dialog" title="Confirm" />
+ *
+ * The dialog renders inline (last on the page is fine — backdrop handles
+ * z-index). Close via the built-in × button or by clicking the backdrop.
+ */
+interface Props {
+  id: string;
+  title?: string;
+  description?: string;
+  size?: "sm" | "md" | "lg" | "xl";
+  class?: string;
+  automationId?: string;
+}
+
+const { id, title, description, size = "md", class: extra = "", automationId } = Astro.props;
+
+const sizeClass = {
+  sm: "max-w-sm",
+  md: "max-w-md",
+  lg: "max-w-2xl",
+  xl: "max-w-4xl",
+}[size];
+---
+
+<input type="checkbox" id={id} class="lp-dialog-toggle sr-only" aria-hidden="true" />
+
+<div class="lp-dialog-root" role="dialog" aria-modal="true" aria-labelledby={title ? `${id}-title` : undefined} data-automation-id={automationId}>
+  <label for={id} class="lp-dialog-backdrop" aria-label="Close dialog"></label>
+  <div
+    class:list={[
+      "lp-dialog-panel relative w-full overflow-hidden rounded-[var(--ganhuo-radius)] border border-[color:var(--border)] bg-base-100 shadow-[0_30px_60px_-20px_rgba(20,18,15,0.4)]",
+      sizeClass,
+      extra,
+    ]}
+  >
+    <label
+      for={id}
+      class="absolute right-4 top-4 grid h-8 w-8 cursor-pointer place-items-center rounded-full border border-transparent text-[color:var(--ganhuo-text-muted)] transition hover:border-[color:var(--border)] hover:text-base-content"
+      aria-label="Close dialog"
+    >
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+      </svg>
+    </label>
+
+    {title && (
+      <div class="border-b border-[color:var(--border)] px-7 py-5">
+        <h2 id={`${id}-title`} class="font-display text-[1.3rem] font-[560] text-base-content">{title}</h2>
+        {description && (
+          <p class="mt-1.5 text-[0.92rem] text-[color:var(--ganhuo-text-muted)]">{description}</p>
+        )}
+      </div>
+    )}
+
+    <div class="px-7 py-6">
+      <slot />
+    </div>
+
+    <slot name="footer" />
+  </div>
+</div>
+
+<style>
+  .lp-dialog-toggle { position: absolute; left: -9999px; }
+  .lp-dialog-root {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(1rem, 4vw, 2rem);
+  }
+  .lp-dialog-toggle:checked + .lp-dialog-root { display: flex; }
+  .lp-dialog-backdrop {
+    position: absolute;
+    inset: 0;
+    background: color-mix(in srgb, var(--color-neutral) 50%, transparent);
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+  }
+  .lp-dialog-panel {
+    animation: lp-dialog-rise 0.18s cubic-bezier(0.2, 0.65, 0.25, 1) both;
+  }
+  @keyframes lp-dialog-rise {
+    from { opacity: 0; transform: translateY(0.5rem) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lp-dialog-panel { animation: none; }
+  }
+</style>

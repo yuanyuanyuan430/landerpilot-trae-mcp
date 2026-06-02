@@ -1,0 +1,114 @@
+---
+import Container from "../atoms/Container.astro";
+import Button from "../atoms/Button.astro";
+
+interface NavLink {
+  text: string;
+  href: string;
+  active?: boolean;
+}
+
+interface Props {
+  brand: string | { src: string; alt?: string };
+  brandHref?: string;
+  links?: NavLink[];
+  primaryCta?: { text: string; href: string };
+  secondaryCta?: { text: string; href: string };
+  variant?: "default" | "sticky" | "transparent";
+  containerSize?: "default" | "wide";
+}
+
+const {
+  brand,
+  brandHref = "/",
+  links = [],
+  primaryCta,
+  secondaryCta,
+  variant = "sticky",
+  containerSize = "default",
+} = Astro.props;
+
+const navAriaLabel = "Primary";
+
+const headerClass = {
+  default: "border-b border-[color:var(--border)] bg-base-100",
+  sticky: "lp-header-sticky border-b border-[color:color-mix(in_srgb,var(--border)_80%,transparent)]",
+  transparent: "lp-header-transparent absolute inset-x-0 top-0 z-40",
+}[variant];
+---
+
+<header
+  class:list={[headerClass]}
+  data-automation-id="section-header-nav"
+  data-variant={variant}
+>
+  <Container size={containerSize === "wide" ? "wide" : "default"} class="flex h-[4.4rem] items-center justify-between gap-4">
+    <a
+      href={brandHref}
+      class="flex min-w-0 items-center gap-2.5 font-display text-[1.34rem] font-semibold tracking-[-0.02em] text-base-content"
+    >
+      {typeof brand === "string" ? (
+        <span class="truncate">{brand}</span>
+      ) : (
+        <img src={brand.src} alt={brand.alt ?? ""} class="h-8 w-auto" />
+      )}
+    </a>
+
+    {links.length > 0 && (
+      <nav class="hidden lg:block" aria-label={navAriaLabel}>
+        <ul class="flex items-center gap-8">
+          {links.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                aria-current={link.active ? "page" : undefined}
+                class:list={[
+                  "text-[0.92rem] font-medium transition-colors duration-150",
+                  link.active
+                    ? "text-base-content"
+                    : "text-[color:var(--ganhuo-text-muted)] hover:text-base-content",
+                ]}
+              >
+                {link.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    )}
+
+    <div class="hidden items-center gap-2.5 lg:flex">
+      {secondaryCta && (
+        <Button variant="ghost" size="sm" href={secondaryCta.href} automationId="header-nav-cta-secondary">
+          {secondaryCta.text}
+        </Button>
+      )}
+      {primaryCta && (
+        <Button variant="primary" size="sm" href={primaryCta.href} automationId="header-nav-cta-primary">
+          {primaryCta.text}
+        </Button>
+      )}
+    </div>
+
+    {primaryCta && (
+      <Button variant="primary" size="sm" href={primaryCta.href} class="shrink-0 lg:hidden" automationId="header-nav-cta-mobile">
+        {primaryCta.text}
+      </Button>
+    )}
+  </Container>
+</header>
+
+<style>
+  .lp-header-sticky {
+    position: fixed;
+    inset-inline: 0;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--color-base-100) 86%, transparent);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+  }
+  .lp-header-transparent {
+    background: transparent;
+  }
+</style>

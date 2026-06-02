@@ -1,0 +1,33 @@
+{
+  "id": "corporate",
+  "displayName": "Corporate / SaaS",
+  "status": "available",
+  "description": "公司官网、SaaS 产品页、服务商介绍页，生成单页企业站。",
+  "entrySkill": "landerpilot",
+  "inputModel": {
+    "required": ["site_name"],
+    "recommended": ["domain", "site_description", "hero_title", "features[]"],
+    "notes": "适合本地先跑通品牌页和营销页，后续可加更多行业模板。"
+  },
+  "dataPolicy": {
+    "mode": "draftable",
+    "reason": "公司/产品官网可以用用户目标、品牌名和合理默认文案先生成第一版，再通过预览迭代。",
+    "acceptedSources": ["brief text", "uploaded brand docs", "features[]", "raw_text", "screenshots/assets"],
+    "minimum": "站点名；推荐补一句价值主张、3-6 个功能/服务点和 CTA。",
+    "demoMode": "不需要 demo_mode；缺少非关键字段时可使用清晰占位文案，但交付时提示用户替换。"
+  },
+  "routes": ["index", "about", "contact", "privacy", "terms"],
+  "variants": ["corporate-saas", "corporate-minimal"],
+  "languageSupport": {
+    "default": "en",
+    "stable": ["en"],
+    "mvp": ["zh-CN"],
+    "notes": "zh-CN is best-effort for built-in template copy. Agent-authored pages must handle Astro i18n explicitly."
+  },
+  "examples": ["examples/basic.json"],
+  "theme": {
+    "mode": "tailwind-component-layer",
+    "tailwind": true,
+    "defaultIndustry": "saas"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "landerpilot-site",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/ganhuo-preview-server.mjs dev",
+    "build": "astro build",
+    "preview": "node scripts/ganhuo-preview-server.mjs preview",
+    "ganhuo:preview:start": "node scripts/ganhuo-preview-server.mjs start",
+    "ganhuo:preview:restart": "node scripts/ganhuo-preview-server.mjs restart",
+    "ganhuo:preview:status": "node scripts/ganhuo-preview-server.mjs status",
+    "ganhuo:preview:doctor": "node scripts/ganhuo-preview-server.mjs doctor",
+    "ganhuo:preview:stop": "node scripts/ganhuo-preview-server.mjs stop"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.0.0",
+    "astro": "^5.2.0",
+    "daisyui": "^5.5.0",
+    "tailwindcss": "^4.0.0"
+  }
+}

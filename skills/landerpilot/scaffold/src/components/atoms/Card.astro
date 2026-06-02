@@ -1,0 +1,37 @@
+---
+interface Props {
+  variant?: "default" | "elevated" | "ink";
+  as?: "div" | "article" | "li" | "section";
+  hover?: boolean;
+  class?: string;
+}
+
+const {
+  variant = "default",
+  as: Tag = "div",
+  hover = true,
+  class: extraClass = "",
+} = Astro.props;
+
+const variantClass = {
+  default: "border border-[color:var(--border)] bg-base-100",
+  elevated:
+    "border border-[color:var(--border)] bg-base-100 shadow-[0_1px_2px_rgba(20,18,15,0.04)]",
+  ink: "border border-transparent bg-neutral text-[color:color-mix(in_srgb,#fff_78%,var(--color-neutral))] shadow-[0_30px_60px_-28px_rgba(20,18,15,0.5)]",
+}[variant];
+
+const hoverClass = hover
+  ? "transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-1 hover:border-[color:color-mix(in_srgb,var(--color-primary)_32%,var(--border))] hover:shadow-[0_18px_38px_-22px_rgba(20,18,15,0.3)]"
+  : "";
+---
+
+<Tag
+  class:list={[
+    "rounded-[var(--ganhuo-radius)] p-7",
+    variantClass,
+    hoverClass,
+    extraClass,
+  ]}
+>
+  <slot />
+</Tag>

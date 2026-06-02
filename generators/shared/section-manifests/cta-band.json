@@ -1,0 +1,51 @@
+{
+  "id": "cta-band",
+  "component": "CTABand",
+  "category": "cta",
+  "displayName": "CTA band",
+  "description": "Full-width call-to-action band. 'dark' variant uses the neutral color (looks like a magazine kicker spread). 'tinted' uses base-200 — softer, better when followed immediately by a footer with neutral background.",
+  "industries": [
+    "all"
+  ],
+  "pageRoles": [
+    "landing",
+    "about",
+    "pricing",
+    "product"
+  ],
+  "props": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "hint": "5-10 words. State the next step in plain language — 'Ready to ship the next one?' / 'Book a table tonight.'"
+    },
+    "description": {
+      "type": "string",
+      "required": false,
+      "hint": "Optional 1 sentence."
+    },
+    "cta": {
+      "type": "cta",
+      "required": true,
+      "hint": "Single action. Verb-first."
+    },
+    "variant": {
+      "type": "enum",
+      "values": [
+        "dark",
+        "tinted"
+      ],
+      "required": false,
+      "default": "dark",
+      "hint": "'dark' = neutral background with radial accent glow. 'tinted' = base-200 background, used when the next sibling is FooterFull (which is already dark)."
+    }
+  },
+  "preview": {
+    "title": "Ready to ship the next one?",
+    "description": "Open the LanderPilot skill in 干活AI and describe the site you want.",
+    "cta": {
+      "text": "Open LanderPilot",
+      "href": "#open"
+    }
+  }
+}

@@ -1,0 +1,83 @@
+---
+import Container from "../atoms/Container.astro";
+
+interface FooterLink {
+  text: string;
+  href: string;
+}
+
+interface FooterGroup {
+  heading: string;
+  links: FooterLink[];
+}
+
+interface Props {
+  brand: string;
+  tagline?: string;
+  groups: FooterGroup[];
+  year?: number;
+  rights?: string;
+}
+
+const {
+  brand,
+  tagline,
+  groups,
+  year = new Date().getFullYear(),
+  rights = "All rights reserved.",
+} = Astro.props;
+---
+
+<footer class="lp-footer py-16" data-automation-id="section-footer-full">
+  <Container>
+    <div
+      class:list={[
+        "grid gap-10",
+        groups.length === 3
+          ? "sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr]"
+          : "sm:grid-cols-2 lg:grid-cols-[1.5fr_repeat(auto-fit,minmax(0,1fr))]",
+      ]}
+    >
+      <div class="max-w-sm">
+        <div class="font-display text-[1.34rem] font-semibold tracking-[-0.02em] text-white">
+          {brand}
+        </div>
+        {tagline && (
+          <p class="mt-3 text-sm leading-7 text-[color:color-mix(in_srgb,#fff_56%,var(--color-neutral))]">
+            {tagline}
+          </p>
+        )}
+      </div>
+      {groups.map((group) => (
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-[0.14em] text-white/45">
+            {group.heading}
+          </h4>
+          <div class="mt-4 grid gap-[0.625rem] text-sm">
+            {group.links.map((link) => (
+              <a href={link.href} class="lp-footer-link">{link.text}</a>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+    <div class="mt-12 border-t border-white/10 pt-6 text-xs text-white/40">
+      &copy; {year} {brand}. {rights}
+    </div>
+  </Container>
+</footer>
+
+<style>
+  .lp-footer {
+    background: var(--color-neutral);
+    color: color-mix(in srgb, #fff 56%, var(--color-neutral));
+  }
+  .lp-footer-link {
+    color: color-mix(in srgb, #fff 62%, var(--color-neutral));
+    transition: color 0.16s ease;
+    text-decoration: none;
+  }
+  .lp-footer-link:hover {
+    color: #fff;
+  }
+</style>

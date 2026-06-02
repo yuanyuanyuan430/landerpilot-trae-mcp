@@ -1,0 +1,33 @@
+{
+  "id": "affiliate-review",
+  "displayName": "Affiliate Review",
+  "status": "available",
+  "description": "联盟品牌 Hub + 单品牌测评页，适合 offer、产品测评、品牌推荐站。",
+  "entrySkill": "landerpilot",
+  "inputModel": {
+    "required": ["site_name"],
+    "recommended": ["domain", "category", "official_url", "affiliate_url", "description", "pros", "cons", "price", "score", "faq", "image", "specs", "rating_breakdown"],
+    "notes": "这是数据型模板。AI 入口必须先让用户上传/粘贴品牌或产品数据，或从用户提供的 URL 抽取后整理成 offers[] / raw_text；不要在缺数据时生成假测评。每个 offer 可选补充 specs (key-value 对象) 让 SpecsTable 展示规格，rating_breakdown (数组) 让 RatingBreakdown 展示多维评分。"
+  },
+  "dataPolicy": {
+    "mode": "required",
+    "reason": "联盟测评站的页面数量、品牌页、评分、CTA 和 SEO 内容都依赖真实品牌/产品数据。",
+    "acceptedSources": ["offers[]", "parseable raw_text", "uploaded CSV/Excel/JSON/Markdown/TXT normalized into offers[]", "source URLs extracted into offers[]"],
+    "minimum": "至少 1 个品牌/产品，包含名称以及官方 URL 或 affiliate URL；推荐提供分类、简介、价格/优惠、优缺点。",
+    "demoMode": "只有用户明确说先用演示/样例数据时，才允许设置 demo_mode: true。"
+  },
+  "routes": ["index", "reviews", "reviews/<brand-slug>", "about", "privacy", "terms", "disclosure"],
+  "variants": ["affiliate-brand-hub+review-revneey-golden-v5"],
+  "languageSupport": {
+    "default": "en",
+    "stable": ["en"],
+    "mvp": ["zh-CN"],
+    "notes": "zh-CN is best-effort for built-in template copy. Agent-authored pages must handle Astro i18n explicitly."
+  },
+  "examples": ["examples/basic.json"],
+  "theme": {
+    "mode": "tailwind-component-layer",
+    "tailwind": true,
+    "defaultIndustry": "ecommerce"
+  }
+}

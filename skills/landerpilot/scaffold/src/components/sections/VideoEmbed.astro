@@ -1,0 +1,120 @@
+---
+import Container from "../atoms/Container.astro";
+import SectionHeader from "../atoms/SectionHeader.astro";
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  /** YouTube / Vimeo embed URL OR direct mp4 URL. */
+  src: string;
+  poster?: string;
+  caption?: string;
+  aspect?: "16/9" | "4/3" | "1/1" | "21/9";
+  containerSize?: "default" | "tight" | "wide";
+  autoplay?: boolean;
+  loop?: boolean;
+  muted?: boolean;
+  controls?: boolean;
+}
+
+const {
+  eyebrow,
+  title,
+  description,
+  src,
+  poster,
+  caption,
+  aspect = "16/9",
+  containerSize = "default",
+  autoplay = false,
+  loop = false,
+  muted = true,
+  controls = true,
+} = Astro.props;
+
+const isYouTube = /youtube\.com|youtu\.be/.test(src);
+const isVimeo = /vimeo\.com/.test(src);
+const isIframe = isYouTube || isVimeo;
+
+function embedUrl(url: string): string {
+  if (/youtube\.com\/embed/.test(url)) return url;
+  const ytMatch = url.match(/(?:v=|youtu\.be\/)([\w-]{11})/);
+  if (ytMatch) {
+    const params = new URLSearchParams({
+      rel: "0",
+      modestbranding: "1",
+      ...(autoplay && { autoplay: "1", mute: "1" }),
+      ...(loop && { loop: "1", playlist: ytMatch[1] }),
+    }).toString();
+    return `https://www.youtube.com/embed/${ytMatch[1]}?${params}`;
+  }
+  const vimeoMatch = url.match(/vimeo\.com\/(\d+)/);
+  if (vimeoMatch) {
+    const params = new URLSearchParams({
+      ...(autoplay && { autoplay: "1", muted: "1" }),
+      ...(loop && { loop: "1" }),
+    }).toString();
+    return `https://player.vimeo.com/video/${vimeoMatch[1]}?${params}`;
+  }
+  return url;
+}
+
+const aspectClass = {
+  "16/9": "aspect-video",
+  "4/3": "aspect-[4/3]",
+  "1/1": "aspect-square",
+  "21/9": "aspect-[21/9]",
+}[aspect];
+---
+
+<section class="py-20 md:py-24" data-automation-id="section-video-embed">
+  <Container size={containerSize}>
+    {title && (
+      <SectionHeader
+        eyebrow={eyebrow}
+        title={title}
+        description={description}
+        align="center"
+        size="tight"
+        class="mb-10"
+      />
+    )}
+
+    <figure class="mx-auto max-w-5xl">
+      <div
+        class:list={[
+          "lp-inview overflow-hidden rounded-[var(--ganhuo-radius)] border border-[color:var(--border)] bg-neutral shadow-[0_30px_60px_-30px_rgba(20,18,15,0.35)]",
+          aspectClass,
+        ]}
+      >
+        {isIframe ? (
+          <iframe
+            src={embedUrl(src)}
+            title={title ?? "Embedded video"}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            class="h-full w-full"
+            loading="lazy"
+          ></iframe>
+        ) : (
+          <video
+            src={src}
+            poster={poster}
+            autoplay={autoplay}
+            loop={loop}
+            muted={muted}
+            controls={controls}
+            playsinline
+            class="h-full w-full object-cover"
+          ></video>
+        )}
+      </div>
+      {caption && (
+        <figcaption class="mt-4 text-center text-[0.85rem] text-[color:var(--ganhuo-text-muted)]">
+          {caption}
+        </figcaption>
+      )}
+    </figure>
+  </Container>
+</section>

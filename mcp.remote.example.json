@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "landerpilot": {
+      "type": "http",
+      "url": "https://landerpilot.com/api/mcp",
+      "headers": {
+        "Authorization": "Bearer ${LANDERPILOT_API_KEY}"
+      }
+    }
+  }
+}

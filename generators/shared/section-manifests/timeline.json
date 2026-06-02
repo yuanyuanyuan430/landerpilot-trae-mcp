@@ -1,0 +1,72 @@
+{
+  "id": "timeline",
+  "component": "Timeline",
+  "category": "story",
+  "displayName": "Timeline / roadmap",
+  "description": "Chronological or sequential story: company history, product roadmap, project milestones. Two layouts: 'vertical' (default, dated column on the left for desktop) and 'horizontal' (scrollable card row — good for roadmaps).",
+  "industries": [
+    "all"
+  ],
+  "pageRoles": [
+    "about",
+    "landing"
+  ],
+  "props": {
+    "eyebrow": {
+      "type": "string",
+      "required": false
+    },
+    "title": {
+      "type": "string",
+      "required": true,
+      "hint": "5-10 words. Often 'Our story' / 'Roadmap' / 'The journey so far'."
+    },
+    "description": {
+      "type": "string",
+      "required": false
+    },
+    "items": {
+      "type": "array<{ date?, title, description?, badge? }>",
+      "required": true,
+      "hint": "Each: { date (year or month-year as string), title (3-6 words), description (1-2 sentences), badge? (small label like 'Shipped' / 'Coming' / 'v1.0') }. 3-8 items."
+    },
+    "layout": {
+      "type": "enum",
+      "values": [
+        "vertical",
+        "horizontal"
+      ],
+      "required": false,
+      "default": "vertical"
+    }
+  },
+  "preview": {
+    "eyebrow": "Roadmap",
+    "title": "What we're building this year.",
+    "items": [
+      {
+        "date": "Q1 2026",
+        "title": "Section library v1",
+        "description": "13 production sections + 6 industry themes.",
+        "badge": "Shipped"
+      },
+      {
+        "date": "Q2 2026",
+        "title": "Section library v2",
+        "description": "16 more sections including blog, forms, team, bento, comparison, video.",
+        "badge": "Shipped"
+      },
+      {
+        "date": "Q3 2026",
+        "title": "Custom theme designer",
+        "description": "Visual theme editor so users can craft their own industry palette.",
+        "badge": "In progress"
+      },
+      {
+        "date": "Q4 2026",
+        "title": "Multi-page generator",
+        "description": "Let the AI design 5-10 page sites in one prompt, with cross-page coherence."
+      }
+    ]
+  }
+}

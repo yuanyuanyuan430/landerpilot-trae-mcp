@@ -1,0 +1,56 @@
+{
+  "id": "testimonials",
+  "component": "Testimonials",
+  "category": "social-proof",
+  "displayName": "Testimonials",
+  "description": "Three quote cards with author + role attribution. Use real quotes from real people — fake testimonials are worse than no testimonials. If only 1-2 real quotes exist, use 2-col layout; if 0, drop the section entirely.",
+  "industries": [
+    "all"
+  ],
+  "pageRoles": [
+    "landing",
+    "about",
+    "product"
+  ],
+  "props": {
+    "eyebrow": {
+      "type": "string",
+      "required": false
+    },
+    "title": {
+      "type": "string",
+      "required": true,
+      "hint": "3-7 words. Often a phrase like 'What people say' or 'Trusted by teams that ship'."
+    },
+    "description": {
+      "type": "string",
+      "required": false
+    },
+    "items": {
+      "type": "array<{ quote: string, name: string, role?: string }>",
+      "required": true,
+      "hint": "2-3 items. quote 15-35 words. Drop anything sounding like 'lifechanging' / 'game-changer' / generic AI-speak. role is title + company, 3-6 words."
+    }
+  },
+  "preview": {
+    "eyebrow": "Field tested",
+    "title": "What early users said.",
+    "items": [
+      {
+        "quote": "We replaced our Webflow workflow for landing pages. Faster, version-controlled, and the AI actually picks the right sections.",
+        "name": "Maya Chen",
+        "role": "Head of growth, Northwave"
+      },
+      {
+        "quote": "Same component library, six clients, six totally different brands. Theme tokens are doing the heavy lifting.",
+        "name": "Diego Reyes",
+        "role": "Creative director, Foundry 22"
+      },
+      {
+        "quote": "I shipped a comparison page in twelve minutes. It used to take half a day.",
+        "name": "Priya Anand",
+        "role": "Solo founder, Ledgerline"
+      }
+    ]
+  }
+}

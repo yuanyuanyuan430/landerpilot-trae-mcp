@@ -1,0 +1,26 @@
+{
+  "id": "affiliate-disclosure",
+  "component": "AffiliateDisclosure",
+  "category": "legal",
+  "displayName": "Affiliate disclosure",
+  "description": "Required notice for sites with affiliate links. Three variants: 'subtle' (light info background, slips into review flow), 'highlighted' (stronger border, top of page), 'band' (full-width strip with base-200 bg). Place at top of every page with affiliate CTAs to satisfy FTC / equivalent regulations.",
+  "industries": ["ecommerce", "saas"],
+  "pageRoles": ["review-detail", "directory-index", "landing", "footer"],
+  "props": {
+    "text": {
+      "type": "string",
+      "required": false,
+      "default": "This site contains affiliate links. We may earn a commission on purchases at no extra cost to you.",
+      "hint": "Disclosure language. Comply with local regulator wording (FTC, ASA, etc.)."
+    },
+    "link": { "type": "cta", "required": false, "hint": "Optional link to full disclosure page." },
+    "variant": { "type": "enum", "values": ["subtle", "highlighted", "band"], "required": false, "default": "subtle" },
+    "position": { "type": "enum", "values": ["top", "inline", "footer"], "required": false, "default": "top" },
+    "containerSize": { "type": "enum", "values": ["default", "tight", "wide"], "required": false, "default": "default" }
+  },
+  "preview": {
+    "text": "This site contains affiliate links. We may earn a commission on purchases at no extra cost to you.",
+    "link": { "text": "See our full disclosure", "href": "/disclosure/" },
+    "variant": "subtle"
+  }
+}

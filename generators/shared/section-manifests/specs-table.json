@@ -1,0 +1,31 @@
+{
+  "id": "specs-table",
+  "component": "SpecsTable",
+  "category": "metrics",
+  "displayName": "Specs / quick facts table",
+  "description": "Key-value table of specs / quick facts. Two layouts: 'stacked' (compact two-column rows, sidebar-friendly) and 'grid' (multi-column card grid for prominent placement).",
+  "industries": ["ecommerce", "saas"],
+  "pageRoles": ["review-detail", "product"],
+  "props": {
+    "title": { "type": "string", "required": false },
+    "description": { "type": "string", "required": false },
+    "specs": {
+      "type": "array<{ label, value, hint? }>",
+      "required": true,
+      "hint": "5-12 spec rows. Each: { label (1-3 words), value (1-5 words), hint? (small grey clarifier in parens) }."
+    },
+    "layout": { "type": "enum", "values": ["stacked", "grid"], "required": false, "default": "stacked" },
+    "containerSize": { "type": "enum", "values": ["default", "tight"], "required": false, "default": "tight" }
+  },
+  "preview": {
+    "title": "Quick specs",
+    "specs": [
+      { "label": "Type", "value": "Over-ear, closed-back" },
+      { "label": "Battery", "value": "30 hours", "hint": "ANC on" },
+      { "label": "Weight", "value": "250 g" },
+      { "label": "Bluetooth", "value": "5.2 / LDAC / multipoint" },
+      { "label": "Charging", "value": "USB-C, 3-min quick charge" },
+      { "label": "Warranty", "value": "2 years" }
+    ]
+  }
+}

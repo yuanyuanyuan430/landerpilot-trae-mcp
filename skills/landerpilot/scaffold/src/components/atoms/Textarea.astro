@@ -1,0 +1,64 @@
+---
+interface Props {
+  name?: string;
+  id?: string;
+  placeholder?: string;
+  value?: string;
+  required?: boolean;
+  disabled?: boolean;
+  readonly?: boolean;
+  rows?: number;
+  minlength?: number;
+  maxlength?: number;
+  error?: string;
+  resize?: "none" | "y" | "x" | "both";
+  class?: string;
+  automationId?: string;
+}
+
+const {
+  name,
+  id,
+  placeholder,
+  value,
+  required,
+  disabled,
+  readonly,
+  rows = 4,
+  minlength,
+  maxlength,
+  error,
+  resize = "y",
+  class: extra = "",
+  automationId,
+} = Astro.props;
+
+const hasError = !!error;
+const resizeClass = resize === "none" ? "resize-none" : resize === "y" ? "resize-y" : resize === "x" ? "resize-x" : "resize";
+---
+
+<textarea
+  name={name}
+  id={id ?? name}
+  placeholder={placeholder}
+  required={required}
+  disabled={disabled}
+  readonly={readonly}
+  rows={rows}
+  minlength={minlength}
+  maxlength={maxlength}
+  aria-invalid={hasError ? "true" : undefined}
+  aria-describedby={hasError && (id ?? name) ? `${id ?? name}-error` : undefined}
+  data-automation-id={automationId}
+  class:list={[
+    "w-full rounded-[var(--radius-field,8px)] border bg-base-100 text-base-content font-sans leading-relaxed",
+    "border-[color:var(--border)] placeholder:text-[color:var(--ganhuo-text-muted)]",
+    "px-3.5 py-3 text-[0.93rem]",
+    "transition-[border-color,box-shadow] duration-150",
+    "focus:outline-none focus:border-primary focus:shadow-[0_0_0_3px_color-mix(in_srgb,var(--color-primary)_18%,transparent)]",
+    "disabled:cursor-not-allowed disabled:opacity-60",
+    hasError && "border-error focus:border-error focus:shadow-[0_0_0_3px_color-mix(in_srgb,var(--color-error)_18%,transparent)]",
+    resizeClass,
+    extra,
+  ]}
+>{value}</textarea>

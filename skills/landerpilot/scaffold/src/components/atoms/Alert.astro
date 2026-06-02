@@ -1,0 +1,72 @@
+---
+interface Props {
+  variant?: "info" | "success" | "warning" | "error" | "neutral";
+  title?: string;
+  icon?: boolean;
+  class?: string;
+}
+
+const { variant = "info", title, icon = true, class: extra = "" } = Astro.props;
+
+const variantStyles = {
+  info: {
+    container: "border-[color:color-mix(in_srgb,var(--color-info)_30%,transparent)] bg-[color:color-mix(in_srgb,var(--color-info)_8%,var(--color-base-100))]",
+    accent: "text-[color:var(--color-info)]",
+    path: "M12 9v4M12 17h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z",
+  },
+  success: {
+    container: "border-[color:color-mix(in_srgb,var(--color-success)_30%,transparent)] bg-[color:color-mix(in_srgb,var(--color-success)_8%,var(--color-base-100))]",
+    accent: "text-[color:var(--color-success)]",
+    path: "M5 13l4 4L19 7",
+  },
+  warning: {
+    container: "border-[color:color-mix(in_srgb,var(--color-warning)_30%,transparent)] bg-[color:color-mix(in_srgb,var(--color-warning)_8%,var(--color-base-100))]",
+    accent: "text-[color:var(--color-warning)]",
+    path: "M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z",
+  },
+  error: {
+    container: "border-[color:color-mix(in_srgb,var(--color-error)_30%,transparent)] bg-[color:color-mix(in_srgb,var(--color-error)_8%,var(--color-base-100))]",
+    accent: "text-[color:var(--color-error)]",
+    path: "M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M21 12a9 9 0 11-18 0 9 9 0 0118 0z",
+  },
+  neutral: {
+    container: "border-[color:var(--border)] bg-base-200",
+    accent: "text-base-content",
+    path: "M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z",
+  },
+}[variant];
+---
+
+<div
+  role={variant === "error" ? "alert" : "status"}
+  class:list={[
+    "flex items-start gap-3 rounded-[var(--ganhuo-radius)] border p-4",
+    variantStyles.container,
+    extra,
+  ]}
+>
+  {icon && (
+    <svg
+      class:list={["mt-0.5 h-5 w-5 shrink-0", variantStyles.accent]}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.8"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <path d={variantStyles.path} />
+    </svg>
+  )}
+  <div class="grid gap-1 min-w-0 flex-1">
+    {title && (
+      <strong class:list={["text-[0.93rem] font-semibold", variantStyles.accent]}>
+        {title}
+      </strong>
+    )}
+    <div class="text-[0.9rem] leading-[1.55] text-base-content">
+      <slot />
+    </div>
+  </div>
+</div>

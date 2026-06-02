@@ -1,0 +1,68 @@
+---
+import Container from "../atoms/Container.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  pros: string[];
+  cons: string[];
+  prosLabel?: string;
+  consLabel?: string;
+  containerSize?: "default" | "tight";
+}
+
+const {
+  title,
+  description,
+  pros,
+  cons,
+  prosLabel = "Pros",
+  consLabel = "Cons",
+  containerSize = "tight",
+} = Astro.props;
+---
+
+<section class="py-10 md:py-12" data-automation-id="section-pros-cons">
+  <Container size={containerSize}>
+    {title && (
+      <div class="mb-6">
+        <h2 class="font-display text-[1.4rem] font-[560] tracking-[-0.018em] text-base-content">{title}</h2>
+        {description && (
+          <p class="mt-2 text-[0.95rem] leading-[1.55] text-[color:var(--ganhuo-text-muted)]">{description}</p>
+        )}
+      </div>
+    )}
+    <div class="grid gap-4 sm:grid-cols-2">
+      <div
+        class="rounded-[var(--ganhuo-radius)] border px-5 py-5 sm:px-6 sm:py-5"
+        style="border-color: color-mix(in srgb, var(--color-success) 30%, transparent); background: color-mix(in srgb, var(--color-success) 7%, var(--color-base-100));"
+        data-automation-id="pros-block"
+      >
+        <h3 class="mb-3 flex items-center gap-2 font-display text-[0.95rem] font-bold text-base-content">
+          <span class="grid h-5 w-5 place-items-center rounded-full text-[color:var(--color-success)] font-bold" style="background: color-mix(in srgb, var(--color-success) 20%, transparent);" aria-hidden="true">✓</span>
+          {prosLabel}
+        </h3>
+        <ul class="grid gap-1.5">
+          {pros.map((p) => (
+            <li class="text-[0.92rem] leading-[1.55] text-base-content">{p}</li>
+          ))}
+        </ul>
+      </div>
+      <div
+        class="rounded-[var(--ganhuo-radius)] border px-5 py-5 sm:px-6 sm:py-5"
+        style="border-color: color-mix(in srgb, var(--color-error) 30%, transparent); background: color-mix(in srgb, var(--color-error) 6%, var(--color-base-100));"
+        data-automation-id="cons-block"
+      >
+        <h3 class="mb-3 flex items-center gap-2 font-display text-[0.95rem] font-bold text-base-content">
+          <span class="grid h-5 w-5 place-items-center rounded-full text-[color:var(--color-error)] font-bold" style="background: color-mix(in srgb, var(--color-error) 18%, transparent);" aria-hidden="true">×</span>
+          {consLabel}
+        </h3>
+        <ul class="grid gap-1.5">
+          {cons.map((c) => (
+            <li class="text-[0.92rem] leading-[1.55] text-base-content">{c}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </Container>
+</section>

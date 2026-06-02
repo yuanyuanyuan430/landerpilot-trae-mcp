@@ -1,0 +1,119 @@
+{
+  "id": "pricing-compare",
+  "component": "PricingCompare",
+  "category": "pricing",
+  "displayName": "Pricing comparison table",
+  "description": "Side-by-side comparison table with plans as columns and features as rows. Use when plan differentiation is feature-based (this plan has X, that one doesn't) rather than tier-based.",
+  "industries": [
+    "saas",
+    "ecommerce"
+  ],
+  "notSuitableFor": [
+    "restaurant",
+    "portfolio",
+    "law-firm",
+    "studio"
+  ],
+  "pageRoles": [
+    "pricing"
+  ],
+  "props": {
+    "eyebrow": {
+      "type": "string",
+      "required": false
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "string",
+      "required": false
+    },
+    "plans": {
+      "type": "array<ComparePlan>",
+      "required": true,
+      "hint": "2-4 plans. Each: { name, price, per?, cta { text, href }, featured? }. Set one plan to featured: true to visually anchor the table."
+    },
+    "rows": {
+      "type": "array<CompareRow>",
+      "required": true,
+      "hint": "5-12 feature rows. Each: { feature: 'Feature name', values: [...] }. values length must match plans length. Each value is either a boolean (true → checkmark, false → em-dash) or a short string ('Unlimited', '100 GB', '5 users')."
+    }
+  },
+  "preview": {
+    "eyebrow": "Compare plans",
+    "title": "Pick the workspace that fits.",
+    "plans": [
+      {
+        "name": "Solo",
+        "price": "$0",
+        "per": "/mo",
+        "cta": {
+          "text": "Get solo",
+          "href": "#solo"
+        }
+      },
+      {
+        "name": "Team",
+        "price": "$19",
+        "per": "/seat/mo",
+        "cta": {
+          "text": "Start team",
+          "href": "#team"
+        },
+        "featured": true
+      },
+      {
+        "name": "Agency",
+        "price": "Custom",
+        "cta": {
+          "text": "Contact us",
+          "href": "#agency"
+        }
+      }
+    ],
+    "rows": [
+      {
+        "feature": "Active sites",
+        "values": [
+          "1",
+          "10",
+          "Unlimited"
+        ]
+      },
+      {
+        "feature": "Custom domains",
+        "values": [
+          false,
+          true,
+          true
+        ]
+      },
+      {
+        "feature": "White-label preview",
+        "values": [
+          false,
+          false,
+          true
+        ]
+      },
+      {
+        "feature": "Industry themes",
+        "values": [
+          "Default only",
+          "All 6",
+          "All 6 + custom"
+        ]
+      },
+      {
+        "feature": "SLA",
+        "values": [
+          false,
+          false,
+          true
+        ]
+      }
+    ]
+  }
+}

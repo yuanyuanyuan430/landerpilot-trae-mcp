@@ -1,0 +1,111 @@
+---
+import Container from "../atoms/Container.astro";
+import SectionHeader from "../atoms/SectionHeader.astro";
+
+interface FeatureItem {
+  index?: string;
+  title: string;
+  description: string;
+  image?: { src: string; alt?: string };
+}
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  description?: string;
+  items: FeatureItem[];
+}
+
+const { eyebrow, title, description, items } = Astro.props;
+---
+
+<section class="py-20 md:py-28" id="features" data-automation-id="section-features-alternating">
+  <Container>
+    <SectionHeader
+      eyebrow={eyebrow}
+      title={title}
+      description={description}
+      class="mb-14"
+    />
+    <div class="grid gap-22">
+      {items.map((item, idx) => (
+        <div
+          class:list={[
+            "lp-feature lp-inview grid items-center gap-[2.4rem] md:grid-cols-2",
+            idx % 2 === 1 && "md:[&>*:first-child]:order-2",
+          ]}
+        >
+          <div class="min-w-0">
+            {item.index && (
+              <span
+                class="mb-4 inline-block border-b-2 pb-[0.6rem] font-display text-[1.05rem] font-semibold text-primary"
+                style="border-bottom-color: color-mix(in srgb, var(--color-primary) 32%, transparent);"
+              >
+                {item.index}
+              </span>
+            )}
+            <h3
+              class="font-display text-[clamp(1.5rem,2.4vw,2.05rem)] font-[550] leading-[1.14] tracking-[-0.02em] text-base-content"
+            >
+              {item.title}
+            </h3>
+            <p
+              class="mt-4 text-[clamp(1.05rem,1.35vw,1.24rem)] leading-[1.68] text-[color:var(--ganhuo-text-muted)]"
+            >
+              {item.description}
+            </p>
+          </div>
+          {item.image && (
+            <div class="lp-feature-visual relative min-w-0">
+              <figure class="lp-window">
+                <div class="lp-window-bar"><span></span><span></span><span></span></div>
+                <img src={item.image.src} alt={item.image.alt ?? item.title} />
+              </figure>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  </Container>
+</section>
+
+<style>
+  .gap-22 { gap: 5.5rem; }
+  .lp-feature-visual::before {
+    content: "";
+    position: absolute;
+    inset: 1.3rem -1.1rem -1.3rem 1.2rem;
+    border-radius: 20px;
+    background: color-mix(in srgb, var(--color-primary) 13%, transparent);
+    z-index: 0;
+  }
+  .lp-window {
+    position: relative;
+    z-index: 1;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: var(--color-base-100);
+    overflow: hidden;
+    box-shadow:
+      0 1px 1px rgba(20, 18, 15, 0.05),
+      0 14px 28px -14px rgba(20, 18, 15, 0.2);
+  }
+  .lp-window-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.72rem 0.95rem;
+    border-bottom: 1px solid var(--border);
+    background: color-mix(in srgb, var(--color-base-200) 65%, var(--color-base-100));
+  }
+  .lp-window-bar span {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--color-base-content) 15%, transparent);
+  }
+  .lp-window img {
+    display: block;
+    width: 100%;
+  }
+</style>

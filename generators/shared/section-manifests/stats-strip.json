@@ -1,0 +1,56 @@
+{
+  "id": "stats-strip",
+  "component": "StatsStrip",
+  "category": "social-proof",
+  "displayName": "Stats strip",
+  "description": "Inline row of 3-5 hero stats with bold numeric values. Drops in below a hero to anchor credibility with concrete numbers. Skip if no real metrics are available — fake stats are worse than no stats.",
+  "industries": [
+    "saas",
+    "ecommerce",
+    "studio",
+    "law-firm"
+  ],
+  "notSuitableFor": [
+    "portfolio",
+    "restaurant"
+  ],
+  "pageRoles": [
+    "landing",
+    "about"
+  ],
+  "props": {
+    "stats": {
+      "type": "array<{ value: string, label: string, accent?: string }>",
+      "required": true,
+      "hint": "3-5 items. value is the headline number (e.g. '4.9', '120k'). accent is an optional suffix that renders in primary color (e.g. '+', 'x'). label is short — 2-5 words. Avoid percentages that round suspiciously."
+    },
+    "bordered": {
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "hint": "Bottom border separator. Set false when the strip is the first element on a page (no sibling above)."
+    }
+  },
+  "preview": {
+    "stats": [
+      {
+        "value": "4.9",
+        "accent": "/5",
+        "label": "Average G2 rating"
+      },
+      {
+        "value": "12k+",
+        "label": "Sites shipped"
+      },
+      {
+        "value": "180",
+        "label": "Countries served"
+      },
+      {
+        "value": "99.9",
+        "accent": "%",
+        "label": "Build uptime"
+      }
+    ]
+  }
+}

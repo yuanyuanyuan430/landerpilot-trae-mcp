@@ -1,0 +1,39 @@
+---
+import Container from "../atoms/Container.astro";
+
+interface Props {
+  stats: Array<{ value: string; label: string; accent?: string }>;
+  bordered?: boolean;
+}
+
+const { stats, bordered = true } = Astro.props;
+---
+
+<section
+  class:list={["py-12 md:py-14", bordered && "border-b border-[color:var(--border)]"]}
+  data-automation-id="section-stats-strip"
+>
+  <Container>
+    <div class="flex flex-wrap gap-[2.1rem_3.4rem]">
+      {stats.map((s) => (
+        <div class="min-w-[7rem]">
+          <div
+            class="font-display text-[clamp(2.3rem,3.6vw,3.05rem)] font-[560] leading-none tracking-[-0.022em] text-base-content"
+          >
+            {s.accent ? (
+              <>
+                {s.value}
+                <em class="not-italic text-primary">{s.accent}</em>
+              </>
+            ) : (
+              s.value
+            )}
+          </div>
+          <div class="mt-[0.55rem] text-[0.84rem] font-semibold text-[color:var(--ganhuo-text-muted)]">
+            {s.label}
+          </div>
+        </div>
+      ))}
+    </div>
+  </Container>
+</section>

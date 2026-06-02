@@ -1,0 +1,76 @@
+---
+import Container from "../atoms/Container.astro";
+import Button from "../atoms/Button.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+  cta: { text: string; href: string };
+  variant?: "dark" | "tinted";
+}
+
+const { title, description, cta, variant = "dark" } = Astro.props;
+---
+
+<section
+  class:list={[
+    "lp-band relative overflow-hidden py-20 md:py-24",
+    variant === "dark" ? "lp-band--dark" : "lp-band--tinted",
+  ]}
+  data-automation-id="section-cta-band"
+>
+  <Container size="tight" class="relative text-center">
+    <h2
+      class:list={[
+        "font-display text-[clamp(2rem,3.7vw,3rem)] font-[540] leading-[1.08] tracking-[-0.024em]",
+        variant === "dark" ? "text-white" : "text-base-content",
+      ]}
+    >
+      {title}
+    </h2>
+    {description && (
+      <p
+        class:list={[
+          "mx-auto mt-4 max-w-xl text-[clamp(1.05rem,1.35vw,1.24rem)] leading-[1.68]",
+          variant === "dark"
+            ? "text-[color:color-mix(in_srgb,#fff_72%,transparent)]"
+            : "text-[color:var(--ganhuo-text-muted)]",
+        ]}
+      >
+        {description}
+      </p>
+    )}
+    <div class="mt-9 inline-block">
+      <Button
+        variant={variant === "dark" ? "inverse" : "primary"}
+        href={cta.href}
+        automationId="cta-band-button"
+      >
+        {cta.text}
+      </Button>
+    </div>
+  </Container>
+</section>
+
+<style>
+  .lp-band--dark {
+    background: var(--color-neutral);
+    color: color-mix(in srgb, #fff 84%, var(--color-neutral));
+  }
+  .lp-band--dark::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(
+      44rem 22rem at 50% -32%,
+      color-mix(in srgb, var(--color-primary) 52%, transparent),
+      transparent 70%
+    );
+  }
+  .lp-band--tinted {
+    background: var(--color-base-200);
+  }
+  .lp-band > * {
+    position: relative;
+  }
+</style>

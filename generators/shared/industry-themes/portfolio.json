@@ -1,0 +1,35 @@
+{
+  "id": "portfolio",
+  "displayName": "Personal Portfolio",
+  "description": "Charcoal + warm tan on warm off-white — thoughtful, hand-curated, personal.",
+  "industries": ["portfolio", "personal", "freelancer", "photographer", "writer", "artist"],
+  "daisyui": {
+    "primary": "#3d3d3d",
+    "primary-content": "#faf8f5",
+    "secondary": "#b08968",
+    "secondary-content": "#1a1410",
+    "accent": "#b08968",
+    "accent-content": "#1a1410",
+    "neutral": "#1c1917",
+    "neutral-content": "#faf8f5",
+    "base-100": "#faf8f5",
+    "base-200": "#f1ede5",
+    "base-300": "#e3dccb",
+    "base-content": "#1c1917",
+    "info": "#2563eb",
+    "info-content": "#ffffff",
+    "success": "#15803d",
+    "success-content": "#ffffff",
+    "warning": "#b45309",
+    "warning-content": "#ffffff",
+    "error": "#991b1b",
+    "error-content": "#ffffff",
+    "radius-box": "8px",
+    "radius-field": "6px",
+    "radius-selector": "999px"
+  },
+  "fonts": {
+    "display": "Fraunces",
+    "sans": "Hanken Grotesk"
+  }
+}

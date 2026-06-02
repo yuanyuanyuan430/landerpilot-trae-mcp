@@ -1,0 +1,111 @@
+---
+import Container from "../atoms/Container.astro";
+import Input from "../atoms/Input.astro";
+import Button from "../atoms/Button.astro";
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  placeholder?: string;
+  submitText?: string;
+  action?: string;
+  fieldName?: string;
+  successUrl?: string;
+  variant?: "centered" | "split" | "band";
+  privacyNote?: string;
+}
+
+const {
+  eyebrow,
+  title = "Subscribe to the newsletter",
+  description,
+  placeholder = "you@example.com",
+  submitText = "Subscribe",
+  action = "",
+  fieldName = "email",
+  successUrl,
+  variant = "centered",
+  privacyNote = "We send one email a month. Unsubscribe anytime.",
+} = Astro.props;
+
+const bandStyle = variant === "band" ? "lp-newsletter-band" : "";
+---
+
+<section
+  class:list={[
+    "py-20 md:py-24",
+    bandStyle,
+  ]}
+  id="newsletter"
+  data-automation-id="section-newsletter-signup"
+>
+  <Container size={variant === "split" ? "default" : "tight"}>
+    <div class:list={[
+      variant === "split" && "grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-16",
+    ]}>
+      <div class={variant === "centered" ? "text-center" : ""}>
+        {eyebrow && (
+          <span class:list={[
+            "inline-block text-[0.76rem] font-bold uppercase tracking-[0.18em]",
+            variant === "band" ? "text-primary-content/70" : "text-primary",
+          ]}>{eyebrow}</span>
+        )}
+        <h2 class:list={[
+          "mt-4 font-display text-[clamp(1.8rem,3.2vw,2.4rem)] font-[540] leading-[1.12] tracking-[-0.022em]",
+          variant === "band" ? "text-primary-content" : "text-base-content",
+          variant === "centered" && "mx-auto max-w-2xl",
+        ]}>{title}</h2>
+        {description && (
+          <p class:list={[
+            "mt-4 text-[clamp(1rem,1.25vw,1.13rem)] leading-[1.6]",
+            variant === "band" ? "text-primary-content/80" : "text-[color:var(--ganhuo-text-muted)]",
+            variant === "centered" && "mx-auto max-w-xl",
+          ]}>{description}</p>
+        )}
+      </div>
+
+      <form
+        action={action}
+        method="POST"
+        class:list={[
+          "mt-8",
+          variant === "centered" && "mx-auto max-w-md",
+          variant === "split" && "lg:mt-0",
+        ]}
+        data-automation-id="newsletter-form"
+      >
+        {successUrl && <input type="hidden" name="_next" value={successUrl} />}
+        <div class="flex flex-col gap-3 sm:flex-row">
+          <label for="newsletter-email" class="sr-only">Email address</label>
+          <Input
+            id="newsletter-email"
+            type="email"
+            name={fieldName}
+            placeholder={placeholder}
+            required
+            autocomplete="email"
+            class="flex-1"
+          />
+          <Button variant="primary" type="submit" automationId="newsletter-submit">
+            {submitText}
+          </Button>
+        </div>
+        {privacyNote && (
+          <p class:list={[
+            "mt-3 text-[0.78rem]",
+            variant === "band" ? "text-primary-content/60" : "text-[color:var(--ganhuo-text-muted)]",
+            variant === "centered" && "text-center",
+          ]}>{privacyNote}</p>
+        )}
+      </form>
+    </div>
+  </Container>
+</section>
+
+<style>
+  .lp-newsletter-band {
+    background: var(--color-primary);
+    color: var(--color-primary-content);
+  }
+</style>

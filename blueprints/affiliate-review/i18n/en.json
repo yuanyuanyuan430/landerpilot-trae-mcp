@@ -1,0 +1,82 @@
+{
+  "nav": {
+    "primary": "Primary",
+    "about": "About",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "disclosure": "Disclosure",
+    "contact": "Contact"
+  },
+  "footer": {
+    "text": "Independent affiliate comparison pages",
+    "ariaLabel": "Footer"
+  },
+  "hub": {
+    "disclosureText": "Affiliate Disclosure: We may earn a commission when you shop through our links. Our recommendations stay comparison-led and editorially structured.",
+    "reviewsSectionTitle": "Editor Reviews & Buying Notes"
+  },
+  "method": {
+    "title": "How We Choose Brands",
+    "steps": [
+      "We start with advertiser availability and official site accessibility.",
+      "We group brands by real shopper intent, not internal network metrics.",
+      "We write useful review notes: best-for, reasons to consider, pros, and watch-outs.",
+      "We keep affiliate disclosure visible and avoid misleading discount claims."
+    ]
+  },
+  "stats": {
+    "brandsReviewed": "Brands reviewed",
+    "buyingCategories": "Buying categories",
+    "editorialSummaries": "Editorial summaries"
+  },
+  "category": {
+    "groupNote": "Brands grouped by shopper intent and review relevance.",
+    "brandCountLabel": "brands"
+  },
+  "card": {
+    "bestForLabel": "Best for:",
+    "prosTitle": "Pros",
+    "watchOutsTitle": "Watch-outs",
+    "readReview": "Read Review"
+  },
+  "score": {
+    "offerClarity": "Offer Clarity",
+    "buyerFit": "Buyer Fit",
+    "trustSignals": "Trust Signals",
+    "value": "Value"
+  },
+  "reviewPage": {
+    "defaultAuthor": "LanderPilot Editorial Team",
+    "by": "By",
+    "updated": "Updated",
+    "minRead": "min read",
+    "visit": "Visit",
+    "officialSite": "Official Site",
+    "bestDeal": "Best Deal",
+    "officialDestination": "Official Destination",
+    "getDeal": "Get This Deal",
+    "visitOfficialSite": "Visit Official Site",
+    "contents": "Contents",
+    "quickSpecs": "Quick Specs",
+    "breadcrumb": "Breadcrumb"
+  },
+  "support": {
+    "reviewsTitle": "All Reviews",
+    "reviewsDescription": "Browse every brand and product review.",
+    "aboutTitle": "About",
+    "privacyTitle": "Privacy",
+    "privacyDescription": "Review this page with legal or compliance and replace it with the final privacy policy before publishing.",
+    "termsTitle": "Terms",
+    "termsDescription": "Review this page with legal or compliance and replace it with the final terms of service before publishing.",
+    "disclosureTitle": "Affiliate Disclosure",
+    "editorialPage": "Editorial page",
+    "footerNote": "Independent reviews, buying notes, and affiliate disclosure pages. Review legal copy before publishing."
+  },
+  "faqDefaults": {
+    "preBuyQuestion": "What should I check before buying?",
+    "preBuyAnswer": "Check current pricing, regional availability, return terms, and whether the offer applies to your selected product or plan."
+  },
+  "related": {
+    "empty": "No related reviews yet."
+  }
+}

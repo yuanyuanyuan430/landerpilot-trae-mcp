@@ -1,0 +1,35 @@
+{
+  "id": "restaurant",
+  "displayName": "Restaurant",
+  "description": "Terracotta + warm amber on parchment — appetizing, hospitable, hand-crafted.",
+  "industries": ["restaurant", "cafe", "bakery", "bar", "hospitality", "catering"],
+  "daisyui": {
+    "primary": "#8b3a2b",
+    "primary-content": "#fbf5ec",
+    "secondary": "#d4923a",
+    "secondary-content": "#231408",
+    "accent": "#8b3a2b",
+    "accent-content": "#fbf5ec",
+    "neutral": "#2c1810",
+    "neutral-content": "#fbf5ec",
+    "base-100": "#fcf6e8",
+    "base-200": "#f4ead3",
+    "base-300": "#e5d3a8",
+    "base-content": "#2c1810",
+    "info": "#2563eb",
+    "info-content": "#ffffff",
+    "success": "#15803d",
+    "success-content": "#ffffff",
+    "warning": "#b45309",
+    "warning-content": "#ffffff",
+    "error": "#991b1b",
+    "error-content": "#ffffff",
+    "radius-box": "16px",
+    "radius-field": "12px",
+    "radius-selector": "999px"
+  },
+  "fonts": {
+    "display": "Fraunces",
+    "sans": "Hanken Grotesk"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "id": "pros-cons",
+  "component": "ProsCons",
+  "category": "review",
+  "displayName": "Pros / cons two-column",
+  "description": "Side-by-side pros and cons lists with green/red tinted backgrounds. The default review pattern — keep lists short (3-6 each) to avoid review fatigue.",
+  "industries": ["ecommerce", "saas"],
+  "pageRoles": ["review-detail", "comparison"],
+  "props": {
+    "title": { "type": "string", "required": false, "hint": "Optional heading above the two boxes." },
+    "description": { "type": "string", "required": false },
+    "pros": { "type": "string[]", "required": true, "hint": "3-6 short bullets (under 15 words each)." },
+    "cons": { "type": "string[]", "required": true, "hint": "3-6 short bullets. Be honest — a 0-cons section reads like marketing copy." },
+    "prosLabel": { "type": "string", "required": false, "default": "Pros" },
+    "consLabel": { "type": "string", "required": false, "default": "Cons" },
+    "containerSize": { "type": "enum", "values": ["default", "tight"], "required": false, "default": "tight" }
+  },
+  "preview": {
+    "pros": [
+      "Industry-best active noise cancellation",
+      "Long 30-hour battery life with USB-C fast charging",
+      "Premium build quality and comfort"
+    ],
+    "cons": [
+      "Premium price tag",
+      "Touch controls take getting used to",
+      "Call quality slightly behind sound playback"
+    ]
+  }
+}

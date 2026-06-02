@@ -1,0 +1,23 @@
+---
+interface Props {
+  htmlFor?: string;
+  required?: boolean;
+  size?: "md" | "sm";
+  class?: string;
+}
+
+const { htmlFor, required, size = "md", class: extra = "" } = Astro.props;
+const sizeClass = size === "sm" ? "text-[0.82rem]" : "text-[0.92rem]";
+---
+
+<label
+  for={htmlFor}
+  class:list={[
+    "block font-semibold text-base-content mb-2",
+    sizeClass,
+    extra,
+  ]}
+>
+  <slot />
+  {required && <span class="ml-0.5 text-[color:var(--color-error)]" aria-hidden="true">*</span>}
+</label>

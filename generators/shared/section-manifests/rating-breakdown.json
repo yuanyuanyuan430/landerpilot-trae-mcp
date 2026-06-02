@@ -1,0 +1,30 @@
+{
+  "id": "rating-breakdown",
+  "component": "RatingBreakdown",
+  "category": "metrics",
+  "displayName": "Multi-dimension rating bars",
+  "description": "Compact grid of score bars across review dimensions (Design / Performance / Value / Support, etc.). Color-bands the bar based on score band. Pair with ReviewHero to flesh out the overall score.",
+  "industries": ["ecommerce", "saas"],
+  "pageRoles": ["review-detail", "comparison"],
+  "props": {
+    "title": { "type": "string", "required": false, "hint": "Optional heading. Skip if used immediately after ReviewHero." },
+    "description": { "type": "string", "required": false },
+    "items": {
+      "type": "array<{ label, score, max?, description? }>",
+      "required": true,
+      "hint": "3-8 dimensions. score is 0-{max} (default max=10). Optional one-line description per dimension."
+    },
+    "columns": { "type": "enum", "values": [1, 2, 3], "required": false, "default": 2 },
+    "containerSize": { "type": "enum", "values": ["default", "tight"], "required": false, "default": "tight" }
+  },
+  "preview": {
+    "items": [
+      { "label": "Sound quality", "score": 9.5 },
+      { "label": "Active noise cancellation", "score": 9.7 },
+      { "label": "Comfort over time", "score": 8.6 },
+      { "label": "Battery life", "score": 9.4 },
+      { "label": "Call quality", "score": 7.9 },
+      { "label": "Value for money", "score": 7.5 }
+    ]
+  }
+}

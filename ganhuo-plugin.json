@@ -1,0 +1,102 @@
+{
+  "interface": {
+    "displayName": "LanderPilot 建站",
+    "shortDescription": "把你的需求和数据直接变成可预览的成品网站，确认后安全发布上线。",
+    "category": "Productivity",
+    "icon": "🚀",
+    "vendor": {
+      "id": "landerpilot",
+      "name": "LanderPilot",
+      "homepage": "https://landerpilot.com",
+      "verified": true
+    }
+  },
+  "distribution": {
+    "kind": "builtin"
+  },
+  "policy": {
+    "installation": "AVAILABLE",
+    "default_enabled": false
+  },
+  "provides": [
+    "static-site-generation",
+    "astro-template-generation",
+    "site-blueprint-orchestration",
+    "frontend-design-guidance",
+    "static-site-preview",
+    "landerpilot-site-management",
+    "landerpilot-deployment-handoff",
+    "safe-online-deployment-workflow",
+    "cloudflare-deploy",
+    "cloudflare-pages-deploy",
+    "cloudflare-worker-deploy",
+    "landerpilot-artifact-upload",
+    "landerpilot-site-resource-provisioning",
+    "custom-domain-binding"
+  ],
+  "skillMetadata": {
+    "landerpilot": {
+      "id": "landerpilot",
+      "displayName": "LanderPilot 建站",
+      "description": "把建站需求和数据直接变成可预览的成品网站；上线前会先核对线上状态并让你确认，避免误改已有站点。",
+      "triggerHint": "请用 LanderPilot 帮我建站；如果是测评站/返现站，可以直接上传或粘贴品牌、店铺、offer 数据：",
+      "icon": "🚀",
+      "category": "web",
+      "tags": [
+        "建站",
+        "落地页",
+        "独立站",
+        "frontend design",
+        "静态网站",
+        "landing page",
+        "static website",
+        "corporate website",
+        "SaaS website",
+        "affiliate review site",
+        "cashback directory",
+        "coupon directory"
+      ],
+      "official": true,
+      "source": "internal",
+      "defaultEnabled": false,
+      "visibility": "primary",
+      "featured": true,
+      "featuredOrder": 10,
+      "paid": true
+    }
+  },
+  "monetization": {
+    "model": "subscription"
+  },
+  "auth": {
+    "mode": "user-supplied"
+  },
+  "trustLevel": "builtin",
+  "signature": null,
+  "runtimeKind": "streamable-http",
+  "serverName": "landerpilot",
+  "transport": {
+    "type": "streamable-http",
+    "url": "https://landerpilot.com/api/mcp"
+  },
+  "credentialHeaders": [
+    {
+      "credentialKey": "apiKey",
+      "targetName": "Authorization",
+      "valuePrefix": "Bearer ",
+      "required": true
+    }
+  ],
+  "network": {
+    "domains": ["landerpilot.com"]
+  },
+  "permissions": [
+    "network",
+    "external_account:landerpilot",
+    "external_account:cloudflare"
+  ],
+  "systemPromptHint": "LanderPilot 单入口建站流程、内置站点蓝图、Astro 模板生成、前端设计方向、本地 static assets、多站点本地管理、受管预览状态检查、部署交接包。Skill 里的本地检查和部署交接只使用 scripts/local-tools.mjs，不再暴露本地 MCP。云端部署能力由本插件内置的 LanderPilot streamable HTTP MCP 提供，需要用户填写 LanderPilot API 密钥；工具列表连接时实时下发。任何线上部署/更新/DNS/Google 配置必须先用本地脚本 prepare-deployment-handoff 固化本地事实，再用云端 MCP inspect_project 查询当前线上状态和生成 diff，用户明确确认后才允许改线上资源；不能凭本地配置或历史记忆直接重部署。",
+  "toolPolicy": {
+    "allowLiveTools": true
+  }
+}

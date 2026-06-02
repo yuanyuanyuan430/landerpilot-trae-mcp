@@ -1,0 +1,104 @@
+---
+/**
+ * Click-to-open dropdown using the native <details> element. Slot the trigger
+ * markup into the default slot's first child wrapped in <summary>; everything
+ * after becomes the menu.
+ */
+interface DropdownItem {
+  label: string;
+  href?: string;
+  icon?: string;
+  divider?: boolean;
+  destructive?: boolean;
+}
+
+interface Props {
+  label: string;
+  items?: DropdownItem[];
+  align?: "left" | "right";
+  width?: "auto" | "trigger" | "wide";
+  class?: string;
+  automationId?: string;
+}
+
+const { label, items = [], align = "left", width = "auto", class: extra = "", automationId } = Astro.props;
+
+const widthClass = width === "wide" ? "min-w-[14rem]" : width === "trigger" ? "min-w-full" : "min-w-[10rem]";
+const alignClass = align === "right" ? "right-0" : "left-0";
+---
+
+<details class:list={["lp-dropdown group relative inline-block", extra]} data-automation-id={automationId}>
+  <summary
+    class="inline-flex cursor-pointer list-none items-center gap-1.5 rounded-[var(--radius-field,8px)] border border-[color:var(--border)] bg-base-100 px-3.5 py-2 text-[0.9rem] font-medium text-base-content transition hover:border-[color:color-mix(in_srgb,var(--color-base-content)_30%,transparent)]"
+  >
+    <span>{label}</span>
+    <svg
+      class="h-3.5 w-3.5 transition group-open:rotate-180"
+      viewBox="0 0 12 8"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  </summary>
+
+  <div
+    class:list={[
+      "lp-dropdown-menu absolute z-30 mt-2 grid overflow-hidden rounded-[var(--ganhuo-radius)] border border-[color:var(--border)] bg-base-100 py-1 shadow-[0_18px_38px_-22px_rgba(20,18,15,0.3)]",
+      widthClass,
+      alignClass,
+    ]}
+    role="menu"
+  >
+    {items.length > 0 ? (
+      items.map((item) =>
+        item.divider ? (
+          <hr class="my-1 h-px border-0 bg-[color:var(--border)]" />
+        ) : item.href ? (
+          <a
+            href={item.href}
+            class:list={[
+              "flex items-center gap-2.5 px-3.5 py-2 text-[0.9rem] transition hover:bg-base-200",
+              item.destructive ? "text-[color:var(--color-error)]" : "text-base-content",
+            ]}
+            role="menuitem"
+          >
+            {item.icon && <span aria-hidden="true">{item.icon}</span>}
+            <span>{item.label}</span>
+          </a>
+        ) : (
+          <button
+            type="button"
+            class:list={[
+              "flex items-center gap-2.5 px-3.5 py-2 text-left text-[0.9rem] transition hover:bg-base-200",
+              item.destructive ? "text-[color:var(--color-error)]" : "text-base-content",
+            ]}
+            role="menuitem"
+          >
+            {item.icon && <span aria-hidden="true">{item.icon}</span>}
+            <span>{item.label}</span>
+          </button>
+        )
+      )
+    ) : (
+      <div class="px-3.5 py-2">
+        <slot />
+      </div>
+    )}
+  </div>
+</details>
+
+<style>
+  .lp-dropdown > summary { list-style: none; }
+  .lp-dropdown > summary::-webkit-details-marker { display: none; }
+  .lp-dropdown-menu {
+    animation: lp-dropdown-in 0.14s ease-out both;
+  }
+  @keyframes lp-dropdown-in {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lp-dropdown-menu { animation: none; }
+  }
+</style>

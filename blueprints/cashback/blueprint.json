@@ -1,0 +1,33 @@
+{
+  "id": "cashback",
+  "displayName": "Cashback Directory",
+  "status": "available",
+  "description": "返现/优惠券目录站：首页、店铺页、分类页。",
+  "entrySkill": "landerpilot",
+  "inputModel": {
+    "required": ["site_name"],
+    "recommended": ["domain", "store_url", "affiliate_url", "category", "cashback_rate", "coupon_count", "coupons", "deal_text", "logo"],
+    "notes": "这是数据型模板。AI 入口必须先让用户上传/粘贴 store/coupon/cashback 数据，或从用户提供的 URL 抽取后整理成 offers[] / raw_text；不要在缺数据时生成假目录。每个 store 可选补充 coupons (array of { code, title, description, expiry, href, discount }) 让 CouponList 展示完整优惠卡片。"
+  },
+  "dataPolicy": {
+    "mode": "required",
+    "reason": "返现/优惠券目录站的首页、店铺页、分类页、返现比例和 coupon 数量都依赖真实商家数据。",
+    "acceptedSources": ["offers[]", "parseable raw_text", "uploaded CSV/Excel/JSON/Markdown/TXT normalized into offers[]", "source URLs extracted into offers[]"],
+    "minimum": "至少 1 个 store/brand，包含名称、affiliate URL、cashback rate，以及 coupon_count / coupons[] / deals[] / deal_text 之一；推荐同时提供分类、store URL、logo、条款和更新时间。",
+    "demoMode": "只有用户明确说先用演示/样例数据时，才允许设置 demo_mode: true。"
+  },
+  "routes": ["index", "stores", "categories", "stores/<store-slug>", "categories/<category-slug>", "about", "contact", "privacy", "terms", "disclosure"],
+  "variants": ["cashback-directory"],
+  "languageSupport": {
+    "default": "en",
+    "stable": ["en"],
+    "mvp": ["zh-CN"],
+    "notes": "zh-CN is best-effort for built-in template copy. Agent-authored pages must handle Astro i18n explicitly."
+  },
+  "examples": ["examples/basic.json"],
+  "theme": {
+    "mode": "tailwind-component-layer",
+    "tailwind": true,
+    "defaultIndustry": "ecommerce"
+  }
+}

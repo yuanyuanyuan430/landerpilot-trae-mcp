@@ -1,0 +1,74 @@
+{
+  "id": "logo-cloud",
+  "component": "LogoCloud",
+  "category": "social-proof",
+  "displayName": "Logo cloud / integrations",
+  "description": "Row of partner logos, customer logos, or integration chips. 'chips' variant renders as text chips with primary-color dot (no image needed — good for integrations / capabilities). 'logos' variant renders actual logo images (needs logo URLs).",
+  "industries": [
+    "all"
+  ],
+  "pageRoles": [
+    "landing",
+    "product"
+  ],
+  "props": {
+    "eyebrow": {
+      "type": "string",
+      "required": false
+    },
+    "title": {
+      "type": "string",
+      "required": false,
+      "hint": "Optional — section can run unannotated under a hero."
+    },
+    "description": {
+      "type": "string",
+      "required": false
+    },
+    "items": {
+      "type": "array<{ name: string, logo?: string, href?: string }>",
+      "required": true,
+      "hint": "6-12 items. For 'chips' variant, only name is needed. For 'logos' variant, logo URL is required. href optional."
+    },
+    "variant": {
+      "type": "enum",
+      "values": [
+        "chips",
+        "logos"
+      ],
+      "required": false,
+      "default": "chips",
+      "hint": "'chips' for text/integrations (no images). 'logos' for actual logo images."
+    }
+  },
+  "preview": {
+    "eyebrow": "Plays well with",
+    "title": "Connect what you already use.",
+    "items": [
+      {
+        "name": "Cloudflare"
+      },
+      {
+        "name": "Stripe"
+      },
+      {
+        "name": "Sanity"
+      },
+      {
+        "name": "Postmark"
+      },
+      {
+        "name": "Plausible"
+      },
+      {
+        "name": "Linear"
+      },
+      {
+        "name": "Notion"
+      },
+      {
+        "name": "Vercel"
+      }
+    ]
+  }
+}

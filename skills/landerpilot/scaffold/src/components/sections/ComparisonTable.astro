@@ -1,0 +1,118 @@
+---
+import Container from "../atoms/Container.astro";
+import SectionHeader from "../atoms/SectionHeader.astro";
+
+interface ComparisonColumn {
+  name: string;
+  tagline?: string;
+  featured?: boolean;
+  logo?: string;
+}
+
+interface ComparisonRow {
+  feature: string;
+  hint?: string;
+  values: Array<string | boolean | { text: string; tone?: "good" | "bad" | "neutral" }>;
+}
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  description?: string;
+  columns: ComparisonColumn[];
+  rows: ComparisonRow[];
+}
+
+const { eyebrow, title, description, columns, rows } = Astro.props;
+---
+
+<section class="py-20 md:py-24" data-automation-id="section-comparison-table">
+  <Container>
+    <SectionHeader
+      eyebrow={eyebrow}
+      title={title}
+      description={description}
+      align="center"
+      size="tight"
+      class="mb-12"
+    />
+
+    <div class="lp-inview mx-auto max-w-5xl overflow-x-auto">
+      <table class="w-full border-collapse text-left">
+        <thead>
+          <tr>
+            <th class="w-1/3 pb-4 align-bottom text-[0.78rem] font-bold uppercase tracking-[0.16em] text-[color:var(--ganhuo-text-muted)]">
+              Compare
+            </th>
+            {columns.map((col) => (
+              <th
+                class:list={[
+                  "border-b border-[color:var(--border)] p-5 align-bottom",
+                  col.featured && "rounded-t-[var(--ganhuo-radius)] bg-base-200",
+                ]}
+              >
+                {col.logo ? (
+                  <img src={col.logo} alt={col.name} class="mb-2 h-7 w-auto" />
+                ) : (
+                  <div class:list={[
+                    "font-display text-[1.05rem] font-[560]",
+                    col.featured ? "text-primary" : "text-base-content",
+                  ]}>{col.name}</div>
+                )}
+                {col.tagline && (
+                  <div class="mt-1 text-[0.78rem] text-[color:var(--ganhuo-text-muted)]">{col.tagline}</div>
+                )}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row) => (
+            <tr class="border-b border-[color:var(--border)]">
+              <td class="py-4 align-top text-[0.95rem] font-medium text-base-content">
+                {row.feature}
+                {row.hint && (
+                  <div class="mt-1 text-[0.78rem] font-normal text-[color:var(--ganhuo-text-muted)]">{row.hint}</div>
+                )}
+              </td>
+              {row.values.map((val, idx) => {
+                const featured = columns[idx]?.featured;
+                if (typeof val === "boolean") {
+                  return (
+                    <td class:list={["p-4 align-top text-[0.95rem]", featured && "bg-base-200"]}>
+                      {val ? (
+                        <span aria-label="included" class="inline-block text-primary">
+                          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                            <path d="M3 9.5l3.5 3.5L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                          </svg>
+                        </span>
+                      ) : (
+                        <span aria-label="not included" class="inline-block text-[color:color-mix(in_srgb,var(--color-base-content)_28%,transparent)]">
+                          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                            <path d="M5 5l8 8M13 5l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+                          </svg>
+                        </span>
+                      )}
+                    </td>
+                  );
+                }
+                const txt = typeof val === "string" ? { text: val, tone: "neutral" as const } : val;
+                const toneClass =
+                  txt.tone === "good"
+                    ? "text-[color:var(--color-success)] font-semibold"
+                    : txt.tone === "bad"
+                      ? "text-[color:var(--color-error)]"
+                      : "text-base-content";
+                return (
+                  <td class:list={["p-4 align-top text-[0.95rem]", featured && "bg-base-200", toneClass]}>
+                    {txt.text}
+                  </td>
+                );
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </Container>
+</section>

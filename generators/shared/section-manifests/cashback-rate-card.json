@@ -1,0 +1,29 @@
+{
+  "id": "cashback-rate-card",
+  "component": "CashbackRateCard",
+  "category": "metrics",
+  "displayName": "Cashback rate highlight",
+  "description": "Single big-number cashback rate display. Three variants: 'band' (full-width primary band, used as a page CTA strip), 'card' (centered card, sidebar-friendly), 'split' (rate on left + description + CTA on right). Pair with StoreHero when the side card isn't enough.",
+  "industries": ["ecommerce"],
+  "pageRoles": ["landing", "store-detail", "category-detail"],
+  "props": {
+    "eyebrow": { "type": "string", "required": false },
+    "rate": { "type": "string", "required": true, "hint": "The headline rate (e.g. '5%', 'Up to $50', '6.5%')." },
+    "rateLabel": { "type": "string", "required": false, "default": "Cashback rate" },
+    "description": { "type": "string", "required": false, "hint": "1-2 sentence framing of what the rate means." },
+    "note": { "type": "string", "required": false, "hint": "Small caveat / terms." },
+    "primaryCta": { "type": "cta", "required": false, "hint": "Affiliate CTA — rel defaults to 'sponsored noopener'." },
+    "secondaryCta": { "type": "cta", "required": false },
+    "variant": { "type": "enum", "values": ["band", "card", "split"], "required": false, "default": "band" },
+    "containerSize": { "type": "enum", "values": ["default", "tight", "wide"], "required": false, "default": "default" }
+  },
+  "preview": {
+    "eyebrow": "Top offer",
+    "rate": "Up to 6%",
+    "rateLabel": "Cashback on hotel bookings",
+    "description": "Stack site-wide promo codes with our cashback on eligible hotels.",
+    "note": "Excludes refundable rates and certain partner hotels.",
+    "primaryCta": { "text": "Activate cashback", "href": "#" },
+    "variant": "band"
+  }
+}

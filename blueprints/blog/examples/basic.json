@@ -1,0 +1,56 @@
+{
+  "type": "blog",
+  "site_name": "Field Notes",
+  "domain": "fieldnotes.example",
+  "language": "en",
+  "industry": "portfolio",
+  "variant": "blog-magazine",
+  "site_description": "A small publication about design systems, AI tooling, and the craft of shipping.",
+  "about_description": "Field Notes is a quiet publication from a three-person studio.",
+  "contact_email": "hi@fieldnotes.example",
+  "nav_links": [
+    { "text": "Writing", "href": "/" },
+    { "text": "About", "href": "/about/" },
+    { "text": "Contact", "href": "/contact/" }
+  ],
+  "team": [
+    { "name": "Maya Chen", "role": "Editor", "bio": "Ex-IDEO. Likes serif fonts and short emails." },
+    { "name": "Diego Reyes", "role": "Engineer", "bio": "Builds the boring things." },
+    { "name": "Priya Anand", "role": "Operations" }
+  ],
+  "posts": [
+    {
+      "slug": "16-section-component-library",
+      "title": "How we shipped a 16-section component library in one afternoon",
+      "excerpt": "Three principles for letting AI assemble production sites without DEMO-feel.",
+      "category": "Build notes",
+      "tags": ["astro", "ai", "design-systems"],
+      "date": "May 22, 2026",
+      "readingTime": "5 min read",
+      "author": { "name": "Maya Chen", "role": "Editor" },
+      "contentHtml": "<p>The trick wasn't the components — it was the manifest layer. By giving each section a JSON description with props, slot hints, and industry tags, the AI could pick the right one without us hardcoding flows.</p><h2>Three principles</h2><p>First: structure beats prompting. The agent doesn't invent a hero — it picks one of two pre-built variants. Second: separate visual decisions from content decisions. The theme tokens handle the first; the prompt handles the second. Third: every section gets a real Astro component with real props, not an HTML string.</p>"
+    },
+    {
+      "slug": "industry-theme-tokens",
+      "title": "Industry theme tokens vs custom design tokens",
+      "excerpt": "When to lean on DaisyUI's variable system and when to roll your own.",
+      "category": "Design systems",
+      "tags": ["design-tokens", "tailwind"],
+      "date": "May 12, 2026",
+      "readingTime": "8 min read",
+      "author": { "name": "Diego Reyes", "role": "Engineer" },
+      "contentHtml": "<p>DaisyUI's <code>--color-primary</code> + <code>--color-base-100</code> system covers ~80% of what you need. The remaining 20% is where bespoke token systems earn their keep.</p>"
+    },
+    {
+      "slug": "static-sites-alive",
+      "title": "Static sites that feel alive (without JS)",
+      "excerpt": "Pure CSS interactions cover more ground than you think.",
+      "category": "Engineering",
+      "tags": ["css", "static-sites"],
+      "date": "April 29, 2026",
+      "readingTime": "6 min read",
+      "author": { "name": "Priya Anand", "role": "Operations" },
+      "contentHtml": "<p>Native <code>&lt;details&gt;</code> handles accordions. <code>:checked</code> + sibling selectors handle tabs. <code>&lt;dialog&gt;</code> handles modals via a checkbox toggle. The list goes on.</p>"
+    }
+  ]
+}

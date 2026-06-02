@@ -1,0 +1,62 @@
+---
+import Container from "../atoms/Container.astro";
+import Button from "../atoms/Button.astro";
+import Eyebrow from "../atoms/Eyebrow.astro";
+
+interface Props {
+  brand?: string;
+  title: string;
+  subtitle?: string;
+  primaryCta: { text: string; href: string };
+  secondaryCta?: { text: string; href: string };
+}
+
+const { brand, title, subtitle, primaryCta, secondaryCta } = Astro.props;
+---
+
+<section
+  class="py-28 text-center md:py-40"
+  data-automation-id="section-hero-centered"
+>
+  <Container size="tight">
+    {brand && (
+      <span class="lp-reveal" style="--lp-d:.05s">
+        <Eyebrow align="center" variant="bracket">{brand}</Eyebrow>
+      </span>
+    )}
+    <h1
+      class="lp-reveal mx-auto mt-7 max-w-3xl font-display text-[clamp(2.4rem,7.5vw,5rem)] font-[540] leading-[1.05] tracking-[-0.032em] text-base-content"
+      style="--lp-d:.12s"
+    >
+      {title}
+    </h1>
+    {subtitle && (
+      <p
+        class="lp-reveal mx-auto mt-6 max-w-xl text-[clamp(1.08rem,1.5vw,1.3rem)] leading-[1.66] text-[color:var(--ganhuo-text-muted)]"
+        style="--lp-d:.2s"
+      >
+        {subtitle}
+      </p>
+    )}
+    <div class="lp-reveal mt-9 flex flex-wrap justify-center gap-3" style="--lp-d:.28s">
+      <Button variant="ink" href={primaryCta.href} automationId="hero-cta-primary">
+        {primaryCta.text}
+      </Button>
+      {secondaryCta && (
+        <Button variant="line" href={secondaryCta.href} automationId="hero-cta-secondary">
+          {secondaryCta.text}
+        </Button>
+      )}
+    </div>
+  </Container>
+</section>
+
+<style>
+  .lp-reveal {
+    animation: lp-rise 0.85s cubic-bezier(0.2, 0.65, 0.25, 1) both;
+    animation-delay: var(--lp-d, 0s);
+  }
+  @media print {
+    .lp-reveal { animation: none !important; opacity: 1 !important; transform: none !important; }
+  }
+</style>

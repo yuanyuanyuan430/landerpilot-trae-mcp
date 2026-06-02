@@ -1,0 +1,7 @@
+{
+  "type": "cashback",
+  "site_name": "CashPanda",
+  "domain": "cashpanda.com",
+  "language": "en",
+  "raw_text": "Amazon official https://www.amazon.com affiliate https://example.go/amazon\nCashback rate: 3%\nCoupon count: 4\nDeal: 3% cashback on eligible categories; terms vary by department.\nBooking.com official https://www.booking.com affiliate https://example.go/booking\nCashback rate: Up to 6%\nCoupon count: 3\nDeal: Up to 6% cashback on eligible hotel bookings.\nNike official https://www.nike.com affiliate https://example.go/nike\nCashback rate: 5%\nCoupon count: 2\nDeal: 5% cashback on selected full-price items.\nWalmart official https://www.walmart.com affiliate https://example.go/walmart\nCashback rate: 2%\nCoupon count: 5\nDeal: 2% cashback on eligible online orders.\nCategory: Featured"
+}

@@ -1,0 +1,5 @@
+node_modules/
+npm-debug.log*
+*.tgz
+.trae/mcp.json
+.DS_Store

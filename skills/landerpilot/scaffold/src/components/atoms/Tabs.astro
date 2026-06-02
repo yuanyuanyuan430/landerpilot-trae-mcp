@@ -1,0 +1,135 @@
+---
+/**
+ * CSS-only tabs using radio inputs + :checked sibling selector. Zero JS.
+ * Pass each panel as an HTML string in `items[].content` — caller has full
+ * control over markup. For trusted templates only (content is rendered with
+ * set:html).
+ */
+interface TabItem {
+  id: string;
+  label: string;
+  content: string;
+}
+
+interface Props {
+  name?: string;
+  items: TabItem[];
+  defaultId?: string;
+  variant?: "underline" | "boxed" | "pill";
+  class?: string;
+}
+
+const { name = `tabs-${Math.random().toString(36).slice(2, 8)}`, items, defaultId, variant = "underline", class: extra = "" } = Astro.props;
+
+const activeId = defaultId ?? items[0]?.id;
+
+const labelBase = "cursor-pointer select-none font-medium text-[0.93rem] transition-colors duration-150";
+const labelVariant = {
+  underline: "px-1 pb-3 border-b-2 border-transparent text-[color:var(--ganhuo-text-muted)] hover:text-base-content",
+  boxed: "px-4 py-2 border border-[color:var(--border)] -mb-px rounded-t-[var(--ganhuo-radius)] bg-base-200 text-[color:var(--ganhuo-text-muted)]",
+  pill: "px-4 py-2 rounded-full text-[color:var(--ganhuo-text-muted)] hover:bg-base-200",
+}[variant];
+
+const tabsListClass = {
+  underline: "flex flex-wrap gap-6 border-b border-[color:var(--border)]",
+  boxed: "flex flex-wrap border-b border-[color:var(--border)]",
+  pill: "inline-flex flex-wrap items-center gap-1 rounded-full bg-base-200 p-1",
+}[variant];
+---
+
+<div class:list={["lp-tabs", `lp-tabs--${variant}`, extra]} role="tablist" data-tabs-name={name}>
+  {items.map((item) => (
+    <input
+      type="radio"
+      name={name}
+      id={`${name}-${item.id}`}
+      class="lp-tabs-input sr-only"
+      checked={item.id === activeId}
+      aria-controls={`${name}-panel-${item.id}`}
+    />
+  ))}
+
+  <div class:list={[tabsListClass]}>
+    {items.map((item) => (
+      <label
+        for={`${name}-${item.id}`}
+        class:list={[labelBase, labelVariant, "lp-tabs-label"]}
+        data-tab-id={item.id}
+        role="tab"
+      >
+        {item.label}
+      </label>
+    ))}
+  </div>
+
+  <div class="lp-tabs-panels mt-6">
+    {items.map((item) => (
+      <div
+        id={`${name}-panel-${item.id}`}
+        class="lp-tabs-panel hidden"
+        data-panel-for={item.id}
+        role="tabpanel"
+        set:html={item.content}
+      />
+    ))}
+  </div>
+</div>
+
+<style>
+  .lp-tabs-input { position: absolute; left: -9999px; }
+
+  /* underline variant active state */
+  .lp-tabs--underline .lp-tabs-input:checked + div > label[data-tab-id] {
+    /* no-op: we use a JS-free pattern via ~ selector below */
+  }
+
+  /* Reveal the panel that matches the checked radio */
+  .lp-tabs-input:nth-of-type(1):checked ~ .lp-tabs-panels .lp-tabs-panel:nth-of-type(1) { display: block; }
+  .lp-tabs-input:nth-of-type(2):checked ~ .lp-tabs-panels .lp-tabs-panel:nth-of-type(2) { display: block; }
+  .lp-tabs-input:nth-of-type(3):checked ~ .lp-tabs-panels .lp-tabs-panel:nth-of-type(3) { display: block; }
+  .lp-tabs-input:nth-of-type(4):checked ~ .lp-tabs-panels .lp-tabs-panel:nth-of-type(4) { display: block; }
+  .lp-tabs-input:nth-of-type(5):checked ~ .lp-tabs-panels .lp-tabs-panel:nth-of-type(5) { display: block; }
+  .lp-tabs-input:nth-of-type(6):checked ~ .lp-tabs-panels .lp-tabs-panel:nth-of-type(6) { display: block; }
+
+  /* Active label styling per variant */
+  .lp-tabs-input:nth-of-type(1):checked ~ div > label:nth-of-type(1),
+  .lp-tabs-input:nth-of-type(2):checked ~ div > label:nth-of-type(2),
+  .lp-tabs-input:nth-of-type(3):checked ~ div > label:nth-of-type(3),
+  .lp-tabs-input:nth-of-type(4):checked ~ div > label:nth-of-type(4),
+  .lp-tabs-input:nth-of-type(5):checked ~ div > label:nth-of-type(5),
+  .lp-tabs-input:nth-of-type(6):checked ~ div > label:nth-of-type(6) {
+    color: var(--color-base-content);
+  }
+
+  .lp-tabs--underline .lp-tabs-input:nth-of-type(1):checked ~ div > label:nth-of-type(1),
+  .lp-tabs--underline .lp-tabs-input:nth-of-type(2):checked ~ div > label:nth-of-type(2),
+  .lp-tabs--underline .lp-tabs-input:nth-of-type(3):checked ~ div > label:nth-of-type(3),
+  .lp-tabs--underline .lp-tabs-input:nth-of-type(4):checked ~ div > label:nth-of-type(4),
+  .lp-tabs--underline .lp-tabs-input:nth-of-type(5):checked ~ div > label:nth-of-type(5),
+  .lp-tabs--underline .lp-tabs-input:nth-of-type(6):checked ~ div > label:nth-of-type(6) {
+    border-bottom-color: var(--color-primary);
+    color: var(--color-base-content);
+  }
+
+  .lp-tabs--pill .lp-tabs-input:nth-of-type(1):checked ~ div > label:nth-of-type(1),
+  .lp-tabs--pill .lp-tabs-input:nth-of-type(2):checked ~ div > label:nth-of-type(2),
+  .lp-tabs--pill .lp-tabs-input:nth-of-type(3):checked ~ div > label:nth-of-type(3),
+  .lp-tabs--pill .lp-tabs-input:nth-of-type(4):checked ~ div > label:nth-of-type(4),
+  .lp-tabs--pill .lp-tabs-input:nth-of-type(5):checked ~ div > label:nth-of-type(5),
+  .lp-tabs--pill .lp-tabs-input:nth-of-type(6):checked ~ div > label:nth-of-type(6) {
+    background-color: var(--color-base-100);
+    color: var(--color-base-content);
+    box-shadow: 0 1px 2px rgba(20, 18, 15, 0.08);
+  }
+
+  .lp-tabs--boxed .lp-tabs-input:nth-of-type(1):checked ~ div > label:nth-of-type(1),
+  .lp-tabs--boxed .lp-tabs-input:nth-of-type(2):checked ~ div > label:nth-of-type(2),
+  .lp-tabs--boxed .lp-tabs-input:nth-of-type(3):checked ~ div > label:nth-of-type(3),
+  .lp-tabs--boxed .lp-tabs-input:nth-of-type(4):checked ~ div > label:nth-of-type(4),
+  .lp-tabs--boxed .lp-tabs-input:nth-of-type(5):checked ~ div > label:nth-of-type(5),
+  .lp-tabs--boxed .lp-tabs-input:nth-of-type(6):checked ~ div > label:nth-of-type(6) {
+    background-color: var(--color-base-100);
+    color: var(--color-base-content);
+    border-bottom-color: transparent;
+  }
+</style>

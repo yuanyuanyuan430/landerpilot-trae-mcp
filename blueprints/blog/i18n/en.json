@@ -1,0 +1,81 @@
+{
+  "nav": {
+    "primaryLabel": "Primary",
+    "home": "Home",
+    "blog": "Writing",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "cta": {
+    "subscribe": "Subscribe",
+    "readMore": "Read more",
+    "contactTeam": "Get in touch"
+  },
+  "sections": {
+    "blog": {
+      "kicker": "Writing",
+      "title": "From the blog",
+      "description": "Notes, essays, and field reports from the team."
+    },
+    "team": {
+      "kicker": "Who we are",
+      "title": "Meet the team",
+      "description": "The people behind the writing."
+    },
+    "contact": {
+      "kicker": "Get in touch",
+      "title": "Drop us a line",
+      "description": "Story ideas, pitches, corrections — all welcome.",
+      "submitText": "Send message",
+      "privacyNote": "We respect your privacy."
+    },
+    "newsletter": {
+      "eyebrow": "Stay in the loop",
+      "title": "Get new posts in your inbox",
+      "description": "One email when a new piece goes live. No spam.",
+      "submitText": "Subscribe",
+      "privacyNote": "Unsubscribe anytime."
+    },
+    "announcement": {
+      "linkText": "Read more"
+    }
+  },
+  "footer": {
+    "label": "Footer",
+    "writing": "Writing",
+    "company": "Company",
+    "legal": "Legal",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "rights": "All rights reserved."
+  },
+  "support": {
+    "sitePageLabel": "Page",
+    "aboutTitle": "About {{siteName}}",
+    "contactTitle": "Contact",
+    "contactDescription": "Reach the {{siteName}} team about tips, pitches, or partnerships.",
+    "privacyTitle": "Privacy Policy",
+    "privacyDescription": "Replace this draft with the customer's final privacy policy before publishing.",
+    "termsTitle": "Terms of Service",
+    "termsDescription": "Replace this draft with the customer's final terms of service before publishing."
+  },
+  "post": {
+    "by": "By",
+    "minRead": "min read",
+    "tagged": "Tagged",
+    "back": "Back to all posts",
+    "placeholderAuthor": "Author"
+  },
+  "defaults": {
+    "description": "{{siteName}} — writing, essays, and notes.",
+    "siteTagline": "Writing, essays, and notes.",
+    "indexHeroTitle": "{{siteName}}",
+    "indexHeroDescription": "Writing from the team at {{siteName}}.",
+    "aboutTitle": "About {{siteName}}",
+    "ctaTitle": "Stay in the loop with {{siteName}}",
+    "placeholderPostTitle": "Untitled post",
+    "placeholderPostExcerpt": "Replace this draft with the real post excerpt before publishing.",
+    "placeholderPostContent": "<p>Replace this placeholder content with the real post before publishing.</p>",
+    "placeholderCategory": "Notes"
+  }
+}

@@ -1,0 +1,75 @@
+---
+import Container from "../atoms/Container.astro";
+import SectionHeader from "../atoms/SectionHeader.astro";
+
+interface ProcessStep {
+  title: string;
+  description: string;
+  icon?: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  description?: string;
+  steps: ProcessStep[];
+  layout?: "horizontal" | "stacked";
+  numbered?: boolean;
+}
+
+const { eyebrow, title, description, steps, layout = "horizontal", numbered = true } = Astro.props;
+
+const isHorizontal = layout === "horizontal";
+const colClass = steps.length === 4 ? "lg:grid-cols-4" : steps.length === 3 ? "lg:grid-cols-3" : steps.length === 2 ? "lg:grid-cols-2" : "lg:grid-cols-3";
+---
+
+<section
+  class="border-y border-[color:var(--border)] bg-base-200 py-20 md:py-24"
+  id="process"
+  data-automation-id="section-process-steps"
+>
+  <Container>
+    <SectionHeader
+      eyebrow={eyebrow}
+      title={title}
+      description={description}
+      class="mb-14"
+    />
+
+    <ol class:list={["relative grid gap-8", isHorizontal ? `md:grid-cols-2 ${colClass} md:gap-6` : "md:gap-4"]}>
+      {steps.map((step, idx) => (
+        <li class:list={[
+          "lp-inview relative flex gap-5 rounded-[var(--ganhuo-radius)] border border-[color:var(--border)] bg-base-100 p-7",
+          !isHorizontal && "md:items-center",
+        ]}>
+          {numbered && (
+            <div class="shrink-0">
+              <span class="grid h-12 w-12 place-items-center rounded-full bg-primary text-primary-content font-display text-[1.15rem] font-semibold">
+                {String(idx + 1).padStart(2, "0")}
+              </span>
+            </div>
+          )}
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center gap-2">
+              {step.icon && !numbered && (
+                <span class="text-lg" aria-hidden="true">{step.icon}</span>
+              )}
+              <h3 class="font-display text-[1.15rem] font-[560] tracking-[-0.015em] text-base-content">
+                {step.title}
+              </h3>
+            </div>
+            <p class="mt-2 text-[0.93rem] leading-[1.6] text-[color:var(--ganhuo-text-muted)]">
+              {step.description}
+            </p>
+          </div>
+          {isHorizontal && idx < steps.length - 1 && (
+            <span
+              class="absolute -right-3 top-1/2 hidden h-px w-6 -translate-y-1/2 bg-[color:var(--border)] lg:block"
+              aria-hidden="true"
+            ></span>
+          )}
+        </li>
+      ))}
+    </ol>
+  </Container>
+</section>

@@ -1,0 +1,272 @@
+---
+import "../styles/global.css";
+
+// v1 sections (13)
+import HeroSplit from "../components/sections/HeroSplit.astro";
+import HeroCentered from "../components/sections/HeroCentered.astro";
+import StatsStrip from "../components/sections/StatsStrip.astro";
+import Features3Col from "../components/sections/Features3Col.astro";
+import FeaturesAlternating from "../components/sections/FeaturesAlternating.astro";
+import Pricing3Tier from "../components/sections/Pricing3Tier.astro";
+import PricingCompare from "../components/sections/PricingCompare.astro";
+import Testimonials from "../components/sections/Testimonials.astro";
+import FAQ from "../components/sections/FAQ.astro";
+import LogoCloud from "../components/sections/LogoCloud.astro";
+import CTABand from "../components/sections/CTABand.astro";
+import FooterFull from "../components/sections/FooterFull.astro";
+import FooterMinimal from "../components/sections/FooterMinimal.astro";
+
+// v2 B1 sections (16)
+import HeaderNav from "../components/sections/HeaderNav.astro";
+import AnnouncementBar from "../components/sections/AnnouncementBar.astro";
+import ContactForm from "../components/sections/ContactForm.astro";
+import NewsletterSignup from "../components/sections/NewsletterSignup.astro";
+import AboutTeam from "../components/sections/AboutTeam.astro";
+import PageHero from "../components/sections/PageHero.astro";
+import Breadcrumb from "../components/sections/Breadcrumb.astro";
+import BlogList from "../components/sections/BlogList.astro";
+import BlogPost from "../components/sections/BlogPost.astro";
+import Timeline from "../components/sections/Timeline.astro";
+import ProcessSteps from "../components/sections/ProcessSteps.astro";
+import ContentBento from "../components/sections/ContentBento.astro";
+import ImageGallery from "../components/sections/ImageGallery.astro";
+import VideoEmbed from "../components/sections/VideoEmbed.astro";
+import ComparisonTable from "../components/sections/ComparisonTable.astro";
+import NotFound from "../components/sections/NotFound.astro";
+
+// v3 B1 affiliate sections (6)
+import BrandGrid from "../components/sections/BrandGrid.astro";
+import ReviewHero from "../components/sections/ReviewHero.astro";
+import RatingBreakdown from "../components/sections/RatingBreakdown.astro";
+import ProsCons from "../components/sections/ProsCons.astro";
+import SpecsTable from "../components/sections/SpecsTable.astro";
+import AffiliateDisclosure from "../components/sections/AffiliateDisclosure.astro";
+void BrandGrid; void ReviewHero; void RatingBreakdown;
+void ProsCons; void SpecsTable; void AffiliateDisclosure;
+
+// v3 B2 cashback sections (5)
+import StoreGrid from "../components/sections/StoreGrid.astro";
+import StoreHero from "../components/sections/StoreHero.astro";
+import CouponList from "../components/sections/CouponList.astro";
+import CategoryGrid from "../components/sections/CategoryGrid.astro";
+import CashbackRateCard from "../components/sections/CashbackRateCard.astro";
+void StoreGrid; void StoreHero; void CouponList;
+void CategoryGrid; void CashbackRateCard;
+
+// v2 B1 atoms (21) — exercise compile path for the standalone-imported ones
+import Input from "../components/atoms/Input.astro";
+import Textarea from "../components/atoms/Textarea.astro";
+import Select from "../components/atoms/Select.astro";
+import Checkbox from "../components/atoms/Checkbox.astro";
+import Radio from "../components/atoms/Radio.astro";
+import Switch from "../components/atoms/Switch.astro";
+import FormField from "../components/atoms/FormField.astro";
+import Avatar from "../components/atoms/Avatar.astro";
+import Badge from "../components/atoms/Badge.astro";
+import Tag from "../components/atoms/Tag.astro";
+import Divider from "../components/atoms/Divider.astro";
+import Icon from "../components/atoms/Icon.astro";
+import Spinner from "../components/atoms/Spinner.astro";
+import Alert from "../components/atoms/Alert.astro";
+import Progress from "../components/atoms/Progress.astro";
+import Accordion from "../components/atoms/Accordion.astro";
+import Tabs from "../components/atoms/Tabs.astro";
+import Dialog from "../components/atoms/Dialog.astro";
+import Dropdown from "../components/atoms/Dropdown.astro";
+import Tooltip from "../components/atoms/Tooltip.astro";
+
+// Force atoms into the build graph (some only used inline below)
+void Textarea; void Select; void Radio; void Switch; void FormField;
+void Avatar; void Divider; void Icon; void Spinner; void Progress;
+void Tabs; void Dialog; void Dropdown;
+
+// Unused v1/v2 sections that need to stay in the build graph for smoke check
+void HeroCentered; void Features3Col; void PricingCompare; void FAQ;
+void LogoCloud; void FooterMinimal;
+void Breadcrumb; void BlogPost; void NotFound; void ImageGallery; void VideoEmbed;
+---
+
+<!doctype html>
+<html lang="en" data-theme="ganhuo-saas">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LanderPilot — Section Library</title>
+  </head>
+  <body class="min-h-screen bg-base-100 text-base-content antialiased">
+    <AnnouncementBar
+      text="New: 16 sections + 21 atoms shipped in v2 batch 1."
+      link={{ text: "See what's new", href: "#timeline" }}
+      variant="primary"
+    />
+    <HeaderNav
+      brand="LanderPilot"
+      links={[
+        { text: "Sections", href: "#features", active: true },
+        { text: "Pricing", href: "#pricing" },
+        { text: "Blog", href: "#blog" },
+        { text: "Contact", href: "#contact" },
+      ]}
+      secondaryCta={{ text: "Sign in", href: "/login" }}
+      primaryCta={{ text: "Start free", href: "/signup" }}
+      variant="sticky"
+    />
+
+    <main class="pt-[4.4rem]">
+      <HeroSplit
+        brand="LanderPilot"
+        title="The AI site builder that ships real Astro components, not screenshots."
+        subtitle="Pick a blueprint, pick an industry theme, watch the AI assemble a production site from 29 polished sections and 26 atoms."
+        primaryCta={{ text: "Start building", href: "#start" }}
+        secondaryCta={{ text: "See how it works", href: "#how" }}
+      />
+      <StatsStrip
+        stats={[
+          { value: "29", label: "Production sections" },
+          { value: "26", label: "Composable atoms" },
+          { value: "6", label: "Industry themes" },
+          { value: "0", label: "Client JS by default" },
+        ]}
+      />
+      <ProcessSteps
+        eyebrow="How it works"
+        title="From prompt to live site in three steps."
+        steps={[
+          { title: "Describe your business", description: "Tell LanderPilot what you do and who it's for." },
+          { title: "Pick a theme + sections", description: "AI assembles a draft from the section library." },
+          { title: "Preview and deploy", description: "Iterate in plain language, deploy to Cloudflare with one click." },
+        ]}
+      />
+      <ContentBento
+        eyebrow="Inside the platform"
+        title="Everything you need to ship, in one workspace."
+        tiles={[
+          { title: "Section library", description: "29 production sections covering hero, pricing, blog, forms.", icon: "▦", size: "feature" },
+          { title: "Industry themes", description: "Six presets + custom editor.", icon: "✿", size: "default", tone: "accent" },
+          { title: "AI selection", description: "Manifest-driven picking.", icon: "✦", size: "default" },
+          { title: "Cloudflare deploy", description: "Preview locally, ship to the edge in 30 seconds.", icon: "↑", size: "wide", tone: "dark", cta: { text: "Deploy docs", href: "/docs/deploy/" } },
+          { title: "Self-hosted fonts", description: "Fraunces + Hanken bundled.", icon: "Aa", size: "tall", tone: "tinted" },
+        ]}
+      />
+      <FeaturesAlternating
+        eyebrow="Capabilities"
+        title="Built for teams that ship marketing sites every week."
+        items={[
+          { index: "01", title: "Section-first composition", description: "Every page is assembled from real Astro components. Add a section, regenerate, ship." },
+          { index: "02", title: "Industry themes in one swap", description: "DaisyUI tokens drive every color so a law firm and a restaurant share components but feel different." },
+        ]}
+      />
+      <Timeline
+        eyebrow="Roadmap"
+        title="What we're building this year."
+        items={[
+          { date: "Q1 2026", title: "Section library v1", description: "13 production sections + 6 themes.", badge: "Shipped" },
+          { date: "Q2 2026", title: "Section library v2 B1", description: "16 more sections including blog, forms, team, bento.", badge: "Shipped" },
+          { date: "Q3 2026", title: "Custom theme designer", description: "Visual editor for industry palette.", badge: "In progress" },
+          { date: "Q4 2026", title: "Multi-page generator", description: "AI-designed 5-10 page sites with cross-page coherence." },
+        ]}
+      />
+      <BlogList
+        eyebrow="Latest"
+        title="From the blog."
+        posts={[
+          { title: "How we shipped a 29-section component library", excerpt: "Three principles for letting AI assemble sites.", href: "#", category: "Build notes", date: "2026-05-22", readingTime: "5 min read", author: { name: "Maya Chen" } },
+          { title: "Industry theme tokens vs custom design tokens", excerpt: "When to lean on DaisyUI variables and when to roll your own.", href: "#", category: "Design systems", date: "2026-05-12", readingTime: "8 min read", author: { name: "Diego Reyes" } },
+          { title: "Static sites that feel alive (without JS)", excerpt: "Pure CSS interactions cover more ground than you think.", href: "#", category: "Engineering", date: "2026-04-29", readingTime: "6 min read", author: { name: "Priya Anand" } },
+        ]}
+      />
+      <Pricing3Tier
+        eyebrow="Pricing"
+        title="One workspace. Every blueprint."
+        plans={[
+          { name: "Starter", price: "$0", per: "/forever", description: "Local builds, every section.", features: ["29 sections", "Local Astro builds", "Self-hosted fonts"], cta: { text: "Get started", href: "#" } },
+          { name: "Studio", price: "$19", per: "/site/mo", description: "Plus cloud deployment.", features: ["Cloudflare deploys", "Custom domains", "Industry themes", "Priority builds"], cta: { text: "Start a site", href: "#" }, featured: true, badge: "Most picked" },
+          { name: "Agency", price: "Custom", description: "For teams shipping at volume.", features: ["White-label", "SLA", "Shared workspace"], cta: { text: "Talk to us", href: "#" } },
+        ]}
+      />
+      <AboutTeam
+        eyebrow="Who we are"
+        title="The people behind the work."
+        description="Small team, opinionated about quality, allergic to filler."
+        members={[
+          { name: "Maya Chen", role: "Founder & Designer", bio: "Ex-IDEO. Likes serif fonts and short emails.", links: [{ label: "LinkedIn", href: "#", icon: "linkedin" }] },
+          { name: "Diego Reyes", role: "Engineering Lead", bio: "Builds the boring things so the product can be magical.", links: [{ label: "GitHub", href: "#", icon: "github" }] },
+          { name: "Priya Anand", role: "Operations", bio: "Keeps the wheels turning and the music on.", links: [{ label: "Email", href: "mailto:#", icon: "email" }] },
+        ]}
+      />
+      <ComparisonTable
+        eyebrow="How we compare"
+        title="What you get with LanderPilot."
+        columns={[
+          { name: "LanderPilot", featured: true },
+          { name: "Webflow" },
+          { name: "Hand-coded" },
+        ]}
+        rows={[
+          { feature: "Time to first draft", values: [{ text: "<5 min", tone: "good" }, { text: "2-4 hours", tone: "neutral" }, { text: "Days", tone: "bad" }] },
+          { feature: "Industry themes", values: [true, false, false] },
+          { feature: "Own the source", values: [true, false, true] },
+        ]}
+      />
+      <Testimonials
+        eyebrow="Field tested"
+        title="What early users said."
+        items={[
+          { quote: "We replaced our Webflow workflow for landing pages.", name: "Maya Chen", role: "Head of growth, Northwave" },
+          { quote: "Same library, six clients, six brands. Theme tokens do the heavy lifting.", name: "Diego Reyes", role: "Creative director, Foundry 22" },
+        ]}
+      />
+      <ContactForm
+        eyebrow="Get in touch"
+        title="Tell us about your project."
+        description="We typically reply within a business day."
+        fields={[
+          { name: "name", label: "Name", type: "text", required: true },
+          { name: "email", label: "Email", type: "email", required: true },
+          { name: "message", label: "Message", type: "textarea", rows: 5, required: true },
+        ]}
+        layout="split"
+        splitContent={{ items: [
+          { label: "Email", value: "hi@example.com" },
+          { label: "Office", value: "Hong Kong — Central" },
+        ]}}
+      />
+      <NewsletterSignup
+        eyebrow="Stay in the loop"
+        title="Get section drops in your inbox."
+        description="One email when we ship new sections, themes, or blueprint updates."
+        variant="band"
+      />
+
+      <!-- Smoke usage for remaining atoms so they enter the build graph -->
+      <section class="py-12 px-6 max-w-3xl mx-auto grid gap-4">
+        <h2 class="font-display text-2xl font-[560]">Atoms compile check</h2>
+        <div class="flex flex-wrap gap-2">
+          <Badge variant="primary">Primary</Badge>
+          <Badge variant="ghost">Ghost</Badge>
+          <Tag>Astro</Tag>
+          <Tag href="#">Linked tag</Tag>
+        </div>
+        <Alert variant="info" title="Heads up">This is an info alert smoke test.</Alert>
+        <Accordion summary="Click to expand">Inside content.</Accordion>
+        <Tooltip text="Saved to draft"><button class="underline">Hover me</button></Tooltip>
+        <Input type="email" placeholder="you@example.com" />
+      </section>
+
+      <CTABand
+        title="Ready to ship the next one?"
+        description="Open the LanderPilot skill and describe the site you want."
+        cta={{ text: "Open LanderPilot", href: "#" }}
+      />
+      <FooterFull
+        brand="LanderPilot"
+        tagline="The AI site builder that ships real Astro components."
+        groups={[
+          { heading: "Product", links: [{ text: "Sections", href: "#" }, { text: "Pricing", href: "#" }] },
+          { heading: "Company", links: [{ text: "About", href: "#" }, { text: "Contact", href: "#" }] },
+          { heading: "Legal", links: [{ text: "Privacy", href: "#" }, { text: "Terms", href: "#" }] },
+        ]}
+      />
+    </main>
+  </body>
+</html>

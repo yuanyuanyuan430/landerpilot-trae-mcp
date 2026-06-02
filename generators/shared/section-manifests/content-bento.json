@@ -1,0 +1,82 @@
+{
+  "id": "content-bento",
+  "component": "ContentBento",
+  "category": "features",
+  "displayName": "Bento grid",
+  "description": "Modern asymmetric grid of feature tiles with varying sizes. 2024-2026 popular layout. Strongest when you have 5-8 features with mixed prominence (some warrant a bigger tile). Skip if all features feel equal — use Features3Col instead.",
+  "industries": [
+    "saas",
+    "studio",
+    "ecommerce",
+    "agency"
+  ],
+  "pageRoles": [
+    "landing",
+    "product"
+  ],
+  "props": {
+    "eyebrow": {
+      "type": "string",
+      "required": false
+    },
+    "title": {
+      "type": "string",
+      "required": true,
+      "hint": "5-10 words."
+    },
+    "description": {
+      "type": "string",
+      "required": false
+    },
+    "tiles": {
+      "type": "array<BentoTile>",
+      "required": true,
+      "hint": "5-9 tiles. Each: { title, description?, icon?, image?: { src, alt? }, cta?, size? (default/wide/tall/feature), tone? (default/tinted/accent/dark) }. Mix sizes for visual rhythm — typically 1 'feature' tile, 1-2 'tall' or 'wide', rest 'default'. Total column units should add up cleanly (6-column grid)."
+    }
+  },
+  "preview": {
+    "eyebrow": "Inside the platform",
+    "title": "Everything you need to ship a site, in one workspace.",
+    "tiles": [
+      {
+        "title": "Section library",
+        "description": "29 production sections covering hero, pricing, blog, forms, and more.",
+        "icon": "▦",
+        "size": "feature",
+        "tone": "default"
+      },
+      {
+        "title": "Industry themes",
+        "description": "Six presets + custom token editor.",
+        "icon": "✿",
+        "size": "default",
+        "tone": "accent"
+      },
+      {
+        "title": "AI section selection",
+        "description": "Manifest-driven picking, not template stuffing.",
+        "icon": "✦",
+        "size": "default",
+        "tone": "default"
+      },
+      {
+        "title": "One-click Cloudflare deploy",
+        "description": "Preview locally, ship to the edge in under 30 seconds.",
+        "icon": "↑",
+        "size": "wide",
+        "tone": "dark",
+        "cta": {
+          "text": "See deploy docs",
+          "href": "/docs/deploy/"
+        }
+      },
+      {
+        "title": "Self-hosted fonts",
+        "description": "Fraunces + Hanken bundled, no Google Fonts CDN.",
+        "icon": "Aa",
+        "size": "tall",
+        "tone": "tinted"
+      }
+    ]
+  }
+}

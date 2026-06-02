@@ -1,0 +1,92 @@
+{
+  "nav": {
+    "primaryAria": "Primary",
+    "browseStores": "Browse Stores"
+  },
+  "landing": {
+    "partnerStores": "Partner Stores",
+    "dealNotes": "Deal Notes",
+    "popularStores": "Popular Stores",
+    "browseByCategory": "Browse by Category",
+    "allCategories": "All Categories",
+    "viewAllStores": "View All {count} Stores"
+  },
+  "trust": {
+    "staticTitle": "Static",
+    "staticSuffix": "directory",
+    "externalTitle": "External",
+    "externalSuffix": "terms checked",
+    "cashbackTitle": "Cashback",
+    "cashbackSuffix": "summaries",
+    "affiliateTitle": "Affiliate",
+    "affiliateSuffix": "disclosure"
+  },
+  "steps": {
+    "heading": "How It Works",
+    "findStore": "Find a Store",
+    "shopSave": "Shop & Save",
+    "shopSaveDescription": "Open the store page to review current cashback, coupons, and eligibility terms.",
+    "confirmTerms": "Confirm Terms",
+    "confirmTermsDescription": "Before shopping, confirm final price, cashback rate, and coupon restrictions on the destination site."
+  },
+  "cta": {
+    "browseAllStores": "Browse All Stores",
+    "browseCategories": "Browse Categories",
+    "compareOffers": "Compare Current Offers",
+    "termsNote": "terms verified before purchase"
+  },
+  "units": {
+    "stores": "stores",
+    "dealNotes": "deal notes"
+  },
+  "footer": {
+    "about": "About",
+    "contact": "Contact",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "disclosure": "Affiliate Disclosure",
+    "aboutShort": "About",
+    "contactShort": "Contact",
+    "privacyShort": "Privacy",
+    "termsShort": "Terms",
+    "disclosureShort": "Disclosure",
+    "rights": "All rights reserved.",
+    "disclosureText": "may earn a commission when you shop through page links. This does not affect the price you pay. Cashback rates are subject to change without notice.",
+    "directoryNote": "A production cashback and coupon directory template. Review legal and partner copy before publishing."
+  },
+  "directory": {
+    "eyebrow": "Savings directory",
+    "allStoresTitle": "All Stores",
+    "allStoresDescription": "Browse every cashback store and offer.",
+    "allCategoriesTitle": "All Categories",
+    "allCategoriesDescription": "Find cashback stores by category."
+  },
+  "store": {
+    "couponsDeals": "Coupons & Deals",
+    "cashback": "Cash Back",
+    "finalTermsNote": "Final terms appear on the destination site",
+    "viewOffer": "View {rate} Offer",
+    "sidebarCashback": "Cash Back at {brand}",
+    "visitStore": "Visit Store",
+    "similarStores": "Similar Stores",
+    "noSimilarStores": "No similar stores yet.",
+    "viewDeal": "View Deal"
+  },
+  "coupons": {
+    "expires": "Expires",
+    "view": "View",
+    "dealBadge": "DEAL",
+    "codeBadge": "CODE",
+    "verifyTerms": "Verify final terms on the destination site."
+  },
+  "support": {
+    "aboutTitle": "About",
+    "contactTitle": "Contact",
+    "contactDescription": "Use this page for contact and partnership details.",
+    "privacyTitle": "Privacy Policy",
+    "privacyDescription": "Review this page with legal or compliance and replace it with the final privacy policy before publishing.",
+    "termsTitle": "Terms of Service",
+    "termsDescription": "Review this page with legal or compliance and replace it with the final terms of service before publishing.",
+    "disclosureTitle": "Affiliate Disclosure"
+  }
+}

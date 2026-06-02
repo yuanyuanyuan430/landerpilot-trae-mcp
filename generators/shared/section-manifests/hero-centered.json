@@ -1,0 +1,58 @@
+{
+  "id": "hero-centered",
+  "component": "HeroCentered",
+  "category": "hero",
+  "displayName": "Centered hero",
+  "description": "Single-column centered hero. Strongest when the page is editorial / minimal — no product visual to anchor, the headline is the visual.",
+  "industries": [
+    "restaurant",
+    "law-firm",
+    "portfolio",
+    "studio",
+    "personal"
+  ],
+  "notSuitableFor": [
+    "ecommerce"
+  ],
+  "pageRoles": [
+    "landing",
+    "about",
+    "404"
+  ],
+  "props": {
+    "brand": {
+      "type": "string",
+      "required": false,
+      "hint": "Eyebrow above the headline (uses bracket-style decorators). 1-3 words."
+    },
+    "title": {
+      "type": "string",
+      "required": true,
+      "hint": "5-10 words. Long enough to fill the centered display setting (clamp scales to 5rem on wide screens). Editorial tone — declarative, not salesy."
+    },
+    "subtitle": {
+      "type": "string",
+      "required": false,
+      "hint": "One sentence, 12-22 words. Sets context for who this is for."
+    },
+    "primaryCta": {
+      "type": "cta",
+      "required": true,
+      "hint": "Single action. 1-3 words, verb-first."
+    },
+    "secondaryCta": {
+      "type": "cta",
+      "required": false,
+      "hint": "Use sparingly — centered hero loses focus with two equal-weight CTAs."
+    }
+  },
+  "preview": {
+    "brand": "Studio Hara",
+    "title": "Quiet brands that age well.",
+    "subtitle": "Identity and editorial design for founders who'd rather be remembered than recognized.",
+    "primaryCta": {
+      "text": "View work",
+      "href": "#work"
+    }
+  }
+}

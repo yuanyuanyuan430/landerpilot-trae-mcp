@@ -1,0 +1,66 @@
+---
+import Container from "../atoms/Container.astro";
+
+interface SpecRow {
+  label: string;
+  value: string;
+  hint?: string;
+}
+
+interface Props {
+  title?: string;
+  description?: string;
+  specs: SpecRow[];
+  layout?: "stacked" | "grid";
+  containerSize?: "default" | "tight";
+}
+
+const { title, description, specs, layout = "stacked", containerSize = "tight" } = Astro.props;
+---
+
+<section class="py-10 md:py-12" data-automation-id="section-specs-table">
+  <Container size={containerSize}>
+    {title && (
+      <div class="mb-6">
+        <h2 class="font-display text-[1.4rem] font-[560] tracking-[-0.018em] text-base-content">{title}</h2>
+        {description && (
+          <p class="mt-2 text-[0.95rem] leading-[1.55] text-[color:var(--ganhuo-text-muted)]">{description}</p>
+        )}
+      </div>
+    )}
+    {layout === "grid" ? (
+      <dl class="grid gap-x-6 gap-y-4 rounded-[var(--ganhuo-radius)] border border-[color:var(--border)] bg-base-100 p-6 shadow-sm sm:grid-cols-2 md:grid-cols-3">
+        {specs.map((spec) => (
+          <div class="border-b border-[color:var(--border)] pb-3 last:border-b-0">
+            <dt class="text-[0.78rem] font-bold uppercase tracking-[0.14em] text-[color:var(--ganhuo-text-muted)]">
+              {spec.label}
+            </dt>
+            <dd class="mt-1 font-display text-[1.02rem] font-[560] text-base-content">{spec.value}</dd>
+            {spec.hint && (
+              <p class="mt-1 text-[0.78rem] text-[color:var(--ganhuo-text-muted)]">{spec.hint}</p>
+            )}
+          </div>
+        ))}
+      </dl>
+    ) : (
+      <dl class="overflow-hidden rounded-[var(--ganhuo-radius)] border border-[color:var(--border)] bg-base-100 shadow-sm">
+        {specs.map((spec, idx) => (
+          <div
+            class:list={[
+              "grid grid-cols-[1fr_1.5fr] gap-4 px-5 py-3.5 sm:grid-cols-[200px_1fr]",
+              idx < specs.length - 1 && "border-b border-[color:var(--border)]",
+            ]}
+          >
+            <dt class="text-[0.85rem] font-medium text-[color:var(--ganhuo-text-muted)]">
+              {spec.label}
+              {spec.hint && (
+                <span class="ml-1.5 text-[0.72rem] opacity-70">({spec.hint})</span>
+              )}
+            </dt>
+            <dd class="text-[0.92rem] font-medium text-base-content">{spec.value}</dd>
+          </div>
+        ))}
+      </dl>
+    )}
+  </Container>
+</section>

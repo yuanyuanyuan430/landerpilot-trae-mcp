@@ -1,0 +1,25 @@
+{
+  "type": "corporate",
+  "site_name": "NexaFlow",
+  "domain": "nexaflow.ai",
+  "language": "en",
+  "site_description": "AI workflow automation platform for operations teams.",
+  "hero_title": "Automate every operations workflow with AI",
+  "hero_description": "NexaFlow connects CRM, support, finance, and data tools into one automated command center.",
+  "hero_cta_text": "Book a Demo",
+  "hero_cta_url": "https://www.nexaflow.ai/demo",
+  "features": [
+    {
+      "title": "Approval routing",
+      "description": "Route approvals across teams with clear owners and audit-ready history."
+    },
+    {
+      "title": "Lead enrichment",
+      "description": "Enrich incoming leads and send prioritized work to the right team."
+    },
+    {
+      "title": "Reporting automation",
+      "description": "Turn recurring reporting workflows into repeatable operations."
+    }
+  ]
+}

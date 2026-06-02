@@ -1,0 +1,104 @@
+---
+import Container from "../atoms/Container.astro";
+import Eyebrow from "../atoms/Eyebrow.astro";
+
+interface BreadcrumbCrumb {
+  text: string;
+  href?: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  description?: string;
+  align?: "start" | "center";
+  size?: "default" | "compact" | "tall";
+  breadcrumbs?: BreadcrumbCrumb[];
+  background?: "default" | "tinted" | "gradient";
+}
+
+const {
+  eyebrow,
+  title,
+  description,
+  align = "start",
+  size = "default",
+  breadcrumbs,
+  background = "default",
+} = Astro.props;
+
+const sizeClass = {
+  compact: "py-16 md:py-20",
+  default: "py-24 md:py-32",
+  tall: "py-32 md:py-44",
+}[size];
+
+const bgClass = {
+  default: "bg-base-100",
+  tinted: "bg-base-200",
+  gradient: "lp-pagehero-gradient",
+}[background];
+---
+
+<section
+  class:list={[bgClass, sizeClass, "relative border-b border-[color:var(--border)]"]}
+  data-automation-id="section-page-hero"
+>
+  <Container size="tight">
+    {breadcrumbs && breadcrumbs.length > 0 && (
+      <nav aria-label="Breadcrumb" class:list={["mb-6", align === "center" && "flex justify-center"]}>
+        <ol class="flex flex-wrap items-center gap-1.5 text-[0.82rem] text-[color:var(--ganhuo-text-muted)]">
+          {breadcrumbs.map((crumb, idx) => (
+            <li class="flex items-center gap-1.5">
+              {idx > 0 && (
+                <span aria-hidden="true" class="text-[0.65rem]">/</span>
+              )}
+              {crumb.href ? (
+                <a href={crumb.href} class="transition hover:text-base-content">{crumb.text}</a>
+              ) : (
+                <span class="text-base-content">{crumb.text}</span>
+              )}
+            </li>
+          ))}
+        </ol>
+      </nav>
+    )}
+
+    <div class:list={[align === "center" && "text-center"]}>
+      {eyebrow && (
+        <Eyebrow align={align === "center" ? "center" : "start"}>{eyebrow}</Eyebrow>
+      )}
+      <h1
+        class:list={[
+          "mt-5 font-display font-[560] tracking-[-0.028em] text-base-content",
+          size === "compact"
+            ? "text-[clamp(2rem,4vw,3rem)] leading-[1.1]"
+            : "text-[clamp(2.5rem,6vw,4rem)] leading-[1.05]",
+          align === "center" && "mx-auto max-w-3xl",
+        ]}
+      >
+        {title}
+      </h1>
+      {description && (
+        <p
+          class:list={[
+            "mt-5 text-[clamp(1.05rem,1.35vw,1.24rem)] leading-[1.65] text-[color:var(--ganhuo-text-muted)]",
+            align === "center" && "mx-auto max-w-2xl",
+          ]}
+        >
+          {description}
+        </p>
+      )}
+    </div>
+  </Container>
+</section>
+
+<style>
+  .lp-pagehero-gradient {
+    background-image: radial-gradient(
+      48rem 26rem at 80% -10%,
+      color-mix(in srgb, var(--color-primary) 14%, transparent),
+      transparent 70%
+    );
+  }
+</style>

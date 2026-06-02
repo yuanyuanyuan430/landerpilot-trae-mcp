@@ -1,0 +1,33 @@
+{
+  "id": "store-grid",
+  "component": "StoreGrid",
+  "category": "directory",
+  "displayName": "Store / merchant grid",
+  "description": "Card grid of merchants with cashback rate badges + coupon counts + dual CTAs (visit store / view detail). Three layouts: 'grid' (default cards), 'list' (dense rows for stores indexes), 'compact' (tile grid with logo + rate only — good for hero featured strips).",
+  "industries": ["ecommerce"],
+  "pageRoles": ["landing", "directory-index", "category-detail"],
+  "props": {
+    "eyebrow": { "type": "string", "required": false },
+    "title": { "type": "string", "required": false },
+    "description": { "type": "string", "required": false },
+    "stores": {
+      "type": "array<StoreEntry>",
+      "required": true,
+      "hint": "Each: { store (required), slug?, category?, logo?, shortDescription?, cashbackRate? (e.g. '5%' / 'Up to 6%'), couponCount?, dealText?, storeHref? (detail page), affiliateUrl?, visitLabel?, detailLabel? }."
+    },
+    "layout": { "type": "enum", "values": ["grid", "list", "compact"], "required": false, "default": "grid" },
+    "columns": { "type": "enum", "values": [2, 3, 4], "required": false, "default": 3 },
+    "visitLabel": { "type": "string", "required": false, "default": "Visit store" },
+    "detailLabel": { "type": "string", "required": false, "default": "View deals" },
+    "couponLabel": { "type": "string", "required": false, "default": "coupons" }
+  },
+  "preview": {
+    "eyebrow": "Featured stores",
+    "title": "Popular this week",
+    "stores": [
+      { "store": "Amazon", "category": "Marketplace", "cashbackRate": "3%", "couponCount": 4, "dealText": "3% cashback on eligible categories.", "affiliateUrl": "#", "storeHref": "/stores/amazon/" },
+      { "store": "Booking.com", "category": "Travel", "cashbackRate": "Up to 6%", "couponCount": 3, "dealText": "Up to 6% cashback on eligible hotel bookings.", "affiliateUrl": "#", "storeHref": "/stores/booking/" },
+      { "store": "Nike", "category": "Apparel", "cashbackRate": "5%", "couponCount": 2, "dealText": "5% cashback on selected full-price items.", "affiliateUrl": "#", "storeHref": "/stores/nike/" }
+    ]
+  }
+}

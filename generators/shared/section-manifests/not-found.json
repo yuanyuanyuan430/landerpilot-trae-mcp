@@ -1,0 +1,78 @@
+{
+  "id": "not-found",
+  "component": "NotFound",
+  "category": "utility",
+  "displayName": "404 page",
+  "description": "Friendly 404 page section. Big code numeral + title + description + back-home button + optional suggestion cards. Use as the only section in pages/404.astro.",
+  "industries": [
+    "all"
+  ],
+  "pageRoles": [
+    "404"
+  ],
+  "props": {
+    "code": {
+      "type": "string",
+      "required": false,
+      "default": "404",
+      "hint": "Big numeric code. Override for 500/403 etc."
+    },
+    "title": {
+      "type": "string",
+      "required": false,
+      "default": "Page not found"
+    },
+    "description": {
+      "type": "string",
+      "required": false
+    },
+    "homeHref": {
+      "type": "string",
+      "required": false,
+      "default": "/"
+    },
+    "homeText": {
+      "type": "string",
+      "required": false,
+      "default": "Back to home"
+    },
+    "searchHref": {
+      "type": "string",
+      "required": false,
+      "hint": "If your site has a search page, add the URL to render a Search button."
+    },
+    "suggestions": {
+      "type": "array<{ text, href, description? }>",
+      "required": false,
+      "hint": "2-6 suggestion cards under the main message. Curate the most likely destinations (homepage already covered) — recent blog posts, popular products, pricing."
+    }
+  },
+  "preview": {
+    "code": "404",
+    "title": "We can't find that page.",
+    "description": "The link might be old, mistyped, or the page got moved while we were polishing it.",
+    "homeText": "Back to home",
+    "suggestions": [
+      {
+        "text": "Section library",
+        "href": "/sections/",
+        "description": "Browse the 29 production sections."
+      },
+      {
+        "text": "Latest blog posts",
+        "href": "/blog/",
+        "description": "Recent writing from the team."
+      },
+      {
+        "text": "Pricing",
+        "href": "/pricing/",
+        "description": "Plans and what's included."
+      },
+      {
+        "text": "Contact us",
+        "href": "/contact/",
+        "description": "Drop us a note."
+      }
+    ]
+  }
+}

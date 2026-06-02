@@ -1,0 +1,60 @@
+{
+  "id": "faq",
+  "component": "FAQ",
+  "category": "faq",
+  "displayName": "FAQ",
+  "description": "Question/answer list. interactive: true uses <details> for accordion behavior (preferred for >5 items). interactive: false renders as a static block (better for printable / SEO-only pages with 3-4 items).",
+  "industries": [
+    "all"
+  ],
+  "pageRoles": [
+    "landing",
+    "pricing",
+    "product",
+    "contact"
+  ],
+  "props": {
+    "eyebrow": {
+      "type": "string",
+      "required": false
+    },
+    "title": {
+      "type": "string",
+      "required": true,
+      "hint": "Usually 'FAQ' or 'Common questions'. Keep short."
+    },
+    "description": {
+      "type": "string",
+      "required": false
+    },
+    "items": {
+      "type": "array<{ question: string, answer: string }>",
+      "required": true,
+      "hint": "4-8 items. Questions written in the customer's voice ('Can I cancel?', not 'Cancellation policy'). Answers 1-3 sentences. Don't use FAQ as a marketing surface — answer the real question, link out if it gets long."
+    },
+    "interactive": {
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "hint": "true uses native <details> accordion. false renders open list. Default true."
+    }
+  },
+  "preview": {
+    "eyebrow": "Common questions",
+    "title": "What people ask us.",
+    "items": [
+      {
+        "question": "Can I export the site outside LanderPilot?",
+        "answer": "Yes — every site is a real Astro project in your workspace. You own the files. Run `npm run build` anywhere."
+      },
+      {
+        "question": "Do I have to use the cloud deploy helper?",
+        "answer": "No. The deploy step is separate. You can upload the dist/ folder to any static host."
+      },
+      {
+        "question": "Can I customize the industry themes?",
+        "answer": "Yes. Each theme is a JSON file with DaisyUI variables — duplicate one, change colors, save under a new name."
+      }
+    ]
+  }
+}

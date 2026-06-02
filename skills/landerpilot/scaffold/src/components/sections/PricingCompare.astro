@@ -1,0 +1,119 @@
+---
+import Container from "../atoms/Container.astro";
+import SectionHeader from "../atoms/SectionHeader.astro";
+import Button from "../atoms/Button.astro";
+
+interface ComparePlan {
+  name: string;
+  price: string;
+  per?: string;
+  cta: { text: string; href: string };
+  featured?: boolean;
+}
+
+interface CompareRow {
+  feature: string;
+  values: Array<string | boolean>;
+}
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  description?: string;
+  plans: ComparePlan[];
+  rows: CompareRow[];
+}
+
+const { eyebrow, title, description, plans, rows } = Astro.props;
+---
+
+<section
+  class="py-20 md:py-28"
+  id="pricing"
+  data-automation-id="section-pricing-compare"
+>
+  <Container>
+    <SectionHeader
+      eyebrow={eyebrow}
+      title={title}
+      description={description}
+      align="center"
+      size="tight"
+      class="mb-12"
+    />
+    <div class="lp-inview mx-auto max-w-5xl overflow-x-auto">
+      <table class="w-full border-collapse text-left">
+        <thead>
+          <tr>
+            <th class="w-1/3 pb-4 align-bottom text-[0.78rem] font-bold uppercase tracking-[0.16em] text-[color:var(--ganhuo-text-muted)]">
+              Features
+            </th>
+            {plans.map((plan) => (
+              <th
+                class:list={[
+                  "border-b border-[color:var(--border)] p-5 align-bottom",
+                  plan.featured && "rounded-t-[var(--ganhuo-radius)] bg-base-200",
+                ]}
+              >
+                <div class="font-display text-lg font-[560] text-base-content">{plan.name}</div>
+                <div class="mt-2 font-display text-[2rem] font-[560] leading-none tracking-[-0.02em] text-base-content">
+                  {plan.price}
+                  {plan.per && (
+                    <span class="ml-1 font-sans text-[0.85rem] font-semibold text-[color:var(--ganhuo-text-muted)]">
+                      {plan.per}
+                    </span>
+                  )}
+                </div>
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row) => (
+            <tr class="border-b border-[color:var(--border)]">
+              <td class="py-4 text-[0.95rem] font-medium text-base-content">{row.feature}</td>
+              {row.values.map((val, idx) => (
+                <td
+                  class:list={[
+                    "p-4 text-[0.95rem]",
+                    plans[idx]?.featured && "bg-base-200",
+                  ]}
+                >
+                  {typeof val === "boolean" ? (
+                    val ? (
+                      <span aria-label="included" class="inline-block text-primary">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                          <path d="M3 8.5l3.5 3.5L13 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                      </span>
+                    ) : (
+                      <span aria-label="not included" class="inline-block text-[color:color-mix(in_srgb,var(--color-base-content)_28%,transparent)]">—</span>
+                    )
+                  ) : (
+                    <span class="text-base-content">{val}</span>
+                  )}
+                </td>
+              ))}
+            </tr>
+          ))}
+          <tr>
+            <td></td>
+            {plans.map((plan) => (
+              <td class:list={["p-5", plan.featured && "rounded-b-[var(--ganhuo-radius)] bg-base-200"]}>
+                <Button
+                  variant={plan.featured ? "primary" : "ghost"}
+                  href={plan.cta.href}
+                  size="sm"
+                  class="w-full"
+                  automationId={`pricing-compare-cta-${plan.name.toLowerCase().replace(/\s+/g, "-")}`}
+                >
+                  {plan.cta.text}
+                </Button>
+              </td>
+            ))}
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </Container>
+</section>

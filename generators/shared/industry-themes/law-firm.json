@@ -1,0 +1,35 @@
+{
+  "id": "law-firm",
+  "displayName": "Law Firm",
+  "description": "Deep navy + muted gold on ivory — authoritative, sober, established.",
+  "industries": ["law", "legal", "accounting", "consulting", "wealth-management"],
+  "daisyui": {
+    "primary": "#1e3a5f",
+    "primary-content": "#f8f5ee",
+    "secondary": "#c9a55c",
+    "secondary-content": "#1e1c17",
+    "accent": "#1e3a5f",
+    "accent-content": "#f8f5ee",
+    "neutral": "#15202e",
+    "neutral-content": "#f0ece2",
+    "base-100": "#fbf8f1",
+    "base-200": "#f3eee2",
+    "base-300": "#e6dfc9",
+    "base-content": "#1b2533",
+    "info": "#2563eb",
+    "info-content": "#ffffff",
+    "success": "#0f6e3a",
+    "success-content": "#ffffff",
+    "warning": "#a16207",
+    "warning-content": "#ffffff",
+    "error": "#991b1b",
+    "error-content": "#ffffff",
+    "radius-box": "4px",
+    "radius-field": "2px",
+    "radius-selector": "999px"
+  },
+  "fonts": {
+    "display": "Fraunces",
+    "sans": "Hanken Grotesk"
+  }
+}

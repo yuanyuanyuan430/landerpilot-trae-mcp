@@ -1,0 +1,52 @@
+---
+/**
+ * CSS-only accordion item built on the native <details> element. Stack multiple
+ * to form a list. For exclusive single-open behavior, pass `name` so the
+ * browser groups them as a radio set (HTML 2024 spec).
+ */
+interface Props {
+  summary: string;
+  name?: string;
+  open?: boolean;
+  variant?: "default" | "bordered" | "ghost";
+  class?: string;
+  automationId?: string;
+}
+
+const { summary, name, open, variant = "bordered", class: extra = "", automationId } = Astro.props;
+
+const variantClass = {
+  default: "py-4",
+  bordered: "border-b border-[color:var(--border)] py-5",
+  ghost: "rounded-[var(--ganhuo-radius)] bg-base-200 px-5 py-4",
+}[variant];
+---
+
+<details
+  name={name}
+  open={open}
+  data-automation-id={automationId}
+  class:list={["lp-accordion group", variantClass, extra]}
+>
+  <summary
+    class="flex cursor-pointer list-none items-center justify-between gap-6 font-display text-[1.05rem] font-[560] text-base-content"
+  >
+    <span>{summary}</span>
+    <span
+      class="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-[color:var(--border)] text-primary transition group-open:rotate-45"
+      aria-hidden="true"
+    >
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M7 2v10M2 7h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+      </svg>
+    </span>
+  </summary>
+  <div class="mt-4 text-[0.95rem] leading-[1.65] text-[color:var(--ganhuo-text-muted)]">
+    <slot />
+  </div>
+</details>
+
+<style>
+  .lp-accordion > summary { list-style: none; }
+  .lp-accordion > summary::-webkit-details-marker { display: none; }
+</style>

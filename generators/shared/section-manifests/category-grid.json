@@ -1,0 +1,32 @@
+{
+  "id": "category-grid",
+  "component": "CategoryGrid",
+  "category": "navigation",
+  "displayName": "Category grid",
+  "description": "Browse-by-category navigation. Three layouts: 'grid' (cards with icon + name + description + store count, default), 'chips' (compact pill list, good above the fold), 'tiles' (image-background tiles for visually rich categories like food / travel / fashion).",
+  "industries": ["ecommerce"],
+  "pageRoles": ["landing", "directory-index"],
+  "props": {
+    "eyebrow": { "type": "string", "required": false },
+    "title": { "type": "string", "required": false },
+    "description": { "type": "string", "required": false },
+    "categories": {
+      "type": "array<CategoryEntry>",
+      "required": true,
+      "hint": "Each: { name (required), slug?, href? (defaults to /categories/{slug}/), description?, icon? (emoji or single letter), storeCount?, image? ('tiles' variant only) }."
+    },
+    "layout": { "type": "enum", "values": ["grid", "chips", "tiles"], "required": false, "default": "grid" },
+    "columns": { "type": "enum", "values": [2, 3, 4, 5, 6], "required": false, "default": 4 },
+    "storeCountSuffix": { "type": "string", "required": false, "default": "stores" }
+  },
+  "preview": {
+    "eyebrow": "Browse",
+    "title": "Shop by category",
+    "categories": [
+      { "name": "Travel", "slug": "travel", "icon": "✈", "storeCount": 24, "description": "Hotels, flights, rentals." },
+      { "name": "Fashion", "slug": "fashion", "icon": "✂", "storeCount": 38, "description": "Apparel, shoes, accessories." },
+      { "name": "Electronics", "slug": "electronics", "icon": "⚡", "storeCount": 19, "description": "Phones, laptops, audio." },
+      { "name": "Home", "slug": "home", "icon": "▦", "storeCount": 27, "description": "Furniture, decor, kitchen." }
+    ]
+  }
+}

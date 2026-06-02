@@ -1,0 +1,33 @@
+---
+interface Props {
+  variant?: "default" | "primary" | "secondary" | "accent" | "success" | "warning" | "error" | "ghost";
+  size?: "sm" | "md";
+  class?: string;
+}
+
+const { variant = "default", size = "md", class: extra = "" } = Astro.props;
+
+const sizeClass = size === "sm" ? "h-5 px-2 text-[0.66rem]" : "h-6 px-2.5 text-[0.72rem]";
+
+const variantClass = {
+  default: "bg-base-200 text-base-content",
+  primary: "bg-primary text-primary-content",
+  secondary: "bg-secondary text-secondary-content",
+  accent: "bg-accent text-accent-content",
+  success: "bg-[color:var(--color-success)] text-[color:var(--color-success-content)]",
+  warning: "bg-[color:var(--color-warning)] text-[color:var(--color-warning-content)]",
+  error: "bg-[color:var(--color-error)] text-[color:var(--color-error-content)]",
+  ghost: "border border-[color:var(--border)] bg-transparent text-base-content",
+}[variant];
+---
+
+<span
+  class:list={[
+    "inline-flex items-center gap-1 rounded-full font-semibold uppercase tracking-[0.08em] align-middle whitespace-nowrap",
+    sizeClass,
+    variantClass,
+    extra,
+  ]}
+>
+  <slot />
+</span>

@@ -1,0 +1,38 @@
+---
+interface Props {
+  align?: "start" | "center";
+  variant?: "rule" | "bracket";
+  class?: string;
+}
+
+const { align = "start", variant = "rule", class: extraClass = "" } = Astro.props;
+---
+
+<span
+  class:list={[
+    "inline-flex items-center gap-[0.7rem] text-[0.76rem] font-bold uppercase tracking-[0.18em] text-primary",
+    align === "center" && "justify-center",
+    "lp-eyebrow",
+    `lp-eyebrow--${variant}`,
+    extraClass,
+  ]}
+>
+  <slot />
+</span>
+
+<style>
+  .lp-eyebrow::before {
+    content: "";
+    width: 1.85rem;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.6;
+  }
+  .lp-eyebrow--bracket::after {
+    content: "";
+    width: 1.6rem;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.55;
+  }
+</style>

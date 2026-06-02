@@ -1,0 +1,126 @@
+---
+import Container from "../atoms/Container.astro";
+
+interface Props {
+  eyebrow?: string;
+  brand: string;
+  title?: string;
+  verdict?: string;
+  verdictSummary?: string;
+  score?: number;
+  author?: string;
+  date?: string;
+  readingTime?: string;
+  primaryCta?: { text: string; href: string; rel?: string };
+  secondaryCta?: { text: string; href: string };
+  dealText?: string;
+}
+
+const {
+  eyebrow = "Review",
+  brand,
+  title,
+  verdict,
+  verdictSummary,
+  score,
+  author,
+  date,
+  readingTime,
+  primaryCta,
+  secondaryCta,
+  dealText,
+} = Astro.props;
+
+function scoreColor(s?: number) {
+  if (typeof s !== "number") return "var(--color-base-300)";
+  if (s >= 9) return "var(--color-success)";
+  if (s >= 7.5) return "var(--color-primary)";
+  if (s >= 6) return "var(--color-warning)";
+  return "var(--color-error)";
+}
+
+const scorePct = typeof score === "number" ? Math.round(score * 10) : 0;
+---
+
+<section class="border-b border-[color:var(--border)] bg-base-200 pb-12 pt-12 md:pb-16 md:pt-16" data-automation-id="section-review-hero">
+  <Container size="tight">
+    {eyebrow && (
+      <span class="inline-block text-[0.76rem] font-bold uppercase tracking-[0.16em] text-primary">{eyebrow}</span>
+    )}
+    <h1 class="mt-4 font-display text-[clamp(2.1rem,4.6vw,3.3rem)] font-[560] leading-[1.08] tracking-[-0.025em] text-base-content">
+      {title || `${brand} review`}
+    </h1>
+    {(author || date || readingTime) && (
+      <div class="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.85rem] text-[color:var(--ganhuo-text-muted)]">
+        {author && (
+          <span>
+            By <strong class="font-semibold text-base-content">{author}</strong>
+          </span>
+        )}
+        {date && <><span class="opacity-50" aria-hidden="true">·</span><time>{date}</time></>}
+        {readingTime && <><span class="opacity-50" aria-hidden="true">·</span><span>{readingTime}</span></>}
+      </div>
+    )}
+
+    <div class="mt-9 grid gap-7 rounded-[var(--ganhuo-radius)] border border-[color:var(--border)] bg-base-100 p-6 shadow-sm sm:grid-cols-[auto_1fr_auto] sm:items-center sm:p-8">
+      {typeof score === "number" && (
+        <div
+          class="lp-score-ring relative mx-auto grid h-[88px] w-[88px] place-items-center rounded-full font-display text-[1.7rem] font-bold text-base-content sm:mx-0"
+          style={`--score-pct:${scorePct};--score-color:${scoreColor(score)}`}
+        >
+          <span>{score.toFixed(1)}</span>
+        </div>
+      )}
+      <div class="text-center sm:text-left">
+        {verdict && (
+          <h2 class="font-display text-[1.15rem] font-[560] tracking-[-0.015em] text-base-content">{verdict}</h2>
+        )}
+        {verdictSummary && (
+          <p class="mt-1.5 text-[0.95rem] leading-[1.55] text-[color:var(--ganhuo-text-muted)]">{verdictSummary}</p>
+        )}
+      </div>
+      {primaryCta && (
+        <div class="flex flex-col items-stretch gap-2 sm:items-end">
+          {dealText && (
+            <span class="text-center text-[0.78rem] font-semibold uppercase tracking-[0.12em] text-primary sm:text-right">
+              {dealText}
+            </span>
+          )}
+          <a
+            href={primaryCta.href}
+            rel={primaryCta.rel || "sponsored noopener"}
+            class="inline-flex items-center justify-center gap-2 rounded-[var(--radius-field,8px)] bg-primary px-6 py-3 text-[0.92rem] font-semibold text-primary-content transition hover:-translate-y-0.5 hover:shadow-md"
+            data-automation-id="review-hero-primary-cta"
+          >
+            {primaryCta.text}
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </a>
+          {secondaryCta && (
+            <a href={secondaryCta.href} class="text-[0.82rem] font-medium text-[color:var(--ganhuo-text-muted)] hover:text-base-content sm:text-right">
+              {secondaryCta.text}
+            </a>
+          )}
+        </div>
+      )}
+    </div>
+  </Container>
+</section>
+
+<style>
+  .lp-score-ring {
+    background: conic-gradient(var(--score-color) calc(var(--score-pct) * 1%), var(--color-base-300) 0);
+  }
+  .lp-score-ring::before {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    border-radius: 9999px;
+    background: var(--color-base-100);
+  }
+  .lp-score-ring > span {
+    position: relative;
+    z-index: 1;
+  }
+</style>

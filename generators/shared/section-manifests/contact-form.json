@@ -1,0 +1,131 @@
+{
+  "id": "contact-form",
+  "component": "ContactForm",
+  "category": "form",
+  "displayName": "Contact form",
+  "description": "Multi-field contact form. 'centered' layout works for standalone contact pages. 'split' layout pairs the form with contact details (email, phone, address) on the left — better for B2B sites where users want context before reaching out. Set action to a Formspree/Web3Forms/Netlify URL since the form is static.",
+  "industries": [
+    "all"
+  ],
+  "pageRoles": [
+    "contact"
+  ],
+  "props": {
+    "eyebrow": {
+      "type": "string",
+      "required": false
+    },
+    "title": {
+      "type": "string",
+      "required": true,
+      "hint": "5-10 words."
+    },
+    "description": {
+      "type": "string",
+      "required": false,
+      "hint": "1 sentence framing what happens after submit."
+    },
+    "action": {
+      "type": "string",
+      "required": false,
+      "hint": "Form action URL. Empty string posts to current page (won't work without backend). Use Formspree / Web3Forms / Netlify Forms for static sites."
+    },
+    "fields": {
+      "type": "array<FormFieldConfig>",
+      "required": true,
+      "hint": "Each field: { name, label, type (text/email/tel/url/textarea/select), placeholder?, required?, options? (select only), fullWidth? (forces full-row), rows? (textarea only). Common pattern: [name, email, subject, message]."
+    },
+    "submitText": {
+      "type": "string",
+      "required": false,
+      "default": "Send message"
+    },
+    "successUrl": {
+      "type": "string",
+      "required": false,
+      "hint": "Redirect after submit (forwarded as _next field — Formspree/Web3Forms convention)."
+    },
+    "layout": {
+      "type": "enum",
+      "values": [
+        "centered",
+        "split"
+      ],
+      "required": false,
+      "default": "centered"
+    },
+    "splitContent": {
+      "type": "{ title?, description?, items?: Array<{label, value}> }",
+      "required": false,
+      "hint": "Used only when layout='split'. items render as dt/dd pairs (e.g. Email/hi@..., Office/123 Main St)."
+    }
+  },
+  "preview": {
+    "eyebrow": "Get in touch",
+    "title": "Tell us about your project.",
+    "description": "We typically reply within a business day.",
+    "fields": [
+      {
+        "name": "name",
+        "label": "Name",
+        "type": "text",
+        "placeholder": "Jane Smith",
+        "required": true
+      },
+      {
+        "name": "email",
+        "label": "Email",
+        "type": "email",
+        "placeholder": "you@company.com",
+        "required": true
+      },
+      {
+        "name": "company",
+        "label": "Company",
+        "type": "text",
+        "placeholder": "Your company"
+      },
+      {
+        "name": "topic",
+        "label": "Topic",
+        "type": "select",
+        "options": [
+          {
+            "value": "sales",
+            "label": "Sales inquiry"
+          },
+          {
+            "value": "support",
+            "label": "Support"
+          },
+          {
+            "value": "press",
+            "label": "Press"
+          }
+        ]
+      },
+      {
+        "name": "message",
+        "label": "Message",
+        "type": "textarea",
+        "placeholder": "What can we help with?",
+        "rows": 5,
+        "required": true
+      }
+    ],
+    "submitText": "Send message",
+    "layout": "split",
+    "splitContent": {
+      "items": [
+        {
+          "label": "Email",
+          "value": "hi@example.com"
+        },
+        {
+          "label": "Office",
+          "value": "Hong Kong — Central"
+        }
+      ]
+    }
+  }
+}

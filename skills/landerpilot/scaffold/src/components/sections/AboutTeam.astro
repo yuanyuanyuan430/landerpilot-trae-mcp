@@ -1,0 +1,104 @@
+---
+import Container from "../atoms/Container.astro";
+import SectionHeader from "../atoms/SectionHeader.astro";
+import Avatar from "../atoms/Avatar.astro";
+
+interface TeamMember {
+  name: string;
+  role: string;
+  bio?: string;
+  avatar?: { src?: string; alt?: string };
+  links?: Array<{ label: string; href: string; icon?: "twitter" | "linkedin" | "github" | "email" | "site" }>;
+}
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  description?: string;
+  members: TeamMember[];
+  layout?: "grid" | "compact";
+  columns?: 2 | 3 | 4;
+}
+
+const { eyebrow, title, description, members, layout = "grid", columns = 3 } = Astro.props;
+
+const colClass = {
+  2: "sm:grid-cols-2",
+  3: "sm:grid-cols-2 lg:grid-cols-3",
+  4: "sm:grid-cols-2 lg:grid-cols-4",
+}[columns];
+
+function iconPath(kind?: string) {
+  switch (kind) {
+    case "twitter":
+      return "M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z";
+    case "linkedin":
+      return "M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 2a2 2 0 11.001 4.001A2 2 0 014 2z";
+    case "github":
+      return "M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22";
+    case "email":
+      return "M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zM22 6l-10 7L2 6";
+    default:
+      return "M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71";
+  }
+}
+---
+
+<section class="py-20 md:py-24" id="team" data-automation-id="section-about-team">
+  <Container>
+    <SectionHeader
+      eyebrow={eyebrow}
+      title={title}
+      description={description}
+      class="mb-14"
+    />
+    <div class:list={["grid gap-x-8 gap-y-12", colClass]}>
+      {members.map((member) => (
+        <article
+          class:list={[
+            "lp-inview min-w-0",
+            layout === "compact" ? "flex items-start gap-4" : "",
+          ]}
+        >
+          <Avatar
+            src={member.avatar?.src}
+            alt={member.avatar?.alt}
+            name={member.name}
+            size={layout === "compact" ? "lg" : "xl"}
+            shape="circle"
+            class={layout === "compact" ? "shrink-0" : "mb-5"}
+          />
+          <div class="min-w-0">
+            <h3 class="font-display text-[1.15rem] font-[560] tracking-[-0.015em] text-base-content">
+              {member.name}
+            </h3>
+            <p class="mt-1 text-[0.85rem] font-medium text-primary">{member.role}</p>
+            {member.bio && (
+              <p class:list={[
+                "text-[0.92rem] leading-[1.6] text-[color:var(--ganhuo-text-muted)]",
+                layout === "compact" ? "mt-2" : "mt-3",
+              ]}>
+                {member.bio}
+              </p>
+            )}
+            {member.links && member.links.length > 0 && (
+              <div class="mt-4 flex flex-wrap gap-3">
+                {member.links.map((link) => (
+                  <a
+                    href={link.href}
+                    aria-label={link.label}
+                    class="grid h-9 w-9 place-items-center rounded-full border border-[color:var(--border)] text-[color:var(--ganhuo-text-muted)] transition hover:border-primary hover:text-primary"
+                  >
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d={iconPath(link.icon)} />
+                    </svg>
+                  </a>
+                ))}
+              </div>
+            )}
+          </div>
+        </article>
+      ))}
+    </div>
+  </Container>
+</section>

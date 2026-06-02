@@ -1,0 +1,154 @@
+{
+  "nav": {
+    "primaryLabel": "Primary",
+    "home": "Home",
+    "features": "Features",
+    "process": "How it works",
+    "pricing": "Pricing",
+    "integrations": "Integrations",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "cta": {
+    "getStarted": "Get Started",
+    "viewFeatures": "View Features",
+    "contactTeam": "Contact the team"
+  },
+  "sections": {
+    "features": {
+      "kicker": "Features",
+      "title": "Built for modern teams",
+      "description": "Everything you need to collaborate, ship, and grow in one platform."
+    },
+    "process": {
+      "kicker": "Process",
+      "title": "How it works",
+      "description": "A clear path from idea to launch."
+    },
+    "integrations": {
+      "kicker": "Integrations",
+      "title": "Works with your stack",
+      "description": "Connect with the tools you already use."
+    },
+    "pricing": {
+      "kicker": "Pricing",
+      "title": "Plans for every team",
+      "description": "Start free. Scale as you grow."
+    },
+    "testimonials": {
+      "kicker": "Proof",
+      "title": "What customers say",
+      "description": "Signals of trust for the people deciding whether to take the next step."
+    },
+    "team": {
+      "kicker": "Who we are",
+      "title": "Meet the team",
+      "description": "The people behind the work."
+    },
+    "contact": {
+      "kicker": "Get in touch",
+      "title": "Tell us about your project",
+      "description": "We typically reply within a business day.",
+      "submitText": "Send message",
+      "privacyNote": "We respect your privacy. No newsletter spam."
+    },
+    "announcement": {
+      "linkText": "Learn more"
+    }
+  },
+  "footer": {
+    "label": "Footer",
+    "product": "Product",
+    "company": "Company",
+    "legal": "Legal",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "rights": "All rights reserved."
+  },
+  "support": {
+    "sitePageLabel": "Site page",
+    "aboutTitle": "About {{siteName}}",
+    "contactTitle": "Contact",
+    "contactDescription": "Use the contact link below to discuss demos, pricing, or partnership details for {{siteName}}.",
+    "privacyTitle": "Privacy Policy",
+    "privacyDescription": "Replace this draft with the customer's final privacy policy before publishing.",
+    "termsTitle": "Terms of Service",
+    "termsDescription": "Replace this draft with the customer's final terms of service before publishing."
+  },
+  "media": {
+    "productScreenshot": "product screenshot"
+  },
+  "pricing": {
+    "planFallback": "Plan",
+    "periodFallback": "per month",
+    "coreFeaturesIncluded": "Core features included",
+    "popular": "Popular",
+    "choose": "Choose"
+  },
+  "process": {
+    "stepTitle": "Step {{index}}"
+  },
+  "testimonials": {
+    "customer": "Customer"
+  },
+  "defaults": {
+    "description": "{{siteName}} helps customers understand the offer and take the next step.",
+    "heroTitle": "{{siteName}} for teams that need a clearer web presence",
+    "aboutTitle": "About {{siteName}}",
+    "ctaTitle": "Ready to try {{siteName}}?",
+    "capabilityTitle": "Capability {{index}}",
+    "capabilityDescription": "A practical capability for the target customer.",
+    "capabilityPromiseDescription": "A practical capability that supports the core promise.",
+    "metricLabel": "Metric",
+    "features": [
+      {
+        "title": "Launch faster",
+        "description": "Move from positioning to a polished static site without a custom build pipeline."
+      },
+      {
+        "title": "Explain the offer",
+        "description": "Turn product notes, services, and proof points into clear buyer-facing sections."
+      },
+      {
+        "title": "Keep it editable",
+        "description": "Generated pages stay local, static, and easy to iterate inside the workspace."
+      }
+    ],
+    "stats": [
+      {
+        "value": "3x",
+        "label": "Faster launch cycles"
+      },
+      {
+        "value": "24/7",
+        "label": "Static site availability"
+      },
+      {
+        "value": "100%",
+        "label": "Local ownership"
+      }
+    ],
+    "integrations": ["CRM", "Analytics", "Support", "Docs", "Payments", "Automation"],
+    "pricingPlans": [
+      {
+        "name": "Starter",
+        "price": "$0",
+        "period": "to begin",
+        "features": ["One site", "Static pages", "Local preview"]
+      },
+      {
+        "name": "Growth",
+        "price": "$49",
+        "period": "per month",
+        "featured": true,
+        "features": ["More pages", "Theme controls", "SEO-ready output"]
+      },
+      {
+        "name": "Scale",
+        "price": "Custom",
+        "period": "for teams",
+        "features": ["Deployment", "Analytics", "Workflow support"]
+      }
+    ]
+  }
+}

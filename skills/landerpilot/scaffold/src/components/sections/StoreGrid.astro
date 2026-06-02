@@ -1,0 +1,207 @@
+---
+import Container from "../atoms/Container.astro";
+import SectionHeader from "../atoms/SectionHeader.astro";
+
+interface StoreEntry {
+  store: string;
+  slug?: string;
+  category?: string;
+  logo?: string;
+  shortDescription?: string;
+  cashbackRate?: string;
+  couponCount?: number;
+  dealText?: string;
+  storeHref?: string;
+  affiliateUrl?: string;
+  visitLabel?: string;
+  detailLabel?: string;
+  couponLabel?: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  stores: StoreEntry[];
+  layout?: "grid" | "list" | "compact";
+  columns?: 2 | 3 | 4;
+  visitLabel?: string;
+  detailLabel?: string;
+  couponLabel?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  description,
+  stores,
+  layout = "grid",
+  columns = 3,
+  visitLabel = "Visit store",
+  detailLabel = "View deals",
+  couponLabel = "coupons",
+} = Astro.props;
+
+const colClass = {
+  2: "sm:grid-cols-2",
+  3: "sm:grid-cols-2 lg:grid-cols-3",
+  4: "sm:grid-cols-2 lg:grid-cols-4",
+}[columns];
+---
+
+<section class="py-20 md:py-24" id="stores" data-automation-id="section-store-grid">
+  <Container>
+    {title && (
+      <SectionHeader
+        eyebrow={eyebrow}
+        title={title}
+        description={description}
+        class="mb-12"
+      />
+    )}
+
+    {layout === "compact" ? (
+      <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+        {stores.map((store) => (
+          <a
+            href={store.storeHref || store.affiliateUrl || "#"}
+            class="lp-inview group flex flex-col items-center gap-2 rounded-[var(--ganhuo-radius)] border border-[color:var(--border)] bg-base-100 p-4 transition hover:-translate-y-1 hover:border-[color:color-mix(in_srgb,var(--color-primary)_32%,var(--border))] hover:shadow-[0_18px_38px_-22px_rgba(20,18,15,0.3)]"
+            data-automation-id={`store-compact-${store.slug ?? store.store.toLowerCase()}`}
+          >
+            {store.logo ? (
+              <img src={store.logo} alt={store.store} class="h-10 w-10 rounded-lg object-cover" />
+            ) : (
+              <span class="grid h-10 w-10 place-items-center rounded-lg bg-base-200 font-display text-sm font-bold text-base-content/70">
+                {store.store.slice(0, 2).toUpperCase()}
+              </span>
+            )}
+            <div class="text-center">
+              <div class="truncate font-display text-[0.92rem] font-[560] text-base-content">{store.store}</div>
+              {store.cashbackRate && (
+                <div class="mt-0.5 text-[0.78rem] font-bold text-primary">{store.cashbackRate}</div>
+              )}
+            </div>
+          </a>
+        ))}
+      </div>
+    ) : layout === "list" ? (
+      <div class="grid gap-3">
+        {stores.map((store) => (
+          <article
+            class="lp-inview grid grid-cols-[auto_1fr_auto] items-center gap-4 rounded-[var(--ganhuo-radius)] border border-[color:var(--border)] bg-base-100 p-4 sm:gap-6"
+            data-automation-id={`store-row-${store.slug ?? store.store.toLowerCase()}`}
+          >
+            {store.logo ? (
+              <img src={store.logo} alt={store.store} class="h-12 w-12 shrink-0 rounded-lg object-cover" />
+            ) : (
+              <span class="grid h-12 w-12 shrink-0 place-items-center rounded-lg bg-base-200 font-display text-sm font-bold text-base-content/70">
+                {store.store.slice(0, 2).toUpperCase()}
+              </span>
+            )}
+            <div class="min-w-0">
+              <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
+                <h3 class="font-display text-[1.05rem] font-[560] tracking-[-0.015em] text-base-content">{store.store}</h3>
+                {store.cashbackRate && (
+                  <span class="rounded-full bg-[color:color-mix(in_srgb,var(--color-primary)_10%,transparent)] px-2.5 py-0.5 text-[0.78rem] font-bold text-primary">
+                    {store.cashbackRate}
+                  </span>
+                )}
+                {store.category && (
+                  <span class="text-[0.78rem] text-[color:var(--ganhuo-text-muted)]">{store.category}</span>
+                )}
+              </div>
+              {store.shortDescription && (
+                <p class="mt-1 hidden text-[0.88rem] leading-[1.5] text-[color:var(--ganhuo-text-muted)] sm:block">{store.shortDescription}</p>
+              )}
+              {typeof store.couponCount === "number" && store.couponCount > 0 && (
+                <p class="mt-1 text-[0.78rem] text-[color:var(--ganhuo-text-muted)] sm:hidden">{store.couponCount} {couponLabel}</p>
+              )}
+            </div>
+            <div class="flex shrink-0 items-center gap-2">
+              {store.storeHref && (
+                <a href={store.storeHref} class="hidden text-[0.85rem] font-semibold text-primary hover:underline underline-offset-4 sm:inline">{store.detailLabel || detailLabel}</a>
+              )}
+              {store.affiliateUrl && (
+                <a
+                  href={store.affiliateUrl}
+                  rel="sponsored noopener"
+                  class="inline-flex items-center justify-center rounded-[var(--radius-field,8px)] bg-primary px-3.5 py-2 text-[0.85rem] font-semibold text-primary-content transition hover:-translate-y-0.5"
+                >
+                  {store.visitLabel || visitLabel}
+                </a>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <div class:list={["grid gap-x-5 gap-y-6", colClass]}>
+        {stores.map((store) => (
+          <article
+            class="lp-inview group flex h-full flex-col rounded-[var(--ganhuo-radius)] border border-[color:var(--border)] bg-base-100 p-5 transition hover:-translate-y-1 hover:border-[color:color-mix(in_srgb,var(--color-primary)_32%,var(--border))] hover:shadow-[0_18px_38px_-22px_rgba(20,18,15,0.3)]"
+            data-automation-id={`store-card-${store.slug ?? store.store.toLowerCase()}`}
+          >
+            <header class="flex items-start justify-between gap-3">
+              <div class="flex items-center gap-3 min-w-0">
+                {store.logo ? (
+                  <img src={store.logo} alt={store.store} class="h-11 w-11 shrink-0 rounded-lg object-cover" />
+                ) : (
+                  <span class="grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-base-200 font-display text-sm font-bold text-base-content/70">
+                    {store.store.slice(0, 2).toUpperCase()}
+                  </span>
+                )}
+                <div class="min-w-0">
+                  <h3 class="truncate font-display text-[1.05rem] font-[560] tracking-[-0.015em] text-base-content">{store.store}</h3>
+                  {store.category && (
+                    <span class="text-[0.78rem] font-medium text-[color:var(--ganhuo-text-muted)]">{store.category}</span>
+                  )}
+                </div>
+              </div>
+              {store.cashbackRate && (
+                <div class="shrink-0 rounded-[var(--radius-field,8px)] bg-[color:color-mix(in_srgb,var(--color-primary)_10%,transparent)] px-3 py-1.5 text-right">
+                  <div class="font-display text-[1.05rem] font-bold leading-none text-primary">{store.cashbackRate}</div>
+                  <div class="mt-0.5 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-[color:var(--ganhuo-text-muted)]">cashback</div>
+                </div>
+              )}
+            </header>
+            {(store.dealText || store.shortDescription) && (
+              <p class="mt-4 text-[0.92rem] leading-[1.55] text-[color:var(--ganhuo-text-muted)]">
+                {store.dealText || store.shortDescription}
+              </p>
+            )}
+            {typeof store.couponCount === "number" && store.couponCount > 0 && (
+              <div class="mt-3 inline-flex items-center gap-1.5 text-[0.82rem] font-medium text-base-content">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M3 5h10v6H3z M3 8h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+                </svg>
+                <span>{store.couponCount} {store.couponLabel || couponLabel}</span>
+              </div>
+            )}
+            <div class="mt-auto flex flex-wrap items-center gap-2 pt-5">
+              {store.affiliateUrl && (
+                <a
+                  href={store.affiliateUrl}
+                  rel="sponsored noopener"
+                  class="inline-flex flex-1 items-center justify-center gap-1 rounded-[var(--radius-field,8px)] bg-primary px-4 py-2.5 text-[0.88rem] font-semibold text-primary-content transition hover:-translate-y-0.5"
+                >
+                  {store.visitLabel || visitLabel}
+                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+                    <path d="M3 6.5h7m0 0L6.5 3m3.5 3.5L6.5 10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </a>
+              )}
+              {store.storeHref && (
+                <a
+                  href={store.storeHref}
+                  class="inline-flex items-center justify-center rounded-[var(--radius-field,8px)] border border-[color:var(--border)] px-4 py-2.5 text-[0.85rem] font-semibold text-base-content transition hover:border-primary hover:text-primary"
+                >
+                  {store.detailLabel || detailLabel}
+                </a>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+    )}
+  </Container>
+</section>

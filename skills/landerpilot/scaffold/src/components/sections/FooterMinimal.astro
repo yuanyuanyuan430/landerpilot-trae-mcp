@@ -1,0 +1,47 @@
+---
+import Container from "../atoms/Container.astro";
+
+interface FooterLink {
+  text: string;
+  href: string;
+}
+
+interface Props {
+  brand: string;
+  links?: FooterLink[];
+  year?: number;
+  rights?: string;
+}
+
+const {
+  brand,
+  links = [],
+  year = new Date().getFullYear(),
+  rights = "All rights reserved.",
+} = Astro.props;
+---
+
+<footer
+  class="border-t border-[color:var(--border)] py-10"
+  data-automation-id="section-footer-minimal"
+>
+  <Container>
+    <div
+      class="flex flex-wrap items-center justify-between gap-5 text-sm text-[color:var(--ganhuo-text-muted)]"
+    >
+      <div>&copy; {year} {brand}. {rights}</div>
+      {links.length > 0 && (
+        <nav class="flex flex-wrap gap-6" aria-label="Footer">
+          {links.map((link) => (
+            <a
+              href={link.href}
+              class="text-[color:var(--ganhuo-text-muted)] transition hover:text-base-content"
+            >
+              {link.text}
+            </a>
+          ))}
+        </nav>
+      )}
+    </div>
+  </Container>
+</footer>

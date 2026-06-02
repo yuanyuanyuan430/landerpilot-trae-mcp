@@ -1,0 +1,113 @@
+---
+import Container from "../atoms/Container.astro";
+import SectionHeader from "../atoms/SectionHeader.astro";
+
+interface BentoTile {
+  title: string;
+  description?: string;
+  icon?: string;
+  image?: { src: string; alt?: string };
+  cta?: { text: string; href: string };
+  size?: "default" | "wide" | "tall" | "feature";
+  tone?: "default" | "dark" | "accent" | "tinted";
+}
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  description?: string;
+  tiles: BentoTile[];
+}
+
+const { eyebrow, title, description, tiles } = Astro.props;
+
+function sizeClass(size: BentoTile["size"]) {
+  return {
+    default: "md:col-span-2 md:row-span-1",
+    wide: "md:col-span-4 md:row-span-1",
+    tall: "md:col-span-2 md:row-span-2",
+    feature: "md:col-span-3 md:row-span-2",
+  }[size ?? "default"];
+}
+
+function toneClass(tone: BentoTile["tone"]) {
+  return {
+    default: "border border-[color:var(--border)] bg-base-100 text-base-content",
+    tinted: "border border-[color:var(--border)] bg-base-200 text-base-content",
+    accent: "border border-transparent bg-primary text-primary-content",
+    dark: "border border-transparent bg-neutral text-neutral-content",
+  }[tone ?? "default"];
+}
+---
+
+<section class="py-20 md:py-24" data-automation-id="section-content-bento">
+  <Container size="wide">
+    <SectionHeader
+      eyebrow={eyebrow}
+      title={title}
+      description={description}
+      class="mb-12"
+    />
+
+    <div class="grid auto-rows-[minmax(11rem,1fr)] gap-4 md:grid-cols-6 md:gap-5">
+      {tiles.map((tile) => (
+        <article
+          class:list={[
+            "lp-inview group relative flex flex-col overflow-hidden rounded-[var(--ganhuo-radius)] p-7 transition hover:-translate-y-1",
+            sizeClass(tile.size),
+            toneClass(tile.tone),
+          ]}
+        >
+          {tile.image && (
+            <img
+              src={tile.image.src}
+              alt={tile.image.alt ?? tile.title}
+              loading="lazy"
+              class="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-30 transition duration-500 group-hover:opacity-40"
+            />
+          )}
+          <div class="relative flex h-full flex-col">
+            {tile.icon && !tile.image && (
+              <div class:list={[
+                "mb-5 inline-grid h-11 w-11 place-items-center rounded-[10px]",
+                tile.tone === "accent" || tile.tone === "dark"
+                  ? "bg-white/15 text-current"
+                  : "bg-[color:color-mix(in_srgb,var(--color-primary)_12%,transparent)] text-primary",
+              ]}>
+                <span class="font-display text-lg font-bold">{tile.icon}</span>
+              </div>
+            )}
+            <h3 class:list={[
+              "font-display font-[560] leading-[1.2] tracking-[-0.018em]",
+              tile.size === "feature" || tile.size === "tall" ? "text-[1.5rem]" : "text-[1.2rem]",
+            ]}>
+              {tile.title}
+            </h3>
+            {tile.description && (
+              <p class:list={[
+                "mt-3 text-[0.95rem] leading-[1.6]",
+                tile.tone === "accent" || tile.tone === "dark" ? "opacity-85" : "text-[color:var(--ganhuo-text-muted)]",
+              ]}>
+                {tile.description}
+              </p>
+            )}
+            {tile.cta && (
+              <a
+                href={tile.cta.href}
+                class:list={[
+                  "mt-auto inline-flex items-center gap-1.5 pt-5 text-[0.92rem] font-semibold transition",
+                  tile.tone === "accent" || tile.tone === "dark" ? "hover:opacity-80" : "text-primary hover:underline underline-offset-4",
+                ]}
+              >
+                {tile.cta.text}
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </a>
+            )}
+          </div>
+        </article>
+      ))}
+    </div>
+  </Container>
+</section>

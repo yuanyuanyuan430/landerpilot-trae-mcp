@@ -1,0 +1,35 @@
+{
+  "id": "saas",
+  "displayName": "SaaS",
+  "description": "Warm editorial baseline — confident, calm, trustworthy.",
+  "industries": ["saas", "tech", "product", "startup", "developer-tools"],
+  "daisyui": {
+    "primary": "#1f6f63",
+    "primary-content": "#ffffff",
+    "secondary": "#2f9183",
+    "secondary-content": "#ffffff",
+    "accent": "#1f6f63",
+    "accent-content": "#ffffff",
+    "neutral": "#1c1a17",
+    "neutral-content": "#f6f4ef",
+    "base-100": "#ffffff",
+    "base-200": "#f6f4ef",
+    "base-300": "#ebe7df",
+    "base-content": "#1c1a17",
+    "info": "#2563eb",
+    "info-content": "#ffffff",
+    "success": "#15803d",
+    "success-content": "#ffffff",
+    "warning": "#b45309",
+    "warning-content": "#ffffff",
+    "error": "#b91c1c",
+    "error-content": "#ffffff",
+    "radius-box": "12px",
+    "radius-field": "8px",
+    "radius-selector": "999px"
+  },
+  "fonts": {
+    "display": "Fraunces",
+    "sans": "Hanken Grotesk"
+  }
+}

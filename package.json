@@ -1,0 +1,43 @@
+{
+  "name": "landerpilot-trae-mcp",
+  "version": "0.1.0",
+  "description": "Trae-friendly LanderPilot stdio MCP bridge and setup helper.",
+  "type": "module",
+  "private": true,
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    ".claude-plugin/",
+    ".trae/mcp.example.json",
+    "blueprints/",
+    "docs/",
+    "generators/",
+    "skills/",
+    "scripts/",
+    "ganhuo-plugin.json",
+    "mcp.local.example.json",
+    "mcp.remote.example.json",
+    "cloud-proxy.mjs",
+    "server.mjs",
+    "README.md"
+  ],
+  "bin": {
+    "landerpilot-local-mcp": "./server.mjs",
+    "landerpilot-cloud-mcp": "./cloud-proxy.mjs",
+    "landerpilot-trae-setup": "./scripts/setup-trae.mjs"
+  },
+  "scripts": {
+    "start": "node server.mjs",
+    "start:cloud": "node cloud-proxy.mjs",
+    "inspect": "node scripts/inspect-tools.mjs",
+    "smoke": "node scripts/smoke-call.mjs",
+    "pack:check": "npm pack --dry-run",
+    "verify:distribution": "node scripts/verify-distribution.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^4.3.6"
+  }
+}

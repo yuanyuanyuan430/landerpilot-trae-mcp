@@ -1,0 +1,36 @@
+{
+  "id": "review-hero",
+  "component": "ReviewHero",
+  "category": "hero",
+  "displayName": "Review hero with score ring",
+  "description": "Hero section for a single brand/product review page. Includes large conic-gradient score ring, verdict line, primary 'Visit site / Get deal' CTA, and meta (author/date/reading time). Pair with RatingBreakdown + ProsCons immediately below.",
+  "industries": ["ecommerce", "saas"],
+  "pageRoles": ["review-detail"],
+  "props": {
+    "eyebrow": { "type": "string", "required": false, "default": "Review", "hint": "Small uppercase label above the H1." },
+    "brand": { "type": "string", "required": true, "hint": "Brand or product name." },
+    "title": { "type": "string", "required": false, "hint": "H1 text. Defaults to '{brand} review' if omitted." },
+    "verdict": { "type": "string", "required": false, "hint": "One-sentence verdict heading (e.g. 'A premium pick that holds up over time.')." },
+    "verdictSummary": { "type": "string", "required": false, "hint": "1-2 sentence expansion of the verdict." },
+    "score": { "type": "number", "required": false, "hint": "0-10 score. Renders as a conic-gradient ring colored by score band (>=9 success, >=7.5 primary, >=6 warning, else error)." },
+    "author": { "type": "string", "required": false },
+    "date": { "type": "string", "required": false, "hint": "Pre-formatted date string." },
+    "readingTime": { "type": "string", "required": false, "hint": "e.g. '6 min read'." },
+    "primaryCta": { "type": "cta", "required": false, "hint": "Primary affiliate CTA. rel defaults to 'sponsored noopener'." },
+    "secondaryCta": { "type": "cta", "required": false, "hint": "Lower-commitment link (e.g. 'See methodology')." },
+    "dealText": { "type": "string", "required": false, "hint": "Small uppercase deal tag above the primary CTA (e.g. '20% off this week')." }
+  },
+  "preview": {
+    "eyebrow": "Review",
+    "brand": "Sony WH-1000XM5",
+    "title": "Sony WH-1000XM5 review",
+    "verdict": "Best-in-class ANC with the longest battery in the segment.",
+    "verdictSummary": "After 6 weeks of daily commute + WFH use, the XM5 holds up — comfort is the real headline.",
+    "score": 9.2,
+    "author": "Maya Chen",
+    "date": "May 22, 2026",
+    "readingTime": "6 min read",
+    "primaryCta": { "text": "Check price", "href": "#" },
+    "dealText": "Save 20% this week"
+  }
+}

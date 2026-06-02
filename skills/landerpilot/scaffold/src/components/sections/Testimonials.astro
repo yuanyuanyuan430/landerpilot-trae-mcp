@@ -1,0 +1,69 @@
+---
+import Container from "../atoms/Container.astro";
+import SectionHeader from "../atoms/SectionHeader.astro";
+
+interface TestimonialItem {
+  quote: string;
+  name: string;
+  role?: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  description?: string;
+  items: TestimonialItem[];
+}
+
+const { eyebrow, title, description, items } = Astro.props;
+---
+
+<section
+  class="border-y border-[color:var(--border)] bg-base-200 py-20 md:py-24"
+  id="testimonials"
+  data-automation-id="section-testimonials"
+>
+  <Container>
+    <SectionHeader
+      eyebrow={eyebrow}
+      title={title}
+      description={description}
+      class="mb-12"
+    />
+    <div
+      class:list={[
+        "grid gap-5",
+        items.length >= 3 ? "md:grid-cols-3" : items.length === 2 ? "md:grid-cols-2" : "",
+      ]}
+    >
+      {items.map((q) => (
+        <figure
+          class="lp-quote flex h-full flex-col rounded-[var(--ganhuo-radius)] border border-[color:var(--border)] bg-base-100 p-[1.9rem_1.85rem]"
+        >
+          <div
+            class="font-display font-medium italic text-[3.4rem] leading-[0.5]"
+            style="color: color-mix(in srgb, var(--color-primary) 42%, transparent);"
+            aria-hidden="true"
+          >
+            “
+          </div>
+          <blockquote
+            class="mt-[1.1rem] font-display text-[1.22rem] font-[480] italic leading-[1.5] tracking-[-0.01em] text-base-content"
+          >
+            {q.quote}
+          </blockquote>
+          <figcaption class="mt-auto pt-[1.4rem]">
+            <strong class="block text-[0.92rem] font-[650] text-base-content not-italic">
+              {q.name}
+            </strong>
+            {q.role && (
+              <span class="text-[0.84rem] text-[color:var(--ganhuo-text-muted)]">
+                {q.role}
+              </span>
+            )}
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </Container>
+</section>

@@ -1,0 +1,94 @@
+{
+  "id": "video-embed",
+  "component": "VideoEmbed",
+  "category": "media",
+  "displayName": "Video embed",
+  "description": "Responsive video section. Auto-detects YouTube/Vimeo URLs and wraps them in an iframe; direct mp4 URLs render as a native <video> tag. 4 aspect ratios. Optional eyebrow/title/description framing above the video.",
+  "industries": [
+    "all"
+  ],
+  "pageRoles": [
+    "landing",
+    "about",
+    "product",
+    "blog-post"
+  ],
+  "props": {
+    "eyebrow": {
+      "type": "string",
+      "required": false
+    },
+    "title": {
+      "type": "string",
+      "required": false
+    },
+    "description": {
+      "type": "string",
+      "required": false
+    },
+    "src": {
+      "type": "string",
+      "required": true,
+      "hint": "YouTube URL, Vimeo URL, or direct .mp4 URL. Auto-detected."
+    },
+    "poster": {
+      "type": "string",
+      "required": false,
+      "hint": "Poster image (for mp4 only). YouTube/Vimeo use their own thumbnail."
+    },
+    "caption": {
+      "type": "string",
+      "required": false,
+      "hint": "Optional caption below the video frame."
+    },
+    "aspect": {
+      "type": "enum",
+      "values": [
+        "16/9",
+        "4/3",
+        "1/1",
+        "21/9"
+      ],
+      "required": false,
+      "default": "16/9"
+    },
+    "containerSize": {
+      "type": "enum",
+      "values": [
+        "default",
+        "tight",
+        "wide"
+      ],
+      "required": false,
+      "default": "default"
+    },
+    "autoplay": {
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "hint": "Forces muted when true (browser autoplay policy)."
+    },
+    "loop": {
+      "type": "boolean",
+      "required": false,
+      "default": false
+    },
+    "muted": {
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "hint": "Only applies to <video> tag (not iframe)."
+    },
+    "controls": {
+      "type": "boolean",
+      "required": false,
+      "default": true
+    }
+  },
+  "preview": {
+    "eyebrow": "Watch the demo",
+    "title": "See LanderPilot in 90 seconds.",
+    "src": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    "caption": "From prompt to live preview in real time."
+  }
+}

@@ -1,0 +1,85 @@
+---
+import Container from "../atoms/Container.astro";
+import Button from "../atoms/Button.astro";
+
+interface SuggestionLink {
+  text: string;
+  href: string;
+  description?: string;
+}
+
+interface Props {
+  code?: string;
+  title?: string;
+  description?: string;
+  homeHref?: string;
+  homeText?: string;
+  searchHref?: string;
+  suggestions?: SuggestionLink[];
+}
+
+const {
+  code = "404",
+  title = "Page not found",
+  description = "The page you're looking for doesn't exist anymore — or it might never have. Try one of the links below.",
+  homeHref = "/",
+  homeText = "Back to home",
+  searchHref,
+  suggestions,
+} = Astro.props;
+---
+
+<section
+  class="flex min-h-[60vh] items-center py-24 md:py-32"
+  data-automation-id="section-not-found"
+>
+  <Container size="tight">
+    <div class="text-center">
+      <p class="font-display text-[clamp(5rem,14vw,9rem)] font-[560] leading-[0.9] tracking-[-0.04em] text-primary opacity-80">
+        {code}
+      </p>
+      <h1 class="mt-4 font-display text-[clamp(2rem,4vw,3rem)] font-[560] leading-[1.08] tracking-[-0.024em] text-base-content">
+        {title}
+      </h1>
+      <p class="mx-auto mt-5 max-w-xl text-[clamp(1.02rem,1.3vw,1.18rem)] leading-[1.65] text-[color:var(--ganhuo-text-muted)]">
+        {description}
+      </p>
+      <div class="mt-9 flex flex-wrap justify-center gap-3">
+        <Button variant="primary" href={homeHref} automationId="not-found-home">
+          {homeText}
+        </Button>
+        {searchHref && (
+          <Button variant="ghost" href={searchHref}>Search</Button>
+        )}
+      </div>
+    </div>
+
+    {suggestions && suggestions.length > 0 && (
+      <div class="mx-auto mt-16 max-w-2xl">
+        <h2 class="text-center text-[0.78rem] font-bold uppercase tracking-[0.16em] text-[color:var(--ganhuo-text-muted)]">
+          You might be looking for
+        </h2>
+        <ul class="mt-6 grid gap-3 sm:grid-cols-2">
+          {suggestions.map((s) => (
+            <li>
+              <a
+                href={s.href}
+                class="group block rounded-[var(--ganhuo-radius)] border border-[color:var(--border)] bg-base-100 p-5 transition hover:-translate-y-1 hover:border-[color:color-mix(in_srgb,var(--color-primary)_32%,var(--border))] hover:shadow-[0_18px_38px_-22px_rgba(20,18,15,0.3)]"
+              >
+                <div class="flex items-center justify-between gap-3">
+                  <span class="font-display text-[1.05rem] font-[560] text-base-content">{s.text}</span>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="text-primary opacity-60 transition group-hover:opacity-100" aria-hidden="true">
+                    <path d="M3 8h10m0 0L9 4m4 4l-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </div>
+                {s.description && (
+                  <p class="mt-1.5 text-[0.88rem] text-[color:var(--ganhuo-text-muted)]">{s.description}</p>
+                )}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+  </Container>
+</section>

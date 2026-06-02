@@ -1,0 +1,51 @@
+{
+  "id": "footer-minimal",
+  "component": "FooterMinimal",
+  "category": "footer",
+  "displayName": "Minimal footer",
+  "description": "Single-line footer with copyright + a few inline links. Use for editorial / personal / portfolio / restaurant sites — pages with limited secondary navigation.",
+  "industries": [
+    "portfolio",
+    "personal",
+    "restaurant",
+    "studio",
+    "law-firm"
+  ],
+  "notSuitableFor": [],
+  "pageRoles": [
+    "footer"
+  ],
+  "props": {
+    "brand": {
+      "type": "string",
+      "required": true
+    },
+    "links": {
+      "type": "array<{ text: string, href: string }>",
+      "required": false,
+      "hint": "0-5 inline links. Typically Privacy / Terms / Contact. Skip if there's no legal page."
+    },
+    "year": {
+      "type": "number",
+      "required": false
+    },
+    "rights": {
+      "type": "string",
+      "required": false,
+      "default": "All rights reserved."
+    }
+  },
+  "preview": {
+    "brand": "Studio Hara",
+    "links": [
+      {
+        "text": "Privacy",
+        "href": "/privacy/"
+      },
+      {
+        "text": "Contact",
+        "href": "/contact/"
+      }
+    ]
+  }
+}

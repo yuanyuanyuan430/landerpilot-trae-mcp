@@ -1,0 +1,34 @@
+---
+interface Props {
+  orientation?: "horizontal" | "vertical";
+  label?: string;
+  class?: string;
+}
+
+const { orientation = "horizontal", label, class: extra = "" } = Astro.props;
+
+const isVertical = orientation === "vertical";
+---
+
+{label && !isVertical ? (
+  <div
+    class:list={["flex items-center gap-4 text-[color:var(--ganhuo-text-muted)]", extra]}
+    role="separator"
+    aria-orientation="horizontal"
+  >
+    <span class="h-px flex-1 bg-[color:var(--border)]"></span>
+    <span class="text-[0.78rem] font-semibold uppercase tracking-[0.14em]">{label}</span>
+    <span class="h-px flex-1 bg-[color:var(--border)]"></span>
+  </div>
+) : isVertical ? (
+  <span
+    class:list={["inline-block w-px self-stretch bg-[color:var(--border)]", extra]}
+    role="separator"
+    aria-orientation="vertical"
+  ></span>
+) : (
+  <hr
+    class:list={["border-0 h-px bg-[color:var(--border)] w-full", extra]}
+    aria-orientation="horizontal"
+  />
+)}

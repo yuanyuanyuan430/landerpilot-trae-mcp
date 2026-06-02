@@ -1,0 +1,92 @@
+{
+  "nav": {
+    "primaryAria": "主导航",
+    "browseStores": "浏览商家"
+  },
+  "landing": {
+    "partnerStores": "合作商家",
+    "dealNotes": "优惠摘要",
+    "popularStores": "热门商家",
+    "browseByCategory": "按分类浏览",
+    "allCategories": "全部分类",
+    "viewAllStores": "查看全部 {count} 个商家"
+  },
+  "trust": {
+    "staticTitle": "静态",
+    "staticSuffix": "目录",
+    "externalTitle": "外部",
+    "externalSuffix": "条款确认",
+    "cashbackTitle": "返现",
+    "cashbackSuffix": "摘要",
+    "affiliateTitle": "联盟",
+    "affiliateSuffix": "披露"
+  },
+  "steps": {
+    "heading": "如何运作",
+    "findStore": "找到商家",
+    "shopSave": "购物并省钱",
+    "shopSaveDescription": "打开商家页面，查看当前返现、优惠券和适用条款。",
+    "confirmTerms": "确认条款",
+    "confirmTermsDescription": "购物前在目标站点确认最终价格、返现比例和优惠限制。"
+  },
+  "cta": {
+    "browseAllStores": "浏览全部商家",
+    "browseCategories": "按分类浏览",
+    "compareOffers": "开始比较优惠",
+    "termsNote": "购物前确认条款"
+  },
+  "units": {
+    "stores": "个商家",
+    "dealNotes": "个优惠摘要"
+  },
+  "footer": {
+    "about": "关于",
+    "contact": "联系",
+    "privacy": "隐私政策",
+    "terms": "服务条款",
+    "disclosure": "联盟披露",
+    "aboutShort": "关于",
+    "contactShort": "联系",
+    "privacyShort": "隐私",
+    "termsShort": "条款",
+    "disclosureShort": "披露",
+    "rights": "保留所有权利。",
+    "disclosureText": "可能在你通过页面链接购物时获得佣金。这不会影响你支付的价格。返现比例可能随时变化。",
+    "directoryNote": "正式返现和优惠券目录模板。发布前请审核法律文本和合作说明。"
+  },
+  "directory": {
+    "eyebrow": "优惠目录",
+    "allStoresTitle": "全部商家",
+    "allStoresDescription": "浏览所有返现商家和优惠。",
+    "allCategoriesTitle": "全部分类",
+    "allCategoriesDescription": "按分类查找返现商家。"
+  },
+  "store": {
+    "couponsDeals": "优惠券与折扣",
+    "cashback": "返现",
+    "finalTermsNote": "外部页面会显示最终条款",
+    "viewOffer": "查看 {rate} 优惠",
+    "sidebarCashback": "{brand} 返现",
+    "visitStore": "前往商家",
+    "similarStores": "相似商家",
+    "noSimilarStores": "暂无相似商家。",
+    "viewDeal": "查看优惠"
+  },
+  "coupons": {
+    "expires": "有效期",
+    "view": "查看",
+    "dealBadge": "优惠",
+    "codeBadge": "代码",
+    "verifyTerms": "请在目标站点确认最终条款。"
+  },
+  "support": {
+    "aboutTitle": "关于我们",
+    "contactTitle": "联系我们",
+    "contactDescription": "此页面用于展示联系方式和合作入口。",
+    "privacyTitle": "隐私政策",
+    "privacyDescription": "发布前请由法律或合规负责人审核并替换为正式隐私政策。",
+    "termsTitle": "服务条款",
+    "termsDescription": "发布前请由法律或合规负责人审核并替换为正式服务条款。",
+    "disclosureTitle": "联盟披露"
+  }
+}

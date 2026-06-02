@@ -1,0 +1,128 @@
+---
+import Container from "../atoms/Container.astro";
+import SectionHeader from "../atoms/SectionHeader.astro";
+
+interface CategoryEntry {
+  name: string;
+  slug?: string;
+  href?: string;
+  description?: string;
+  icon?: string;
+  storeCount?: number;
+  image?: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  categories: CategoryEntry[];
+  layout?: "grid" | "chips" | "tiles";
+  columns?: 2 | 3 | 4 | 5 | 6;
+  storeCountSuffix?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  description,
+  categories,
+  layout = "grid",
+  columns = 4,
+  storeCountSuffix = "stores",
+} = Astro.props;
+
+const colClass = {
+  2: "sm:grid-cols-2",
+  3: "sm:grid-cols-2 lg:grid-cols-3",
+  4: "sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4",
+  5: "sm:grid-cols-3 lg:grid-cols-5",
+  6: "sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6",
+}[columns];
+---
+
+<section
+  class="border-b border-[color:var(--border)] bg-base-200 py-16 md:py-20"
+  id="categories"
+  data-automation-id="section-category-grid"
+>
+  <Container>
+    {title && (
+      <SectionHeader
+        eyebrow={eyebrow}
+        title={title}
+        description={description}
+        class="mb-10"
+      />
+    )}
+
+    {layout === "chips" ? (
+      <div class="flex flex-wrap gap-2.5">
+        {categories.map((cat) => (
+          <a
+            href={cat.href || (cat.slug ? `/categories/${cat.slug}/` : "#")}
+            class="inline-flex items-center gap-2 rounded-full border border-[color:var(--border)] bg-base-100 px-4 py-2 text-[0.88rem] font-medium text-base-content transition hover:border-primary hover:text-primary"
+            data-automation-id={`category-chip-${cat.slug ?? cat.name.toLowerCase()}`}
+          >
+            {cat.icon && <span aria-hidden="true">{cat.icon}</span>}
+            <span>{cat.name}</span>
+            {typeof cat.storeCount === "number" && (
+              <span class="ml-1 text-[0.78rem] text-[color:var(--ganhuo-text-muted)]">({cat.storeCount})</span>
+            )}
+          </a>
+        ))}
+      </div>
+    ) : layout === "tiles" ? (
+      <div class:list={["grid gap-4", colClass]}>
+        {categories.map((cat) => (
+          <a
+            href={cat.href || (cat.slug ? `/categories/${cat.slug}/` : "#")}
+            class="lp-inview group relative aspect-[5/4] overflow-hidden rounded-[var(--ganhuo-radius)] border border-[color:var(--border)] bg-base-100"
+            data-automation-id={`category-tile-${cat.slug ?? cat.name.toLowerCase()}`}
+          >
+            {cat.image && (
+              <img src={cat.image} alt="" class="absolute inset-0 h-full w-full object-cover opacity-50 transition duration-500 group-hover:opacity-65 group-hover:scale-[1.04]" />
+            )}
+            <div class="absolute inset-0 bg-gradient-to-t from-[color:color-mix(in_srgb,var(--color-neutral)_85%,transparent)] to-transparent"></div>
+            <div class="absolute inset-x-0 bottom-0 p-4 text-base-100">
+              <div class="flex items-center gap-2">
+                {cat.icon && <span class="text-lg" aria-hidden="true">{cat.icon}</span>}
+                <h3 class="font-display text-[1.05rem] font-[560]">{cat.name}</h3>
+              </div>
+              {typeof cat.storeCount === "number" && (
+                <div class="mt-1 text-[0.78rem] opacity-80">{cat.storeCount} {storeCountSuffix}</div>
+              )}
+            </div>
+          </a>
+        ))}
+      </div>
+    ) : (
+      <div class:list={["grid gap-4", colClass]}>
+        {categories.map((cat) => (
+          <a
+            href={cat.href || (cat.slug ? `/categories/${cat.slug}/` : "#")}
+            class="lp-inview group flex flex-col rounded-[var(--ganhuo-radius)] border border-[color:var(--border)] bg-base-100 p-5 transition hover:-translate-y-1 hover:border-[color:color-mix(in_srgb,var(--color-primary)_32%,var(--border))] hover:shadow-[0_18px_38px_-22px_rgba(20,18,15,0.3)]"
+            data-automation-id={`category-card-${cat.slug ?? cat.name.toLowerCase()}`}
+          >
+            {cat.icon && (
+              <div
+                class="mb-4 inline-grid h-11 w-11 place-items-center rounded-[10px] text-primary"
+                style="background: color-mix(in srgb, var(--color-primary) 12%, transparent);"
+                aria-hidden="true"
+              >
+                <span class="font-display text-lg font-bold">{cat.icon}</span>
+              </div>
+            )}
+            <h3 class="font-display text-[1.05rem] font-[560] tracking-[-0.015em] text-base-content">{cat.name}</h3>
+            {cat.description && (
+              <p class="mt-1.5 text-[0.88rem] leading-[1.5] text-[color:var(--ganhuo-text-muted)]">{cat.description}</p>
+            )}
+            {typeof cat.storeCount === "number" && (
+              <div class="mt-auto pt-4 text-[0.82rem] font-medium text-primary">{cat.storeCount} {storeCountSuffix} →</div>
+            )}
+          </a>
+        ))}
+      </div>
+    )}
+  </Container>
+</section>

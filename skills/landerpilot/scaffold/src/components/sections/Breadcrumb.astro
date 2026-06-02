@@ -1,0 +1,66 @@
+---
+import Container from "../atoms/Container.astro";
+
+interface BreadcrumbCrumb {
+  text: string;
+  href?: string;
+}
+
+interface Props {
+  items: BreadcrumbCrumb[];
+  bordered?: boolean;
+  containerSize?: "default" | "tight" | "wide";
+}
+
+const { items, bordered = true, containerSize = "default" } = Astro.props;
+---
+
+<nav
+  class:list={[
+    "py-3",
+    bordered && "border-b border-[color:var(--border)] bg-base-100",
+  ]}
+  aria-label="Breadcrumb"
+  data-automation-id="section-breadcrumb"
+>
+  <Container size={containerSize}>
+    <ol
+      class="flex flex-wrap items-center gap-1.5 text-[0.82rem] text-[color:var(--ganhuo-text-muted)]"
+      itemscope
+      itemtype="https://schema.org/BreadcrumbList"
+    >
+      {items.map((crumb, idx) => (
+        <li
+          class="flex items-center gap-1.5"
+          itemprop="itemListElement"
+          itemscope
+          itemtype="https://schema.org/ListItem"
+        >
+          {idx > 0 && (
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" class="opacity-60">
+              <path d="M4.5 2.5L8 6L4.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          )}
+          {crumb.href && idx < items.length - 1 ? (
+            <a
+              href={crumb.href}
+              itemprop="item"
+              class="transition hover:text-base-content"
+            >
+              <span itemprop="name">{crumb.text}</span>
+            </a>
+          ) : (
+            <span
+              aria-current={idx === items.length - 1 ? "page" : undefined}
+              class={idx === items.length - 1 ? "text-base-content font-medium" : ""}
+              itemprop="name"
+            >
+              {crumb.text}
+            </span>
+          )}
+          <meta itemprop="position" content={String(idx + 1)} />
+        </li>
+      ))}
+    </ol>
+  </Container>
+</nav>

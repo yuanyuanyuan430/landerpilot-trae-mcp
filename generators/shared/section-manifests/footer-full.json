@@ -1,0 +1,92 @@
+{
+  "id": "footer-full",
+  "component": "FooterFull",
+  "category": "footer",
+  "displayName": "Full footer",
+  "description": "Multi-column footer: brand + tagline + 3-4 link groups. Use for product / SaaS / agency sites with many secondary pages. Renders on neutral background.",
+  "industries": [
+    "saas",
+    "ecommerce",
+    "agency"
+  ],
+  "notSuitableFor": [
+    "personal",
+    "portfolio"
+  ],
+  "pageRoles": [
+    "footer"
+  ],
+  "props": {
+    "brand": {
+      "type": "string",
+      "required": true,
+      "hint": "Site name."
+    },
+    "tagline": {
+      "type": "string",
+      "required": false,
+      "hint": "1 sentence under the brand. Reuse the site's meta description."
+    },
+    "groups": {
+      "type": "array<{ heading: string, links: Array<{ text, href }> }>",
+      "required": true,
+      "hint": "2-4 link groups. Typical groupings: Product (Features, Pricing, Changelog), Company (About, Blog, Contact), Legal (Privacy, Terms). heading 1-2 words, uppercase styling is applied automatically. 3-6 links per group."
+    },
+    "year": {
+      "type": "number",
+      "required": false,
+      "hint": "Defaults to current year."
+    },
+    "rights": {
+      "type": "string",
+      "required": false,
+      "default": "All rights reserved.",
+      "hint": "Tail of copyright line."
+    }
+  },
+  "preview": {
+    "brand": "LanderPilot",
+    "tagline": "The AI site builder that ships real Astro components, not screenshots.",
+    "groups": [
+      {
+        "heading": "Product",
+        "links": [
+          {
+            "text": "Sections",
+            "href": "#features"
+          },
+          {
+            "text": "Pricing",
+            "href": "#pricing"
+          }
+        ]
+      },
+      {
+        "heading": "Company",
+        "links": [
+          {
+            "text": "About",
+            "href": "/about/"
+          },
+          {
+            "text": "Contact",
+            "href": "/contact/"
+          }
+        ]
+      },
+      {
+        "heading": "Legal",
+        "links": [
+          {
+            "text": "Privacy",
+            "href": "/privacy/"
+          },
+          {
+            "text": "Terms",
+            "href": "/terms/"
+          }
+        ]
+      }
+    ]
+  }
+}

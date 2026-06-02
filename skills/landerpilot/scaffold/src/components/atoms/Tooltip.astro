@@ -1,0 +1,52 @@
+---
+/**
+ * Pure CSS tooltip — shows on hover / focus. Wraps any inline trigger.
+ *
+ *   <Tooltip text="Saved to draft" position="top">
+ *     <button>Save</button>
+ *   </Tooltip>
+ */
+interface Props {
+  text: string;
+  position?: "top" | "bottom" | "left" | "right";
+  variant?: "dark" | "light";
+  class?: string;
+}
+
+const { text, position = "top", variant = "dark", class: extra = "" } = Astro.props;
+
+const tipBg =
+  variant === "dark"
+    ? "bg-[color:var(--color-neutral)] text-[color:var(--color-neutral-content)]"
+    : "bg-base-100 text-base-content border border-[color:var(--border)]";
+
+const posClass = {
+  top: "bottom-[calc(100%+0.5rem)] left-1/2 -translate-x-1/2",
+  bottom: "top-[calc(100%+0.5rem)] left-1/2 -translate-x-1/2",
+  left: "right-[calc(100%+0.5rem)] top-1/2 -translate-y-1/2",
+  right: "left-[calc(100%+0.5rem)] top-1/2 -translate-y-1/2",
+}[position];
+---
+
+<span class:list={["lp-tooltip group relative inline-flex", extra]}>
+  <slot />
+  <span
+    role="tooltip"
+    class:list={[
+      "lp-tooltip-tip pointer-events-none absolute z-20 whitespace-nowrap rounded-md px-2.5 py-1.5 text-[0.78rem] font-medium shadow-[0_6px_14px_-6px_rgba(20,18,15,0.3)]",
+      "opacity-0 transition-opacity duration-150",
+      "group-hover:opacity-100 group-focus-within:opacity-100",
+      posClass,
+      tipBg,
+    ]}
+  >
+    {text}
+  </span>
+</span>
+
+<style>
+  /* Fail-safe: keep tooltip hidden until interaction. */
+  .lp-tooltip-tip { visibility: hidden; }
+  .lp-tooltip:hover .lp-tooltip-tip,
+  .lp-tooltip:focus-within .lp-tooltip-tip { visibility: visible; }
+</style>

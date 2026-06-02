@@ -1,0 +1,95 @@
+{
+  "id": "image-gallery",
+  "component": "ImageGallery",
+  "category": "media",
+  "displayName": "Image gallery",
+  "description": "Multi-image showcase. Three layouts: 'grid' (uniform aspect ratios, predictable), 'masonry' (varied heights, Pinterest-style — best for portfolios), 'strip' (horizontal scroll, good for product variants / before-after). Always include alt text — galleries are accessibility hotspots.",
+  "industries": [
+    "portfolio",
+    "restaurant",
+    "studio",
+    "ecommerce"
+  ],
+  "notSuitableFor": [
+    "saas",
+    "law-firm"
+  ],
+  "pageRoles": [
+    "about",
+    "landing",
+    "blog-post"
+  ],
+  "props": {
+    "eyebrow": {
+      "type": "string",
+      "required": false
+    },
+    "title": {
+      "type": "string",
+      "required": false
+    },
+    "description": {
+      "type": "string",
+      "required": false
+    },
+    "images": {
+      "type": "array<{ src, alt?, caption?, href?, aspect? }>",
+      "required": true,
+      "hint": "6-30 images. aspect can be 'square'/'landscape'/'portrait'/'wide' (default landscape). href makes the image clickable. alt is critical for a11y + SEO."
+    },
+    "layout": {
+      "type": "enum",
+      "values": [
+        "grid",
+        "masonry",
+        "strip"
+      ],
+      "required": false,
+      "default": "grid"
+    },
+    "columns": {
+      "type": "enum",
+      "values": [
+        2,
+        3,
+        4
+      ],
+      "required": false,
+      "default": 3,
+      "hint": "Only used for 'grid' layout."
+    },
+    "gap": {
+      "type": "enum",
+      "values": [
+        "tight",
+        "default",
+        "loose"
+      ],
+      "required": false,
+      "default": "default"
+    }
+  },
+  "preview": {
+    "eyebrow": "Selected work",
+    "title": "Recent commissions.",
+    "images": [
+      {
+        "src": "https://images.unsplash.com/photo-1493612276216-ee3925520721?w=800",
+        "alt": "Editorial spread mockup",
+        "aspect": "landscape"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=800",
+        "alt": "Product photography",
+        "aspect": "landscape"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=800",
+        "alt": "Branding presentation",
+        "aspect": "landscape"
+      }
+    ],
+    "layout": "grid",
+    "columns": 3
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "id": "features-alternating",
+  "component": "FeaturesAlternating",
+  "category": "features",
+  "displayName": "Alternating features",
+  "description": "Long-form feature rows that alternate image-left / image-right. Best for 2-4 high-priority features that each deserve their own screenshot and a paragraph of explanation. Skip when there's no real imagery — empty windows look hollow.",
+  "industries": [
+    "saas",
+    "studio",
+    "agency"
+  ],
+  "notSuitableFor": [
+    "restaurant",
+    "portfolio",
+    "law-firm"
+  ],
+  "pageRoles": [
+    "landing",
+    "product"
+  ],
+  "props": {
+    "eyebrow": {
+      "type": "string",
+      "required": false
+    },
+    "title": {
+      "type": "string",
+      "required": true,
+      "hint": "Section headline. 5-10 words."
+    },
+    "description": {
+      "type": "string",
+      "required": false,
+      "hint": "1 sentence intro framing why these features matter."
+    },
+    "items": {
+      "type": "array<{ index?: string, title: string, description: string, image?: { src, alt } }>",
+      "required": true,
+      "hint": "2-4 items. index is a 2-digit string ('01', '02') rendered as an underlined eyebrow above the title. title 3-6 words. description 2-3 sentences (30-50 words) — this is the long-form slot."
+    }
+  },
+  "preview": {
+    "eyebrow": "Capabilities",
+    "title": "Built for teams that ship marketing sites every week.",
+    "description": "No more bespoke layouts for every launch. Reuse the same section library, swap the theme, keep the speed.",
+    "items": [
+      {
+        "index": "01",
+        "title": "Section-first composition",
+        "description": "Every page is assembled from real Astro components. Add a section, regenerate, ship."
+      },
+      {
+        "index": "02",
+        "title": "Industry themes in one swap",
+        "description": "DaisyUI-powered tokens mean a law firm and a restaurant site share the same components but feel completely different."
+      }
+    ]
+  }
+}

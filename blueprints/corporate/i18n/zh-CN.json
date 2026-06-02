@@ -1,0 +1,154 @@
+{
+  "nav": {
+    "primaryLabel": "主导航",
+    "home": "首页",
+    "features": "功能",
+    "process": "如何运作",
+    "pricing": "价格",
+    "integrations": "集成",
+    "about": "关于",
+    "contact": "联系"
+  },
+  "cta": {
+    "getStarted": "开始使用",
+    "viewFeatures": "查看功能",
+    "contactTeam": "联系团队"
+  },
+  "sections": {
+    "features": {
+      "kicker": "功能",
+      "title": "为现代团队打造",
+      "description": "在一个平台中完成协作、交付和增长所需的核心工作。"
+    },
+    "process": {
+      "kicker": "流程",
+      "title": "如何运作",
+      "description": "从想法到上线，保持步骤清晰。"
+    },
+    "integrations": {
+      "kicker": "集成",
+      "title": "适配你的工具栈",
+      "description": "连接你已经在用的工具。"
+    },
+    "pricing": {
+      "kicker": "价格",
+      "title": "适合不同团队的方案",
+      "description": "免费开始，随增长扩展。"
+    },
+    "testimonials": {
+      "kicker": "证明",
+      "title": "客户怎么说",
+      "description": "给正在决定下一步行动的人提供可信信号。"
+    },
+    "team": {
+      "kicker": "我们是谁",
+      "title": "团队介绍",
+      "description": "项目背后的人。"
+    },
+    "contact": {
+      "kicker": "联系我们",
+      "title": "聊聊你的项目",
+      "description": "通常一个工作日内回复。",
+      "submitText": "发送消息",
+      "privacyNote": "我们重视你的隐私，绝不发送骚扰邮件。"
+    },
+    "announcement": {
+      "linkText": "了解详情"
+    }
+  },
+  "footer": {
+    "label": "页脚",
+    "product": "产品",
+    "company": "公司",
+    "legal": "法律",
+    "privacy": "隐私",
+    "terms": "条款",
+    "rights": "保留所有权利。"
+  },
+  "support": {
+    "sitePageLabel": "站点页面",
+    "aboutTitle": "关于 {{siteName}}",
+    "contactTitle": "联系我们",
+    "contactDescription": "通过下面的入口联系 {{siteName}}，确认演示、报价或合作细节。",
+    "privacyTitle": "隐私政策",
+    "privacyDescription": "发布前请由客户或法律负责人替换为正式隐私政策。",
+    "termsTitle": "服务条款",
+    "termsDescription": "发布前请由客户或法律负责人替换为正式服务条款。"
+  },
+  "media": {
+    "productScreenshot": "产品截图"
+  },
+  "pricing": {
+    "planFallback": "方案",
+    "periodFallback": "每月",
+    "coreFeaturesIncluded": "包含核心能力",
+    "popular": "热门",
+    "choose": "选择"
+  },
+  "process": {
+    "stepTitle": "步骤 {{index}}"
+  },
+  "testimonials": {
+    "customer": "客户"
+  },
+  "defaults": {
+    "description": "{{siteName}} 帮助客户理解产品价值并完成下一步行动。",
+    "heroTitle": "{{siteName}}，为团队打造清晰可信的线上展示",
+    "aboutTitle": "关于 {{siteName}}",
+    "ctaTitle": "准备好了解 {{siteName}} 了吗？",
+    "capabilityTitle": "能力 {{index}}",
+    "capabilityDescription": "面向目标客户的实用能力。",
+    "capabilityPromiseDescription": "支撑核心价值主张的实用能力。",
+    "metricLabel": "指标",
+    "features": [
+      {
+        "title": "更快上线",
+        "description": "从定位与素材快速生成可预览的静态站点，不需要额外搭建工程链路。"
+      },
+      {
+        "title": "讲清价值",
+        "description": "把产品信息、服务能力和证明点整理成面向客户的清晰页面区块。"
+      },
+      {
+        "title": "保持可编辑",
+        "description": "生成结果保留在本地工作区，静态、可构建、可持续迭代。"
+      }
+    ],
+    "stats": [
+      {
+        "value": "3x",
+        "label": "更快上线周期"
+      },
+      {
+        "value": "24/7",
+        "label": "静态站可用性"
+      },
+      {
+        "value": "100%",
+        "label": "本地所有权"
+      }
+    ],
+    "integrations": ["客户管理", "数据分析", "客户支持", "文档", "支付", "自动化"],
+    "pricingPlans": [
+      {
+        "name": "入门版",
+        "price": "$0",
+        "period": "起步使用",
+        "features": ["一个站点", "静态页面", "本地预览"]
+      },
+      {
+        "name": "增长版",
+        "price": "$49",
+        "period": "每月",
+        "featured": true,
+        "features": ["更多页面", "主题控制", "SEO 就绪产物"]
+      },
+      {
+        "name": "规模版",
+        "price": "定制",
+        "period": "团队方案",
+        "features": ["部署", "分析", "工作流支持"]
+      }
+    ]
+  }
+}

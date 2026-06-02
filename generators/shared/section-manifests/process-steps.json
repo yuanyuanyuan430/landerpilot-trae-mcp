@@ -1,0 +1,68 @@
+{
+  "id": "process-steps",
+  "component": "ProcessSteps",
+  "category": "features",
+  "displayName": "Process / how it works",
+  "description": "Numbered step cards explaining a workflow or onboarding sequence. More structured than Features3Col. Two layouts: 'horizontal' (cards in a row, ideal for 3-4 steps) and 'stacked' (stacked cards, ideal for 5+ or longer descriptions).",
+  "industries": [
+    "all"
+  ],
+  "pageRoles": [
+    "landing",
+    "product"
+  ],
+  "props": {
+    "eyebrow": {
+      "type": "string",
+      "required": false
+    },
+    "title": {
+      "type": "string",
+      "required": true,
+      "hint": "5-10 words. Often 'How it works' / 'Our process' / 'Three steps to launch'."
+    },
+    "description": {
+      "type": "string",
+      "required": false
+    },
+    "steps": {
+      "type": "array<{ title, description, icon? }>",
+      "required": true,
+      "hint": "3-6 steps. Each: { title (3-6 words), description (1-2 sentences, 15-30 words), icon? (single emoji, used only when numbered=false) }."
+    },
+    "layout": {
+      "type": "enum",
+      "values": [
+        "horizontal",
+        "stacked"
+      ],
+      "required": false,
+      "default": "horizontal"
+    },
+    "numbered": {
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "hint": "Show 01/02/03 chips on each step. Set false to use icon prop instead."
+    }
+  },
+  "preview": {
+    "eyebrow": "How it works",
+    "title": "From prompt to live site in three steps.",
+    "description": "No code, no agency, no scaffolding from scratch.",
+    "steps": [
+      {
+        "title": "Describe your business",
+        "description": "Tell LanderPilot what you do, who it's for, and what visitors should do next."
+      },
+      {
+        "title": "Pick a theme + sections",
+        "description": "The AI assembles a draft from the section library and your chosen industry theme."
+      },
+      {
+        "title": "Preview, polish, deploy",
+        "description": "Open the live preview, iterate in plain language, deploy to Cloudflare with one click."
+      }
+    ]
+  }
+}

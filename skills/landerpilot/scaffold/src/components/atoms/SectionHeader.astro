@@ -1,0 +1,42 @@
+---
+import Eyebrow from "./Eyebrow.astro";
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  description?: string;
+  align?: "start" | "center";
+  size?: "default" | "tight";
+  class?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  description,
+  align = "start",
+  size = "default",
+  class: extraClass = "",
+} = Astro.props;
+---
+
+<div
+  class:list={[
+    align === "center" ? "mx-auto text-center" : "",
+    size === "tight" ? "max-w-2xl" : "max-w-3xl",
+    "lp-inview",
+    extraClass,
+  ]}
+>
+  {eyebrow && <Eyebrow align={align === "center" ? "center" : "start"}>{eyebrow}</Eyebrow>}
+  <h2
+    class="lp-h2 mt-5 font-display font-[540] text-[clamp(2rem,3.7vw,3rem)] leading-[1.08] tracking-[-0.024em] text-base-content"
+  >
+    {title}
+  </h2>
+  {description && (
+    <p class="mt-4 text-[clamp(1.05rem,1.35vw,1.24rem)] leading-[1.68] text-[color:var(--ganhuo-text-muted)]">
+      {description}
+    </p>
+  )}
+</div>

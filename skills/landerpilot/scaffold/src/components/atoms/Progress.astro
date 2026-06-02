@@ -1,0 +1,55 @@
+---
+interface Props {
+  value: number;
+  max?: number;
+  size?: "sm" | "md" | "lg";
+  variant?: "primary" | "secondary" | "success" | "warning" | "error";
+  label?: string;
+  showValue?: boolean;
+  class?: string;
+}
+
+const {
+  value,
+  max = 100,
+  size = "md",
+  variant = "primary",
+  label,
+  showValue = false,
+  class: extra = "",
+} = Astro.props;
+
+const pct = Math.max(0, Math.min(100, (value / max) * 100));
+
+const sizeClass = size === "sm" ? "h-1.5" : size === "lg" ? "h-3" : "h-2";
+
+const variantBg = {
+  primary: "bg-primary",
+  secondary: "bg-secondary",
+  success: "bg-[color:var(--color-success)]",
+  warning: "bg-[color:var(--color-warning)]",
+  error: "bg-[color:var(--color-error)]",
+}[variant];
+---
+
+<div class:list={["grid gap-2", extra]}>
+  {(label || showValue) && (
+    <div class="flex items-center justify-between text-[0.82rem] font-medium text-base-content">
+      {label && <span>{label}</span>}
+      {showValue && <span class="tabular-nums text-[color:var(--ganhuo-text-muted)]">{Math.round(pct)}%</span>}
+    </div>
+  )}
+  <div
+    class:list={["overflow-hidden rounded-full bg-base-200", sizeClass]}
+    role="progressbar"
+    aria-valuenow={value}
+    aria-valuemin={0}
+    aria-valuemax={max}
+    aria-label={label}
+  >
+    <div
+      class:list={["h-full rounded-full transition-[width] duration-500", variantBg]}
+      style={`width: ${pct}%`}
+    ></div>
+  </div>
+</div>

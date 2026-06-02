@@ -1,0 +1,77 @@
+---
+import Container from "../atoms/Container.astro";
+import SectionHeader from "../atoms/SectionHeader.astro";
+
+interface LogoItem {
+  name: string;
+  logo?: string;
+  href?: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  items: LogoItem[];
+  variant?: "chips" | "logos";
+}
+
+const { eyebrow, title, description, items, variant = "chips" } = Astro.props;
+---
+
+<section
+  class="border-b border-[color:var(--border)] py-20 md:py-24"
+  id="integrations"
+  data-automation-id="section-logo-cloud"
+>
+  <Container>
+    {title && (
+      <SectionHeader
+        eyebrow={eyebrow}
+        title={title}
+        description={description}
+        class="mb-10"
+      />
+    )}
+    <div
+      class:list={[
+        "lp-inview flex flex-wrap",
+        variant === "chips" ? "gap-[0.625rem]" : "items-center gap-x-12 gap-y-6",
+      ]}
+    >
+      {items.map((item) => (
+        variant === "chips" ? (
+          <span
+            class="inline-flex items-center gap-2 rounded-full border border-[color:var(--border)] bg-base-100 px-[1.15rem] py-[0.68rem] text-[0.9rem] font-semibold text-base-content"
+          >
+            <span
+              class="block h-[0.42rem] w-[0.42rem] rounded-full bg-primary"
+              aria-hidden="true"
+            ></span>
+            {item.name}
+          </span>
+        ) : item.logo ? (
+          item.href ? (
+            <a href={item.href} aria-label={item.name} class="inline-block">
+              <img
+                src={item.logo}
+                alt={item.name}
+                class="h-7 w-auto opacity-70 transition hover:opacity-100"
+              />
+            </a>
+          ) : (
+            <img
+              src={item.logo}
+              alt={item.name}
+              class="h-7 w-auto opacity-70"
+            />
+          )
+        ) : (
+          <span class="font-display text-lg font-medium text-[color:var(--ganhuo-text-muted)]">
+            {item.name}
+          </span>
+        )
+      ))}
+    </div>
+  </Container>
+</section>

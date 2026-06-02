@@ -1,0 +1,122 @@
+{
+  "id": "comparison-table",
+  "component": "ComparisonTable",
+  "category": "comparison",
+  "displayName": "Vs competitor comparison",
+  "description": "Side-by-side comparison vs competitors (different from PricingCompare which compares your own plans). One column should be your product (set featured: true). Rows = capability + check/text. Cell values support 'good'/'bad'/'neutral' tone for color-coded text values.",
+  "industries": [
+    "saas",
+    "ecommerce"
+  ],
+  "notSuitableFor": [
+    "portfolio",
+    "restaurant",
+    "personal"
+  ],
+  "pageRoles": [
+    "pricing",
+    "landing"
+  ],
+  "props": {
+    "eyebrow": {
+      "type": "string",
+      "required": false
+    },
+    "title": {
+      "type": "string",
+      "required": true,
+      "hint": "5-10 words. Often 'Why teams pick {Brand}' / '{Brand} vs the alternatives'."
+    },
+    "description": {
+      "type": "string",
+      "required": false
+    },
+    "columns": {
+      "type": "array<{ name, tagline?, featured?, logo? }>",
+      "required": true,
+      "hint": "3-4 columns. Set featured: true on your product (gets highlighted background). Logo URL renders an image; otherwise name as text."
+    },
+    "rows": {
+      "type": "array<{ feature, hint?, values }>",
+      "required": true,
+      "hint": "5-12 rows. values length must match columns length. Each value: boolean (renders ✓/✗), string (renders as text), OR { text, tone } (text with good/bad/neutral color)."
+    }
+  },
+  "preview": {
+    "eyebrow": "How we compare",
+    "title": "What you get with LanderPilot.",
+    "description": "An honest side-by-side with the obvious alternatives.",
+    "columns": [
+      {
+        "name": "LanderPilot",
+        "tagline": "AI site builder",
+        "featured": true
+      },
+      {
+        "name": "Webflow",
+        "tagline": "Visual builder"
+      },
+      {
+        "name": "Hand-coded",
+        "tagline": "From scratch"
+      }
+    ],
+    "rows": [
+      {
+        "feature": "Time to first draft",
+        "values": [
+          {
+            "text": "<5 min",
+            "tone": "good"
+          },
+          {
+            "text": "2-4 hours",
+            "tone": "neutral"
+          },
+          {
+            "text": "Days",
+            "tone": "bad"
+          }
+        ]
+      },
+      {
+        "feature": "Industry themes",
+        "values": [
+          true,
+          false,
+          false
+        ]
+      },
+      {
+        "feature": "Own the source code",
+        "values": [
+          true,
+          false,
+          true
+        ]
+      },
+      {
+        "feature": "Deploy to your domain",
+        "values": [
+          true,
+          true,
+          true
+        ]
+      },
+      {
+        "feature": "Monthly cost",
+        "values": [
+          {
+            "text": "$0-19",
+            "tone": "good"
+          },
+          {
+            "text": "$29+",
+            "tone": "neutral"
+          },
+          "$0"
+        ]
+      }
+    ]
+  }
+}

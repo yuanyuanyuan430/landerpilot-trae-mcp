@@ -1,0 +1,6 @@
+# 构建产物与依赖，不入站点仓库
+dist/
+node_modules/
+.astro/
+/.ganhuo/preview-server.json
+/.ganhuo/preview-server.log

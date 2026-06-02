@@ -1,0 +1,90 @@
+---
+import Container from "../atoms/Container.astro";
+import SectionHeader from "../atoms/SectionHeader.astro";
+
+interface TimelineItem {
+  date?: string;
+  title: string;
+  description?: string;
+  badge?: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  description?: string;
+  items: TimelineItem[];
+  layout?: "vertical" | "horizontal";
+}
+
+const { eyebrow, title, description, items, layout = "vertical" } = Astro.props;
+---
+
+<section class="py-20 md:py-24" data-automation-id="section-timeline">
+  <Container>
+    <SectionHeader
+      eyebrow={eyebrow}
+      title={title}
+      description={description}
+      class="mb-14"
+    />
+
+    {layout === "horizontal" ? (
+      <div class="overflow-x-auto pb-4">
+        <ol class="grid auto-cols-[minmax(16rem,1fr)] grid-flow-col gap-8 min-w-full">
+          {items.map((item, idx) => (
+            <li class="lp-inview relative pl-0 pt-10">
+              <span class="absolute left-0 right-0 top-4 h-px bg-[color:var(--border)]" aria-hidden="true"></span>
+              <span class="absolute left-3 top-2.5 grid h-4 w-4 place-items-center rounded-full border-2 border-base-100 bg-primary" aria-hidden="true"></span>
+              {item.date && (
+                <span class="block text-[0.78rem] font-bold uppercase tracking-[0.14em] text-primary">{item.date}</span>
+              )}
+              <h3 class="mt-2 font-display text-[1.2rem] font-[560] tracking-[-0.015em] text-base-content">{item.title}</h3>
+              {item.description && (
+                <p class="mt-2 text-[0.95rem] leading-[1.6] text-[color:var(--ganhuo-text-muted)]">{item.description}</p>
+              )}
+            </li>
+          ))}
+        </ol>
+      </div>
+    ) : (
+      <ol class="lp-timeline relative grid gap-12 md:gap-10">
+        {items.map((item, idx) => (
+          <li class="lp-inview relative grid grid-cols-[2.2rem_1fr] gap-x-5 md:grid-cols-[8rem_2.2rem_1fr] md:gap-x-7">
+            {item.date && (
+              <div class="hidden font-display text-[0.95rem] font-semibold text-primary md:block md:text-right">
+                {item.date}
+              </div>
+            )}
+            <div class="relative">
+              <span class="absolute left-1/2 top-0 grid h-9 w-9 -translate-x-1/2 place-items-center rounded-full border-2 border-[color:var(--border)] bg-base-100" aria-hidden="true">
+                <span class="h-2.5 w-2.5 rounded-full bg-primary"></span>
+              </span>
+              {idx < items.length - 1 && (
+                <span class="absolute left-1/2 top-9 h-[calc(100%+3rem)] w-px -translate-x-1/2 bg-[color:var(--border)]" aria-hidden="true"></span>
+              )}
+            </div>
+            <div class="pb-2">
+              {item.date && (
+                <span class="mb-1 inline-block font-display text-[0.95rem] font-semibold text-primary md:hidden">
+                  {item.date}
+                </span>
+              )}
+              <div class="flex flex-wrap items-center gap-2">
+                <h3 class="font-display text-[1.2rem] font-[560] tracking-[-0.015em] text-base-content">{item.title}</h3>
+                {item.badge && (
+                  <span class="rounded-full bg-base-200 px-2 py-0.5 text-[0.7rem] font-semibold uppercase tracking-[0.1em] text-base-content">
+                    {item.badge}
+                  </span>
+                )}
+              </div>
+              {item.description && (
+                <p class="mt-2 text-[0.95rem] leading-[1.6] text-[color:var(--ganhuo-text-muted)]">{item.description}</p>
+              )}
+            </div>
+          </li>
+        ))}
+      </ol>
+    )}
+  </Container>
+</section>

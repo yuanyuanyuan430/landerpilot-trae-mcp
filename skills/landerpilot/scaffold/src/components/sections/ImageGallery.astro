@@ -1,0 +1,116 @@
+---
+import Container from "../atoms/Container.astro";
+import SectionHeader from "../atoms/SectionHeader.astro";
+
+interface GalleryImage {
+  src: string;
+  alt?: string;
+  caption?: string;
+  href?: string;
+  aspect?: "square" | "landscape" | "portrait" | "wide";
+}
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  images: GalleryImage[];
+  layout?: "grid" | "masonry" | "strip";
+  columns?: 2 | 3 | 4;
+  gap?: "tight" | "default" | "loose";
+}
+
+const { eyebrow, title, description, images, layout = "grid", columns = 3, gap = "default" } = Astro.props;
+
+const colClass = {
+  2: "sm:grid-cols-2",
+  3: "sm:grid-cols-2 lg:grid-cols-3",
+  4: "sm:grid-cols-2 lg:grid-cols-4",
+}[columns];
+
+const gapClass = {
+  tight: "gap-2",
+  default: "gap-4 md:gap-5",
+  loose: "gap-6 md:gap-8",
+}[gap];
+
+const aspectClass = {
+  square: "aspect-square",
+  landscape: "aspect-[4/3]",
+  portrait: "aspect-[3/4]",
+  wide: "aspect-[16/9]",
+};
+---
+
+<section class="py-20 md:py-24" data-automation-id="section-image-gallery">
+  <Container>
+    {title && (
+      <SectionHeader
+        eyebrow={eyebrow}
+        title={title}
+        description={description}
+        class="mb-10"
+      />
+    )}
+
+    {layout === "strip" ? (
+      <div class="-mx-4 overflow-x-auto px-4 pb-2">
+        <div class:list={["flex", gapClass]}>
+          {images.map((img) => (
+            <figure class="shrink-0">
+              <a href={img.href ?? img.src} class="block overflow-hidden rounded-[var(--ganhuo-radius)] border border-[color:var(--border)] bg-base-200">
+                <img
+                  src={img.src}
+                  alt={img.alt ?? ""}
+                  loading="lazy"
+                  class:list={["h-72 w-auto object-cover transition duration-500 hover:scale-[1.03]"]}
+                />
+              </a>
+              {img.caption && (
+                <figcaption class="mt-2 text-[0.78rem] text-[color:var(--ganhuo-text-muted)]">{img.caption}</figcaption>
+              )}
+            </figure>
+          ))}
+        </div>
+      </div>
+    ) : layout === "masonry" ? (
+      <div class:list={["columns-1 sm:columns-2 lg:columns-3", gapClass.replace("gap-", "[column-gap:")
+        .replace("md:gap-", "_md:[column-gap:") + "]"]}>
+        {images.map((img) => (
+          <figure class="mb-4 break-inside-avoid">
+            <a href={img.href ?? img.src} class="block overflow-hidden rounded-[var(--ganhuo-radius)] border border-[color:var(--border)] bg-base-200">
+              <img src={img.src} alt={img.alt ?? ""} loading="lazy" class="w-full transition duration-500 hover:scale-[1.02]" />
+            </a>
+            {img.caption && (
+              <figcaption class="mt-2 text-[0.78rem] text-[color:var(--ganhuo-text-muted)]">{img.caption}</figcaption>
+            )}
+          </figure>
+        ))}
+      </div>
+    ) : (
+      <div class:list={["grid", colClass, gapClass]}>
+        {images.map((img) => {
+          const aspect = aspectClass[img.aspect ?? "landscape"];
+          return (
+            <figure>
+              <a
+                href={img.href ?? img.src}
+                class="group block overflow-hidden rounded-[var(--ganhuo-radius)] border border-[color:var(--border)] bg-base-200"
+              >
+                <img
+                  src={img.src}
+                  alt={img.alt ?? ""}
+                  loading="lazy"
+                  class:list={["w-full object-cover transition duration-500 group-hover:scale-[1.03]", aspect]}
+                />
+              </a>
+              {img.caption && (
+                <figcaption class="mt-2 text-[0.82rem] text-[color:var(--ganhuo-text-muted)]">{img.caption}</figcaption>
+              )}
+            </figure>
+          );
+        })}
+      </div>
+    )}
+  </Container>
+</section>

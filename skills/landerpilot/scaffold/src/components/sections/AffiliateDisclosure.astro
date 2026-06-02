@@ -1,0 +1,63 @@
+---
+import Container from "../atoms/Container.astro";
+
+interface Props {
+  text?: string;
+  link?: { text: string; href: string };
+  variant?: "subtle" | "highlighted" | "band";
+  position?: "top" | "inline" | "footer";
+  containerSize?: "default" | "tight" | "wide";
+}
+
+const {
+  text = "This site contains affiliate links. We may earn a commission on purchases at no extra cost to you.",
+  link,
+  variant = "subtle",
+  position = "top",
+  containerSize = "default",
+} = Astro.props;
+
+const variantClass = {
+  subtle: "border border-[color:color-mix(in_srgb,var(--color-info)_22%,transparent)] bg-[color:color-mix(in_srgb,var(--color-info)_6%,var(--color-base-100))] text-base-content",
+  highlighted: "border border-[color:var(--color-info)] bg-[color:color-mix(in_srgb,var(--color-info)_10%,var(--color-base-100))] text-base-content",
+  band: "border-y border-[color:var(--border)] bg-base-200 text-base-content",
+}[variant];
+
+const wrapperClass = position === "footer" ? "border-t border-[color:var(--border)] bg-base-200" : "";
+---
+
+<aside
+  role="note"
+  aria-label="Affiliate disclosure"
+  class:list={[wrapperClass, "py-3"]}
+  data-automation-id="section-affiliate-disclosure"
+>
+  <Container size={containerSize}>
+    <div
+      class:list={[
+        "flex flex-wrap items-start gap-3 rounded-[var(--radius-field,8px)] px-4 py-3 text-[0.85rem] leading-[1.55]",
+        variantClass,
+      ]}
+    >
+      <svg
+        class="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--color-info)]"
+        viewBox="0 0 16 16"
+        fill="none"
+        aria-hidden="true"
+      >
+        <path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM8 7v3.5M8 5v.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+      </svg>
+      <p class="flex-1">
+        {text}
+        {link && (
+          <>
+            {" "}
+            <a href={link.href} class="font-semibold text-primary underline-offset-4 hover:underline">
+              {link.text}
+            </a>
+          </>
+        )}
+      </p>
+    </div>
+  </Container>
+</aside>

@@ -1,0 +1,32 @@
+{
+  "id": "coupon-list",
+  "component": "CouponList",
+  "category": "deals",
+  "displayName": "Coupon list",
+  "description": "Card list of coupons / deals / cashback offers. Each card shows discount + title + description + expiry + 'Copy code' button (clipboard) + 'Get deal' CTA. Coupon types: 'code' (dashed code chip), 'deal' (gray chip), 'cashback' (filled primary chip).",
+  "industries": ["ecommerce"],
+  "pageRoles": ["store-detail", "category-detail", "directory-index"],
+  "props": {
+    "eyebrow": { "type": "string", "required": false },
+    "title": { "type": "string", "required": false },
+    "description": { "type": "string", "required": false },
+    "coupons": {
+      "type": "array<Coupon>",
+      "required": true,
+      "hint": "Each: { code?, title?, description?, expiry? (pre-formatted date string), href?, type? ('code'|'deal'|'cashback'), discount? (e.g. '20% off' — shown in the chip when no code) }. 3-12 items."
+    },
+    "ctaLabel": { "type": "string", "required": false, "default": "Get deal" },
+    "copyLabel": { "type": "string", "required": false, "default": "Copy code" },
+    "expiryPrefix": { "type": "string", "required": false, "default": "Expires" },
+    "containerSize": { "type": "enum", "values": ["default", "tight", "wide"], "required": false, "default": "default" }
+  },
+  "preview": {
+    "eyebrow": "Active offers",
+    "title": "Coupons and deals this week",
+    "coupons": [
+      { "code": "SUMMER25", "title": "25% off summer collection", "description": "Apply at checkout. Eligible items only.", "expiry": "Aug 31, 2026", "href": "#", "type": "code", "discount": "25% off" },
+      { "title": "Up to 6% cashback on hotels", "description": "Cashback credits within 30 days of stay.", "type": "cashback", "discount": "Up to 6%", "href": "#" },
+      { "title": "Free shipping on orders over $50", "description": "No code required — applies automatically.", "type": "deal", "discount": "Free ship", "href": "#" }
+    ]
+  }
+}

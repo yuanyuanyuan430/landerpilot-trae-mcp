@@ -1,0 +1,53 @@
+{
+  "id": "announcement-bar",
+  "component": "AnnouncementBar",
+  "category": "navigation",
+  "displayName": "Announcement bar",
+  "description": "Slim full-width strip above the header for time-bound announcements (sales, launches, holiday hours). Three color variants. Use sparingly — too many simultaneous announcements train users to ignore it.",
+  "industries": [
+    "all"
+  ],
+  "pageRoles": [
+    "header"
+  ],
+  "props": {
+    "text": {
+      "type": "string",
+      "required": true,
+      "hint": "Main announcement text. Under 10 words."
+    },
+    "link": {
+      "type": "cta",
+      "required": false,
+      "hint": "Optional inline link, 1-3 words."
+    },
+    "variant": {
+      "type": "enum",
+      "values": [
+        "neutral",
+        "primary",
+        "accent"
+      ],
+      "required": false,
+      "default": "neutral",
+      "hint": "'neutral' for everyday hours/policies. 'primary' for product launches. 'accent' for urgent / time-bound."
+    },
+    "position": {
+      "type": "enum",
+      "values": [
+        "top",
+        "static"
+      ],
+      "required": false,
+      "default": "top"
+    }
+  },
+  "preview": {
+    "text": "New: AI section selection just shipped.",
+    "link": {
+      "text": "Read the changelog",
+      "href": "/changelog/"
+    },
+    "variant": "primary"
+  }
+}

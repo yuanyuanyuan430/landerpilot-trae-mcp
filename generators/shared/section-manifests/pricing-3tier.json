@@ -1,0 +1,96 @@
+{
+  "id": "pricing-3tier",
+  "component": "Pricing3Tier",
+  "category": "pricing",
+  "displayName": "Three-tier pricing",
+  "description": "Three pricing cards in a row with a featured (dark) middle card. Industry-standard SaaS pricing layout. Use when plans differ on tier rather than on feature combinatorics.",
+  "industries": [
+    "saas",
+    "ecommerce",
+    "agency"
+  ],
+  "notSuitableFor": [
+    "restaurant",
+    "portfolio",
+    "law-firm"
+  ],
+  "pageRoles": [
+    "pricing",
+    "landing"
+  ],
+  "props": {
+    "eyebrow": {
+      "type": "string",
+      "required": false
+    },
+    "title": {
+      "type": "string",
+      "required": true,
+      "hint": "3-7 words."
+    },
+    "description": {
+      "type": "string",
+      "required": false,
+      "hint": "1 sentence."
+    },
+    "plans": {
+      "type": "array<PricingPlan>",
+      "required": true,
+      "hint": "Exactly 3 plans. The middle plan should set featured: true. Each plan: { name (1 word), price ('$X' or 'Custom'), per (optional, e.g. '/mo'), description (1 sentence), features (3-6 strings, ~5 words each), cta { text, href }, featured?, badge? (3-word marker like 'Most picked', only on featured) }"
+    }
+  },
+  "preview": {
+    "eyebrow": "Pricing",
+    "title": "One workspace. Every blueprint.",
+    "description": "Built-in plans for solo builders and growing teams.",
+    "plans": [
+      {
+        "name": "Starter",
+        "price": "$0",
+        "per": "/forever",
+        "description": "Local builds, three blueprints, one preview.",
+        "features": [
+          "Local Astro builds",
+          "3 blueprints",
+          "Self-hosted fonts"
+        ],
+        "cta": {
+          "text": "Get started",
+          "href": "#starter"
+        }
+      },
+      {
+        "name": "Studio",
+        "price": "$19",
+        "per": "/site/mo",
+        "description": "Everything in Starter plus the cloud deployment helper.",
+        "features": [
+          "Cloudflare deploys",
+          "Custom domains",
+          "Industry theme packs",
+          "Priority builds"
+        ],
+        "cta": {
+          "text": "Start a site",
+          "href": "#studio"
+        },
+        "featured": true,
+        "badge": "Most picked"
+      },
+      {
+        "name": "Agency",
+        "price": "Custom",
+        "description": "For teams shipping client sites at volume.",
+        "features": [
+          "White-label preview",
+          "SLA",
+          "Shared workspace"
+        ],
+        "cta": {
+          "text": "Talk to us",
+          "href": "#agency"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "id": "blog-post",
+  "component": "BlogPost",
+  "category": "blog",
+  "displayName": "Blog post layout",
+  "description": "Single blog article layout: title + meta + cover image + prose content + tags. Pass HTML content via contentHtml prop, OR use the default slot with regular Astro markup. Built-in lp-prose typography styles handle h2/h3/blockquote/code/img/list.",
+  "industries": [
+    "all"
+  ],
+  "pageRoles": [
+    "blog-post"
+  ],
+  "props": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "hint": "5-12 words. Article title."
+    },
+    "excerpt": {
+      "type": "string",
+      "required": false,
+      "hint": "1-3 sentence subhead under title."
+    },
+    "category": {
+      "type": "string",
+      "required": false,
+      "hint": "Single primary category. Renders as Tag chip."
+    },
+    "tags": {
+      "type": "string[]",
+      "required": false,
+      "hint": "3-6 tags. Render at the bottom as a tag list."
+    },
+    "date": {
+      "type": "string",
+      "required": false,
+      "hint": "Published date. Pre-formatted (e.g. '2026-05-22' or 'May 22, 2026')."
+    },
+    "readingTime": {
+      "type": "string",
+      "required": false,
+      "hint": "e.g. '5 min read'."
+    },
+    "author": {
+      "type": "{ name, role?, avatar? }",
+      "required": false
+    },
+    "cover": {
+      "type": "{ src, alt?, caption? }",
+      "required": false,
+      "hint": "Hero image. 16:9 or wider works best. Caption renders below."
+    },
+    "contentHtml": {
+      "type": "string",
+      "required": false,
+      "hint": "Pre-rendered HTML content. If set, used in place of the default slot. For trusted sources only (rendered with set:html)."
+    }
+  },
+  "preview": {
+    "title": "How we shipped a 16-section component library in one afternoon",
+    "excerpt": "Three principles for letting an AI assemble production sites without DEMO-feel.",
+    "category": "Build notes",
+    "date": "May 22, 2026",
+    "readingTime": "5 min read",
+    "author": {
+      "name": "Maya Chen",
+      "role": "Founder & Designer"
+    },
+    "tags": [
+      "astro",
+      "ai",
+      "design-systems"
+    ]
+  }
+}

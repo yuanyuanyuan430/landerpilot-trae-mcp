@@ -1,0 +1,36 @@
+{
+  "id": "store-hero",
+  "component": "StoreHero",
+  "category": "hero",
+  "displayName": "Store hero with cashback rate card",
+  "description": "Hero for a single merchant page: logo + store name + category + giant cashback rate display in a side card + visit CTA + coupon count. Pair with CouponList below.",
+  "industries": ["ecommerce"],
+  "pageRoles": ["store-detail"],
+  "props": {
+    "eyebrow": { "type": "string", "required": false, "default": "Store" },
+    "store": { "type": "string", "required": true, "hint": "Merchant name." },
+    "title": { "type": "string", "required": false, "hint": "Page H1 — defaults to store name." },
+    "description": { "type": "string", "required": false, "hint": "1-3 sentence merchant intro." },
+    "cashbackRate": { "type": "string", "required": false, "hint": "Big rate value (e.g. '5%' or 'Up to 6%'). Renders as the side card." },
+    "cashbackLabel": { "type": "string", "required": false, "default": "Cashback rate" },
+    "rateNote": { "type": "string", "required": false, "hint": "Small caveat under the rate (terms, exclusions)." },
+    "logo": { "type": "string", "required": false, "hint": "Square logo URL." },
+    "category": { "type": "string", "required": false },
+    "couponCount": { "type": "number", "required": false, "hint": "Active coupons. Renders below the description." },
+    "couponLabel": { "type": "string", "required": false, "default": "active coupons" },
+    "updatedDate": { "type": "string", "required": false, "hint": "Last-updated date for trust." },
+    "primaryCta": { "type": "cta", "required": false, "hint": "Affiliate visit CTA — rel defaults to 'sponsored noopener'." },
+    "secondaryCta": { "type": "cta", "required": false }
+  },
+  "preview": {
+    "eyebrow": "Store",
+    "store": "Booking.com",
+    "description": "Save on hotel bookings worldwide with cashback on eligible reservations. Verify final terms during checkout.",
+    "cashbackRate": "Up to 6%",
+    "rateNote": "Cashback varies by hotel and booking type.",
+    "category": "Travel",
+    "couponCount": 3,
+    "updatedDate": "May 22, 2026",
+    "primaryCta": { "text": "Visit Booking.com", "href": "#" }
+  }
+}

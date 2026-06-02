@@ -1,0 +1,138 @@
+---
+import Container from "../atoms/Container.astro";
+import SectionHeader from "../atoms/SectionHeader.astro";
+import Button from "../atoms/Button.astro";
+
+interface PricingPlan {
+  name: string;
+  price: string;
+  per?: string;
+  description?: string;
+  features: string[];
+  cta: { text: string; href: string };
+  featured?: boolean;
+  badge?: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  description?: string;
+  plans: PricingPlan[];
+}
+
+const { eyebrow, title, description, plans } = Astro.props;
+---
+
+<section class="py-20 md:py-28" id="pricing" data-automation-id="section-pricing-3tier">
+  <Container>
+    <SectionHeader
+      eyebrow={eyebrow}
+      title={title}
+      description={description}
+      align="center"
+      size="tight"
+      class="mb-14"
+    />
+    <div class="lp-inview mx-auto grid w-full max-w-5xl gap-5 lg:grid-cols-3 lg:items-stretch">
+      {plans.map((plan) => (
+        <div
+          class:list={[
+            "lp-price flex h-full flex-col rounded-[var(--ganhuo-radius)] p-[2rem_1.85rem]",
+            plan.featured
+              ? "lp-price--featured border-transparent"
+              : "border border-[color:var(--border)] bg-base-100",
+          ]}
+          data-automation-id={`pricing-plan-${plan.name.toLowerCase().replace(/\s+/g, "-")}`}
+        >
+          {plan.badge && plan.featured && (
+            <span
+              class="mb-4 self-start rounded-full bg-primary px-3 py-1 text-[0.7rem] font-bold uppercase tracking-[0.12em] text-primary-content"
+            >
+              {plan.badge}
+            </span>
+          )}
+          <div
+            class:list={[
+              "font-display text-[1.3rem] font-[560] tracking-[-0.015em]",
+              plan.featured ? "text-white" : "text-base-content",
+            ]}
+          >
+            {plan.name}
+          </div>
+          <div
+            class:list={[
+              "mt-4 font-display text-[2.9rem] font-[560] leading-none tracking-[-0.03em]",
+              plan.featured ? "text-white" : "text-base-content",
+            ]}
+          >
+            {plan.price}
+            {plan.per && (
+              <span
+                class:list={[
+                  "ml-1 font-sans text-[0.92rem] font-semibold",
+                  plan.featured
+                    ? "text-[color:color-mix(in_srgb,#fff_60%,transparent)]"
+                    : "text-[color:var(--ganhuo-text-muted)]",
+                ]}
+              >
+                {plan.per}
+              </span>
+            )}
+          </div>
+          {plan.description && (
+            <p
+              class:list={[
+                "mt-[0.85rem] text-[0.92rem] leading-[1.6]",
+                plan.featured
+                  ? "text-[color:color-mix(in_srgb,#fff_66%,transparent)]"
+                  : "text-[color:var(--ganhuo-text-muted)]",
+              ]}
+            >
+              {plan.description}
+            </p>
+          )}
+          <ul class="my-[1.4rem_0_1.8rem] grid gap-[0.7rem]">
+            {plan.features.map((f) => (
+              <li
+                class:list={[
+                  "relative pl-6 text-[0.9rem] leading-[1.5]",
+                  plan.featured
+                    ? "text-[color:color-mix(in_srgb,#fff_82%,transparent)]"
+                    : "text-base-content",
+                ]}
+              >
+                <span
+                  class:list={[
+                    "absolute left-0 top-[0.36rem] block h-[0.42rem] w-[0.72rem] -rotate-45 border-b-2 border-l-2",
+                    plan.featured ? "border-[color:var(--color-secondary)]" : "border-primary",
+                  ]}
+                ></span>
+                {f}
+              </li>
+            ))}
+          </ul>
+          <div class="mt-auto">
+            <Button
+              variant={plan.featured ? "inverse" : "primary"}
+              href={plan.cta.href}
+              class="w-full"
+              automationId={`pricing-cta-${plan.name.toLowerCase().replace(/\s+/g, "-")}`}
+            >
+              {plan.cta.text}
+            </Button>
+          </div>
+        </div>
+      ))}
+    </div>
+  </Container>
+</section>
+
+<style>
+  .lp-price--featured {
+    position: relative;
+    background: var(--color-neutral);
+    color: color-mix(in srgb, #fff 78%, var(--color-neutral));
+    box-shadow: 0 30px 60px -28px rgba(20, 18, 15, 0.5);
+  }
+</style>

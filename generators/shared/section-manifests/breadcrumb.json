@@ -1,0 +1,53 @@
+{
+  "id": "breadcrumb",
+  "component": "Breadcrumb",
+  "category": "navigation",
+  "displayName": "Breadcrumb",
+  "description": "Standalone breadcrumb navigation strip. Use when PageHero isn't a fit but the page still needs hierarchical context (e.g. deep docs, product catalogs). Includes schema.org BreadcrumbList microdata for SEO.",
+  "industries": [
+    "all"
+  ],
+  "pageRoles": [
+    "blog-post",
+    "blog-index",
+    "product"
+  ],
+  "props": {
+    "items": {
+      "type": "array<{ text, href? }>",
+      "required": true,
+      "hint": "2-5 crumbs from root to current. Last item is the current page (no href). Example: [{text:'Home', href:'/'}, {text:'Blog', href:'/blog/'}, {text:'This post'}]"
+    },
+    "bordered": {
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "hint": "Bottom border + base-100 bg. Set false for transparent inline use."
+    },
+    "containerSize": {
+      "type": "enum",
+      "values": [
+        "default",
+        "tight",
+        "wide"
+      ],
+      "required": false,
+      "default": "default"
+    }
+  },
+  "preview": {
+    "items": [
+      {
+        "text": "Home",
+        "href": "/"
+      },
+      {
+        "text": "Sections",
+        "href": "/sections/"
+      },
+      {
+        "text": "Hero variants"
+      }
+    ]
+  }
+}

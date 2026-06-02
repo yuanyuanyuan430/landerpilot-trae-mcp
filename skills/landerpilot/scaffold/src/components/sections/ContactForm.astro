@@ -1,0 +1,146 @@
+---
+import Container from "../atoms/Container.astro";
+import SectionHeader from "../atoms/SectionHeader.astro";
+import FormField from "../atoms/FormField.astro";
+import Input from "../atoms/Input.astro";
+import Textarea from "../atoms/Textarea.astro";
+import Select from "../atoms/Select.astro";
+import Button from "../atoms/Button.astro";
+
+type FieldType = "text" | "email" | "tel" | "url" | "textarea" | "select";
+
+interface FormFieldConfig {
+  name: string;
+  label: string;
+  type?: FieldType;
+  placeholder?: string;
+  required?: boolean;
+  rows?: number;
+  options?: Array<{ value: string; label: string }>;
+  fullWidth?: boolean;
+}
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  description?: string;
+  action?: string;
+  method?: "POST" | "GET";
+  fields: FormFieldConfig[];
+  submitText?: string;
+  successUrl?: string;
+  layout?: "centered" | "split";
+  splitContent?: { title?: string; description?: string; items?: Array<{ label: string; value: string }> };
+}
+
+const {
+  eyebrow,
+  title,
+  description,
+  action = "",
+  method = "POST",
+  fields,
+  submitText = "Send message",
+  successUrl,
+  layout = "centered",
+  splitContent,
+} = Astro.props;
+---
+
+<section class="py-20 md:py-24" id="contact" data-automation-id="section-contact-form">
+  <Container size={layout === "split" ? "default" : "tight"}>
+    {layout === "centered" && (
+      <SectionHeader
+        eyebrow={eyebrow}
+        title={title}
+        description={description}
+        align="center"
+        size="tight"
+        class="mb-12"
+      />
+    )}
+
+    <div class:list={["grid gap-12", layout === "split" && "lg:grid-cols-[1fr_1.1fr] lg:gap-16"]}>
+      {layout === "split" && (
+        <div class="max-w-md">
+          {eyebrow && (
+            <span class="text-[0.76rem] font-bold uppercase tracking-[0.18em] text-primary">{eyebrow}</span>
+          )}
+          <h2 class="mt-5 font-display text-[clamp(2rem,3.7vw,2.7rem)] font-[540] leading-[1.1] tracking-[-0.024em] text-base-content">
+            {title}
+          </h2>
+          {description && (
+            <p class="mt-5 text-[clamp(1.02rem,1.3vw,1.18rem)] leading-[1.66] text-[color:var(--ganhuo-text-muted)]">
+              {description}
+            </p>
+          )}
+          {splitContent?.items && (
+            <dl class="mt-10 grid gap-6">
+              {splitContent.items.map((item) => (
+                <div>
+                  <dt class="text-[0.76rem] font-bold uppercase tracking-[0.16em] text-[color:var(--ganhuo-text-muted)]">
+                    {item.label}
+                  </dt>
+                  <dd class="mt-1.5 font-display text-[1.1rem] font-medium text-base-content">{item.value}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
+        </div>
+      )}
+
+      <form
+        action={action}
+        method={method}
+        class:list={[
+          "grid gap-5",
+          layout === "centered" && "mx-auto w-full max-w-2xl",
+          layout === "split" && "rounded-[var(--ganhuo-radius)] border border-[color:var(--border)] bg-base-100 p-7 md:p-10",
+        ]}
+        data-automation-id="contact-form"
+      >
+        {successUrl && (
+          <input type="hidden" name="_next" value={successUrl} />
+        )}
+        <div class:list={["grid gap-5 md:grid-cols-2"]}>
+          {fields.map((field) => (
+            <div class:list={[field.fullWidth || field.type === "textarea" ? "md:col-span-2" : ""]}>
+              <FormField name={field.name} label={field.label} required={field.required}>
+                {field.type === "textarea" ? (
+                  <Textarea
+                    name={field.name}
+                    placeholder={field.placeholder}
+                    required={field.required}
+                    rows={field.rows ?? 5}
+                  />
+                ) : field.type === "select" && field.options ? (
+                  <Select
+                    name={field.name}
+                    placeholder={field.placeholder}
+                    required={field.required}
+                    options={field.options}
+                  />
+                ) : (
+                  <Input
+                    type={(field.type as any) || "text"}
+                    name={field.name}
+                    placeholder={field.placeholder}
+                    required={field.required}
+                  />
+                )}
+              </FormField>
+            </div>
+          ))}
+        </div>
+        <div class="mt-2 flex flex-wrap items-center justify-between gap-4">
+          <p class="text-[0.78rem] text-[color:var(--ganhuo-text-muted)]">
+            We respect your privacy. No newsletter spam.
+          </p>
+          <Button variant="primary" type="submit" automationId="contact-form-submit">
+            {submitText}
+          </Button>
+        </div>
+      </form>
+    </div>
+  </Container>
+</section>

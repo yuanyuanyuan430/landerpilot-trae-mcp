@@ -1,0 +1,92 @@
+{
+  "id": "blog-list",
+  "component": "BlogList",
+  "category": "blog",
+  "displayName": "Blog post list",
+  "description": "Blog index / category page. Three layouts: 'grid' (uniform card grid), 'featured' (first post is hero-sized, rest in grid), 'list' (dense list view, no cover images — for archives / search results).",
+  "industries": [
+    "all"
+  ],
+  "pageRoles": [
+    "blog-index"
+  ],
+  "props": {
+    "eyebrow": {
+      "type": "string",
+      "required": false
+    },
+    "title": {
+      "type": "string",
+      "required": false,
+      "hint": "Section heading. Omit when used inline below PageHero."
+    },
+    "description": {
+      "type": "string",
+      "required": false
+    },
+    "posts": {
+      "type": "array<BlogPost>",
+      "required": true,
+      "hint": "Each: { title, excerpt?, href, cover?: { src, alt? }, category?, tags?, date?, readingTime?, author?: { name, avatar? } }. 3-12 posts depending on layout."
+    },
+    "layout": {
+      "type": "enum",
+      "values": [
+        "grid",
+        "featured",
+        "list"
+      ],
+      "required": false,
+      "default": "grid"
+    },
+    "columns": {
+      "type": "enum",
+      "values": [
+        2,
+        3
+      ],
+      "required": false,
+      "default": 3
+    }
+  },
+  "preview": {
+    "eyebrow": "Latest",
+    "title": "From the blog.",
+    "posts": [
+      {
+        "title": "How we shipped a 16-section library in one afternoon",
+        "excerpt": "Three principles for letting AI assemble sites without DEMO-feel.",
+        "href": "/blog/16-sections/",
+        "category": "Build notes",
+        "date": "2026-05-22",
+        "readingTime": "5 min read",
+        "author": {
+          "name": "Maya Chen"
+        }
+      },
+      {
+        "title": "Industry theme tokens vs custom design tokens",
+        "excerpt": "When to lean on DaisyUI's variable system and when to roll your own.",
+        "href": "/blog/theme-tokens/",
+        "category": "Design systems",
+        "date": "2026-05-12",
+        "readingTime": "8 min read",
+        "author": {
+          "name": "Diego Reyes"
+        }
+      },
+      {
+        "title": "Static sites that feel alive (without JS)",
+        "excerpt": "Pure CSS interactions cover more ground than you think.",
+        "href": "/blog/static-alive/",
+        "category": "Engineering",
+        "date": "2026-04-29",
+        "readingTime": "6 min read",
+        "author": {
+          "name": "Priya Anand"
+        }
+      }
+    ],
+    "layout": "featured"
+  }
+}

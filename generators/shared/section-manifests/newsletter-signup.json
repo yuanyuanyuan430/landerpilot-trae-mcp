@@ -1,0 +1,78 @@
+{
+  "id": "newsletter-signup",
+  "component": "NewsletterSignup",
+  "category": "form",
+  "displayName": "Newsletter signup",
+  "description": "Single email field + submit. Three variants: 'centered' for blog footers / sidebar conversions, 'split' for editorial pages, 'band' for a primary-colored full-width strip (high attention, use sparingly).",
+  "industries": [
+    "all"
+  ],
+  "pageRoles": [
+    "landing",
+    "blog-index",
+    "blog-post",
+    "about"
+  ],
+  "props": {
+    "eyebrow": {
+      "type": "string",
+      "required": false
+    },
+    "title": {
+      "type": "string",
+      "required": false,
+      "default": "Subscribe to the newsletter",
+      "hint": "Promise the reader gets, not the action. e.g. 'A weekly digest, no fluff.'"
+    },
+    "description": {
+      "type": "string",
+      "required": false
+    },
+    "placeholder": {
+      "type": "string",
+      "required": false,
+      "default": "you@example.com"
+    },
+    "submitText": {
+      "type": "string",
+      "required": false,
+      "default": "Subscribe"
+    },
+    "action": {
+      "type": "string",
+      "required": false,
+      "hint": "Newsletter service URL — ConvertKit / Buttondown / MailerLite / Formspree."
+    },
+    "fieldName": {
+      "type": "string",
+      "required": false,
+      "default": "email"
+    },
+    "successUrl": {
+      "type": "string",
+      "required": false
+    },
+    "variant": {
+      "type": "enum",
+      "values": [
+        "centered",
+        "split",
+        "band"
+      ],
+      "required": false,
+      "default": "centered"
+    },
+    "privacyNote": {
+      "type": "string",
+      "required": false,
+      "default": "We send one email a month. Unsubscribe anytime."
+    }
+  },
+  "preview": {
+    "eyebrow": "Stay in the loop",
+    "title": "Get the section drops in your inbox.",
+    "description": "One email when we ship new sections, themes, or blueprint updates.",
+    "submitText": "Subscribe",
+    "variant": "split"
+  }
+}

@@ -1,0 +1,30 @@
+---
+interface Props {
+  href?: string;
+  size?: "sm" | "md";
+  class?: string;
+}
+
+const { href, size = "md", class: extra = "" } = Astro.props;
+
+const sizeClass = size === "sm" ? "h-7 px-2.5 text-[0.78rem]" : "h-8 px-3 text-[0.85rem]";
+
+const base = [
+  "inline-flex items-center gap-1.5 rounded-full border border-[color:var(--border)] bg-base-100",
+  "text-base-content font-medium transition-colors duration-150",
+  sizeClass,
+  extra,
+];
+
+const interactive = "hover:border-primary hover:text-primary";
+---
+
+{href ? (
+  <a href={href} class:list={[...base, interactive]}>
+    <slot />
+  </a>
+) : (
+  <span class:list={base}>
+    <slot />
+  </span>
+)}

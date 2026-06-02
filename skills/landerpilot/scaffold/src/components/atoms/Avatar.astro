@@ -1,0 +1,48 @@
+---
+interface Props {
+  src?: string;
+  alt?: string;
+  name?: string;
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
+  shape?: "circle" | "square";
+  class?: string;
+}
+
+const { src, alt, name = "", size = "md", shape = "circle", class: extra = "" } = Astro.props;
+
+const sizeClass = {
+  xs: "h-7 w-7 text-[0.65rem]",
+  sm: "h-9 w-9 text-[0.78rem]",
+  md: "h-11 w-11 text-[0.92rem]",
+  lg: "h-14 w-14 text-base",
+  xl: "h-20 w-20 text-xl",
+}[size];
+
+const shapeClass = shape === "circle" ? "rounded-full" : "rounded-[10px]";
+
+const initials = name
+  .replace(/[^\p{L}\p{N}\s]/gu, " ")
+  .trim()
+  .split(/\s+/)
+  .filter(Boolean)
+  .slice(0, 2)
+  .map((w) => w[0].toUpperCase())
+  .join("");
+---
+
+<span
+  class:list={[
+    "inline-block overflow-hidden border border-[color:var(--border)] bg-base-200 align-middle",
+    sizeClass,
+    shapeClass,
+    extra,
+  ]}
+>
+  {src ? (
+    <img src={src} alt={alt ?? name ?? ""} class="h-full w-full object-cover" loading="lazy" />
+  ) : (
+    <span class="grid h-full w-full place-items-center font-display font-semibold text-base-content/80">
+      {initials || "?"}
+    </span>
+  )}
+</span>

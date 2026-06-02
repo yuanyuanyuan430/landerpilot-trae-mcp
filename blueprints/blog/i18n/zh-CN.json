@@ -1,0 +1,81 @@
+{
+  "nav": {
+    "primaryLabel": "主导航",
+    "home": "首页",
+    "blog": "文章",
+    "about": "关于",
+    "contact": "联系"
+  },
+  "cta": {
+    "subscribe": "订阅",
+    "readMore": "阅读全文",
+    "contactTeam": "联系我们"
+  },
+  "sections": {
+    "blog": {
+      "kicker": "文章",
+      "title": "最新内容",
+      "description": "团队的笔记、文章与现场观察。"
+    },
+    "team": {
+      "kicker": "我们是谁",
+      "title": "团队介绍",
+      "description": "文章背后的人。"
+    },
+    "contact": {
+      "kicker": "联系我们",
+      "title": "给我们留言",
+      "description": "选题、约稿、勘误，都欢迎。",
+      "submitText": "发送消息",
+      "privacyNote": "我们重视你的隐私。"
+    },
+    "newsletter": {
+      "eyebrow": "保持联系",
+      "title": "新文章上线时通知你",
+      "description": "新内容上线时一封邮件，绝不打扰。",
+      "submitText": "订阅",
+      "privacyNote": "随时取消订阅。"
+    },
+    "announcement": {
+      "linkText": "了解详情"
+    }
+  },
+  "footer": {
+    "label": "页脚",
+    "writing": "文章",
+    "company": "关于",
+    "legal": "法律",
+    "privacy": "隐私",
+    "terms": "条款",
+    "rights": "保留所有权利。"
+  },
+  "support": {
+    "sitePageLabel": "页面",
+    "aboutTitle": "关于 {{siteName}}",
+    "contactTitle": "联系我们",
+    "contactDescription": "向 {{siteName}} 团队提交线索、稿件或合作意向。",
+    "privacyTitle": "隐私政策",
+    "privacyDescription": "发布前请由客户或法律负责人替换为正式隐私政策。",
+    "termsTitle": "服务条款",
+    "termsDescription": "发布前请由客户或法律负责人替换为正式服务条款。"
+  },
+  "post": {
+    "by": "作者",
+    "minRead": "分钟阅读",
+    "tagged": "标签",
+    "back": "返回所有文章",
+    "placeholderAuthor": "作者"
+  },
+  "defaults": {
+    "description": "{{siteName}} — 文章、笔记与思考。",
+    "siteTagline": "文章、笔记与思考。",
+    "indexHeroTitle": "{{siteName}}",
+    "indexHeroDescription": "{{siteName}} 团队的写作集合。",
+    "aboutTitle": "关于 {{siteName}}",
+    "ctaTitle": "订阅 {{siteName}}",
+    "placeholderPostTitle": "未命名文章",
+    "placeholderPostExcerpt": "发布前请替换为真实摘要。",
+    "placeholderPostContent": "<p>发布前请替换为真实内容。</p>",
+    "placeholderCategory": "笔记"
+  }
+}

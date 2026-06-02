@@ -1,0 +1,78 @@
+---
+interface Props {
+  name?: string;
+  id?: string;
+  value?: string;
+  checked?: boolean;
+  required?: boolean;
+  disabled?: boolean;
+  label?: string;
+  description?: string;
+  class?: string;
+  automationId?: string;
+}
+
+const {
+  name,
+  id,
+  value,
+  checked,
+  required,
+  disabled,
+  label,
+  description,
+  class: extra = "",
+  automationId,
+} = Astro.props;
+
+const fieldId = id ?? name;
+---
+
+<label
+  for={fieldId}
+  class:list={[
+    "flex items-start gap-3 cursor-pointer select-none",
+    disabled && "cursor-not-allowed opacity-60",
+    extra,
+  ]}
+>
+  <input
+    type="checkbox"
+    id={fieldId}
+    name={name}
+    value={value}
+    checked={checked}
+    required={required}
+    disabled={disabled}
+    data-automation-id={automationId}
+    class="peer sr-only"
+  />
+  <span
+    class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-[5px] border border-[color:var(--border)] bg-base-100 transition peer-checked:border-primary peer-checked:bg-primary peer-focus-visible:shadow-[0_0_0_3px_color-mix(in_srgb,var(--color-primary)_24%,transparent)]"
+    aria-hidden="true"
+  >
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 12 12"
+      fill="none"
+      class="opacity-0 transition peer-checked:opacity-100 text-primary-content"
+    >
+      <path d="M2 6.5L5 9.5L10 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  </span>
+  {(label || description) && (
+    <span class="grid gap-0.5">
+      {label && <span class="text-[0.93rem] font-medium text-base-content">{label}</span>}
+      {description && <span class="text-[0.82rem] text-[color:var(--ganhuo-text-muted)]">{description}</span>}
+    </span>
+  )}
+</label>
+
+<style>
+  /* peer-checked targets the sibling SVG via Tailwind's peer-checked: prefix on
+     parent class:list above. Astro scoped styles + Tailwind handle the rest. */
+  input[type="checkbox"]:checked + span svg { opacity: 1; }
+  input[type="checkbox"]:checked + span { background-color: var(--color-primary); border-color: var(--color-primary); }
+  input[type="checkbox"]:focus-visible + span { box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 24%, transparent); }
+</style>

@@ -1,0 +1,33 @@
+{
+  "id": "blog",
+  "displayName": "Blog / Publication",
+  "status": "available",
+  "description": "Multi-post blog or publication site: blog index with featured/list/grid layouts + per-post pages with editorial typography. Optional about/contact/legal support pages.",
+  "entrySkill": "landerpilot",
+  "inputModel": {
+    "required": ["site_name", "posts"],
+    "recommended": ["domain", "site_description", "posts[].author", "posts[].category"],
+    "notes": "Each post needs at minimum { slug, title, contentHtml, date }. Pass contentHtml as ready-to-render HTML (markdown rendering happens upstream of producer)."
+  },
+  "dataPolicy": {
+    "mode": "strict",
+    "reason": "Blog content is the product — fabricated posts mislead readers and SEO. Producer refuses to invent post content.",
+    "acceptedSources": ["posts array", "uploaded markdown", "RSS export", "CMS export"],
+    "minimum": "At least 1 real post with title + content + date.",
+    "demoMode": "Use demo_mode=true to allow a single placeholder post for layout preview; producer emits a warning."
+  },
+  "routes": ["index", "blog/{slug}", "about", "contact", "privacy", "terms"],
+  "variants": ["blog-magazine", "blog-personal"],
+  "languageSupport": {
+    "default": "en",
+    "stable": ["en"],
+    "mvp": ["zh-CN"],
+    "notes": "Producer is language-agnostic for posts — pass content in any language; framing strings (nav, footer, eyebrows) come from i18n."
+  },
+  "examples": ["examples/basic.json"],
+  "theme": {
+    "mode": "tailwind-component-layer",
+    "tailwind": true,
+    "defaultIndustry": "portfolio"
+  }
+}

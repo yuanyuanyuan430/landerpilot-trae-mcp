@@ -1,0 +1,76 @@
+---
+interface Props {
+  name?: string;
+  id?: string;
+  value?: string;
+  checked?: boolean;
+  required?: boolean;
+  disabled?: boolean;
+  label?: string;
+  description?: string;
+  class?: string;
+  automationId?: string;
+}
+
+const {
+  name,
+  id,
+  value,
+  checked,
+  required,
+  disabled,
+  label,
+  description,
+  class: extra = "",
+  automationId,
+} = Astro.props;
+
+const fieldId = id ?? name;
+---
+
+<label
+  for={fieldId}
+  class:list={[
+    "flex items-start gap-3 cursor-pointer select-none",
+    disabled && "cursor-not-allowed opacity-60",
+    extra,
+  ]}
+>
+  <input
+    type="checkbox"
+    role="switch"
+    id={fieldId}
+    name={name}
+    value={value}
+    checked={checked}
+    required={required}
+    disabled={disabled}
+    data-automation-id={automationId}
+    class="sr-only"
+  />
+  <span
+    class="relative mt-0.5 inline-flex h-6 w-11 shrink-0 items-center rounded-full border border-[color:var(--border)] bg-base-200 transition switch-track"
+    aria-hidden="true"
+  >
+    <span class="absolute left-0.5 inline-block h-[1.1rem] w-[1.1rem] rounded-full bg-base-100 shadow-sm transition switch-thumb"></span>
+  </span>
+  {(label || description) && (
+    <span class="grid gap-0.5">
+      {label && <span class="text-[0.93rem] font-medium text-base-content">{label}</span>}
+      {description && <span class="text-[0.82rem] text-[color:var(--ganhuo-text-muted)]">{description}</span>}
+    </span>
+  )}
+</label>
+
+<style>
+  input[type="checkbox"][role="switch"]:checked + .switch-track {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+  }
+  input[type="checkbox"][role="switch"]:checked + .switch-track .switch-thumb {
+    transform: translateX(1.25rem);
+  }
+  input[type="checkbox"][role="switch"]:focus-visible + .switch-track {
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 24%, transparent);
+  }
+</style>

@@ -1,0 +1,26 @@
+---
+interface Props {
+  size?: "default" | "tight" | "wide";
+  as?: "div" | "section" | "header" | "footer" | "main" | "article";
+  class?: string;
+}
+
+const { size = "default", as: Tag = "div", class: extraClass = "" } = Astro.props;
+
+const sizeClass =
+  size === "tight"
+    ? "max-w-4xl"
+    : size === "wide"
+      ? "max-w-[88rem]"
+      : "max-w-7xl";
+---
+
+<Tag
+  class:list={[
+    "mx-auto w-full px-[clamp(1.25rem,4vw,2.75rem)]",
+    sizeClass,
+    extraClass,
+  ]}
+>
+  <slot />
+</Tag>

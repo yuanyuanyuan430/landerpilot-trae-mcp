@@ -1,0 +1,68 @@
+{
+  "id": "features-3col",
+  "component": "Features3Col",
+  "category": "features",
+  "displayName": "Three-column features",
+  "description": "Compact 3-column grid for short feature/value-prop items. Best when the page has many features to cover and screen real estate matters. Two variants: 'default' (boxed cards), 'minimal' (no boxes, top-rule + numeric index — fits editorial / studio / restaurant pages).",
+  "industries": [
+    "all"
+  ],
+  "pageRoles": [
+    "landing",
+    "product",
+    "pricing"
+  ],
+  "props": {
+    "eyebrow": {
+      "type": "string",
+      "required": false,
+      "hint": "Section kicker, 1-3 words."
+    },
+    "title": {
+      "type": "string",
+      "required": false,
+      "hint": "Section headline. Omit if the section runs unannotated under another section."
+    },
+    "description": {
+      "type": "string",
+      "required": false,
+      "hint": "1 sentence intro."
+    },
+    "items": {
+      "type": "array<{ title: string, description: string, icon?: string }>",
+      "required": true,
+      "hint": "Exactly 3 items (or multiples of 3) for clean grid. title 2-5 words, description 1-2 sentences (15-30 words). icon is a single emoji or short letter (used in 'default' variant only)."
+    },
+    "variant": {
+      "type": "enum",
+      "values": [
+        "default",
+        "minimal"
+      ],
+      "required": false,
+      "default": "default",
+      "hint": "'default' = boxed cards with hover. 'minimal' = top-rule + indexed (01/02/03), no boxes, editorial feel — pairs well with hero-centered."
+    }
+  },
+  "preview": {
+    "eyebrow": "What you get",
+    "title": "Everything to ship marketing sites at speed.",
+    "items": [
+      {
+        "title": "Real Astro builds",
+        "description": "Not screenshots. Real components compiled to static HTML you control.",
+        "icon": "⌘"
+      },
+      {
+        "title": "Theme tokens, not overrides",
+        "description": "Swap industry presets in one variable change. No restyling.",
+        "icon": "✦"
+      },
+      {
+        "title": "AI selects sections",
+        "description": "Manifest-driven — the agent picks from your library, doesn't invent layouts.",
+        "icon": "✸"
+      }
+    ]
+  }
+}

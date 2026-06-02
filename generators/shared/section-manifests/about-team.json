@@ -1,0 +1,102 @@
+{
+  "id": "about-team",
+  "component": "AboutTeam",
+  "category": "social-proof",
+  "displayName": "About / team",
+  "description": "Team member grid with avatar + name + role + optional bio + social links. Use real photos and full names — fake team grids erode trust faster than no team grid. Two layouts: 'grid' (default, photo above name) and 'compact' (photo left, text right — denser, more list-like).",
+  "industries": [
+    "law-firm",
+    "studio",
+    "agency",
+    "portfolio",
+    "saas",
+    "restaurant"
+  ],
+  "pageRoles": [
+    "about",
+    "landing"
+  ],
+  "props": {
+    "eyebrow": {
+      "type": "string",
+      "required": false
+    },
+    "title": {
+      "type": "string",
+      "required": true,
+      "hint": "3-7 words. Often 'Meet the team' / 'Who we are' / 'Our partners'."
+    },
+    "description": {
+      "type": "string",
+      "required": false
+    },
+    "members": {
+      "type": "array<{ name, role, bio?, avatar?, links? }>",
+      "required": true,
+      "hint": "Each: { name, role (title + department, 2-5 words), bio (1-2 sentences), avatar: { src, alt }, links: [{ label, href, icon (twitter|linkedin|github|email|site) }] }. 2-12 members; use columns prop to control layout."
+    },
+    "layout": {
+      "type": "enum",
+      "values": [
+        "grid",
+        "compact"
+      ],
+      "required": false,
+      "default": "grid"
+    },
+    "columns": {
+      "type": "enum",
+      "values": [
+        2,
+        3,
+        4
+      ],
+      "required": false,
+      "default": 3
+    }
+  },
+  "preview": {
+    "eyebrow": "Who we are",
+    "title": "The people behind the work.",
+    "description": "Small team, opinionated about quality, allergic to filler.",
+    "members": [
+      {
+        "name": "Maya Chen",
+        "role": "Founder & Designer",
+        "bio": "Ex-IDEO. Likes serif fonts and short emails.",
+        "links": [
+          {
+            "label": "LinkedIn",
+            "href": "#",
+            "icon": "linkedin"
+          }
+        ]
+      },
+      {
+        "name": "Diego Reyes",
+        "role": "Engineering Lead",
+        "bio": "Builds the boring things so the product can be magical.",
+        "links": [
+          {
+            "label": "GitHub",
+            "href": "#",
+            "icon": "github"
+          }
+        ]
+      },
+      {
+        "name": "Priya Anand",
+        "role": "Operations",
+        "bio": "Keeps the wheels turning, the invoices going out, and the music on.",
+        "links": [
+          {
+            "label": "Email",
+            "href": "mailto:priya@example.com",
+            "icon": "email"
+          }
+        ]
+      }
+    ],
+    "columns": 3
+  }
+}

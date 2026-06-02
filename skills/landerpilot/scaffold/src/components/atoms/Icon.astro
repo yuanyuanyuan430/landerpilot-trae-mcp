@@ -1,0 +1,55 @@
+---
+/**
+ * Inline SVG icon wrapper. Pass an SVG path string via `path` OR put raw SVG
+ * markup inside the default slot (use Astro's set:html if needed). The wrapper
+ * sets size + color via Tailwind class so icons inherit theme tokens.
+ *
+ * Library-friendly: paste a 24x24 viewBox path string from lucide-static /
+ * heroicons / phosphor and it just works.
+ */
+interface Props {
+  name?: string;
+  path?: string;
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
+  strokeWidth?: number;
+  fill?: "none" | "currentColor";
+  viewBox?: string;
+  label?: string;
+  class?: string;
+}
+
+const {
+  name,
+  path,
+  size = "md",
+  strokeWidth = 1.8,
+  fill = "none",
+  viewBox = "0 0 24 24",
+  label,
+  class: extra = "",
+} = Astro.props;
+
+const sizeClass = {
+  xs: "h-3 w-3",
+  sm: "h-4 w-4",
+  md: "h-5 w-5",
+  lg: "h-6 w-6",
+  xl: "h-8 w-8",
+}[size];
+
+const ariaProps = label ? { "aria-label": label, role: "img" } : { "aria-hidden": "true" };
+---
+
+<svg
+  viewBox={viewBox}
+  fill={fill}
+  stroke="currentColor"
+  stroke-width={strokeWidth}
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class:list={["inline-block shrink-0", sizeClass, extra]}
+  data-icon={name}
+  {...ariaProps}
+>
+  {path ? <path d={path} /> : <slot />}
+</svg>

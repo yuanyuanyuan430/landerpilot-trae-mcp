@@ -1,0 +1,34 @@
+{
+  "id": "brand-grid",
+  "component": "BrandGrid",
+  "category": "directory",
+  "displayName": "Brand / product grid",
+  "description": "Card grid of brands or products with optional rating ring, deal text, pros preview, and dual CTAs (visit / read review). Use for affiliate hub pages, brand catalogs, and product comparison hubs. List variant collapses to a single-row layout for sparse data.",
+  "industries": ["ecommerce", "saas"],
+  "pageRoles": ["landing", "directory-index"],
+  "props": {
+    "eyebrow": { "type": "string", "required": false },
+    "title": { "type": "string", "required": false },
+    "description": { "type": "string", "required": false },
+    "brands": {
+      "type": "array<BrandEntry>",
+      "required": true,
+      "hint": "Each: { brand (required), slug?, category?, logo?, shortDescription?, score? (0-10), dealText?, price?, reviewHref?, affiliateUrl?, visitLabel?, pros? }. score renders as conic-gradient ring. dealText highlights inline. Provide reviewHref or affiliateUrl (or both) for CTAs."
+    },
+    "layout": { "type": "enum", "values": ["grid", "list"], "required": false, "default": "grid" },
+    "columns": { "type": "enum", "values": [2, 3, 4], "required": false, "default": 3 },
+    "showScore": { "type": "boolean", "required": false, "default": true },
+    "showPros": { "type": "boolean", "required": false, "default": false },
+    "reviewLabel": { "type": "string", "required": false, "default": "Read review" },
+    "visitLabel": { "type": "string", "required": false, "default": "Visit site" }
+  },
+  "preview": {
+    "eyebrow": "Featured offers",
+    "title": "Compare the best brands before you buy.",
+    "brands": [
+      { "brand": "Sony WH-1000XM5", "category": "Headphones", "score": 9.2, "shortDescription": "Class-leading ANC with 30-hour battery.", "dealText": "Save 20% this week", "affiliateUrl": "#", "reviewHref": "/reviews/sony-xm5/" },
+      { "brand": "Uplift Desk", "category": "Standing desks", "score": 8.6, "shortDescription": "Solid build, 7-year warranty.", "affiliateUrl": "#", "reviewHref": "/reviews/uplift/" },
+      { "brand": "NordVPN", "category": "VPN", "score": 8.1, "shortDescription": "Reliable speeds across 60+ countries.", "affiliateUrl": "#", "reviewHref": "/reviews/nordvpn/" }
+    ]
+  }
+}

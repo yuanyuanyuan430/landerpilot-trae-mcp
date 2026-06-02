@@ -1,0 +1,82 @@
+{
+  "nav": {
+    "primary": "主导航",
+    "about": "关于",
+    "privacy": "隐私",
+    "terms": "条款",
+    "disclosure": "披露",
+    "contact": "联系"
+  },
+  "footer": {
+    "text": "独立联盟对比页面",
+    "ariaLabel": "页脚"
+  },
+  "hub": {
+    "disclosureText": "联盟披露：当你通过我们的链接购物时，我们可能获得佣金。推荐内容仍以对比和编辑判断为基础。",
+    "reviewsSectionTitle": "编辑测评与购买提示"
+  },
+  "method": {
+    "title": "我们如何选择品牌",
+    "steps": [
+      "我们先确认广告主可用性和官方网站可访问性。",
+      "我们按真实购买意图整理品牌，而不是按内部联盟指标排序。",
+      "我们写清适合人群、考虑理由、优点和注意点。",
+      "我们保持联盟披露可见，避免夸大折扣。"
+    ]
+  },
+  "stats": {
+    "brandsReviewed": "已整理品牌",
+    "buyingCategories": "购买分类",
+    "editorialSummaries": "编辑摘要"
+  },
+  "category": {
+    "groupNote": "按购买意图和测评相关度整理品牌。",
+    "brandCountLabel": "个品牌"
+  },
+  "card": {
+    "bestForLabel": "适合：",
+    "prosTitle": "优点",
+    "watchOutsTitle": "注意点",
+    "readReview": "阅读测评"
+  },
+  "score": {
+    "offerClarity": "优惠清晰度",
+    "buyerFit": "购买匹配度",
+    "trustSignals": "信任信号",
+    "value": "价值表现"
+  },
+  "reviewPage": {
+    "defaultAuthor": "LanderPilot 编辑团队",
+    "by": "作者",
+    "updated": "更新于",
+    "minRead": "分钟阅读",
+    "visit": "访问",
+    "officialSite": "官网",
+    "bestDeal": "当前优惠",
+    "officialDestination": "官方入口",
+    "getDeal": "获取优惠",
+    "visitOfficialSite": "访问官网",
+    "contents": "目录",
+    "quickSpecs": "快速信息",
+    "breadcrumb": "面包屑"
+  },
+  "support": {
+    "reviewsTitle": "全部测评",
+    "reviewsDescription": "浏览所有品牌和产品测评。",
+    "aboutTitle": "关于我们",
+    "privacyTitle": "隐私政策",
+    "privacyDescription": "发布前请由法律或合规负责人审核并替换为正式隐私政策。",
+    "termsTitle": "服务条款",
+    "termsDescription": "发布前请由法律或合规负责人审核并替换为正式服务条款。",
+    "disclosureTitle": "联盟披露",
+    "editorialPage": "编辑页面",
+    "footerNote": "独立测评、购买提示与联盟披露页面。发布前请审核正式法律文本。"
+  },
+  "faqDefaults": {
+    "preBuyQuestion": "购买前应该检查什么？",
+    "preBuyAnswer": "请检查当前价格、地区可用性、退换政策，以及优惠是否适用于你选择的产品或套餐。"
+  },
+  "related": {
+    "empty": "暂无相关测评。"
+  }
+}

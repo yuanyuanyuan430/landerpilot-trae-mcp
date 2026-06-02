@@ -1,0 +1,90 @@
+{
+  "id": "header-nav",
+  "component": "HeaderNav",
+  "category": "navigation",
+  "displayName": "Header navigation",
+  "description": "Site header with brand + nav links + optional CTAs. Three variants: 'default' (static border), 'sticky' (fixed + backdrop-blur — matches the existing corporate-saas look), 'transparent' (overlays hero, no background). Use sticky for SaaS / product sites, default for content sites, transparent only when paired with a hero that has its own backdrop.",
+  "industries": [
+    "all"
+  ],
+  "pageRoles": [
+    "header"
+  ],
+  "props": {
+    "brand": {
+      "type": "string | { src, alt }",
+      "required": true,
+      "hint": "Site name as string, or { src, alt } for a logo image."
+    },
+    "brandHref": {
+      "type": "string",
+      "required": false,
+      "default": "/",
+      "hint": "Where the brand links to."
+    },
+    "links": {
+      "type": "array<{ text, href, active? }>",
+      "required": false,
+      "hint": "3-6 nav links. Mark the current page with active: true."
+    },
+    "primaryCta": {
+      "type": "cta",
+      "required": false,
+      "hint": "Right-side primary action (signup, demo)."
+    },
+    "secondaryCta": {
+      "type": "cta",
+      "required": false,
+      "hint": "Right-side ghost-style action (login, docs)."
+    },
+    "variant": {
+      "type": "enum",
+      "values": [
+        "default",
+        "sticky",
+        "transparent"
+      ],
+      "required": false,
+      "default": "sticky"
+    },
+    "containerSize": {
+      "type": "enum",
+      "values": [
+        "default",
+        "wide"
+      ],
+      "required": false,
+      "default": "default"
+    }
+  },
+  "preview": {
+    "brand": "LanderPilot",
+    "links": [
+      {
+        "text": "Features",
+        "href": "#features"
+      },
+      {
+        "text": "Pricing",
+        "href": "#pricing"
+      },
+      {
+        "text": "Blog",
+        "href": "/blog/"
+      },
+      {
+        "text": "Docs",
+        "href": "/docs/"
+      }
+    ],
+    "secondaryCta": {
+      "text": "Sign in",
+      "href": "/login"
+    },
+    "primaryCta": {
+      "text": "Start free",
+      "href": "/signup"
+    },
+    "variant": "sticky"
+  }
+}
