@@ -5,7 +5,8 @@ import { join, resolve } from "node:path";
 
 const cwd = resolve(getArgValue("--project") || process.cwd());
 const projectConfigPath = resolve(cwd, ".trae", "mcp.json");
-const configPaths = uniquePaths([projectConfigPath, ...getGlobalConfigPaths()]);
+const targetPlatform = getArgValue("--platform") || process.platform;
+const configPaths = uniquePaths([projectConfigPath, ...getGlobalConfigPaths(targetPlatform)]);
 
 const reports = configPaths.map(checkConfig);
 const ok = reports.some((report) => report.ok);
@@ -59,15 +60,43 @@ function checkConfig(filePath, index) {
   };
 }
 
-function getGlobalConfigPaths() {
+function getGlobalConfigPaths(platform) {
   const explicitPath = getArgValue("--global-config");
   if (explicitPath) return [resolve(explicitPath)];
 
+  if (platform === "win32") return getWindowsGlobalConfigPaths();
+  if (platform === "linux") return getLinuxGlobalConfigPaths();
+  return getMacGlobalConfigPaths();
+}
+
+function getMacGlobalConfigPaths() {
   const home = homedir();
   return [
     join(home, "Library", "Application Support", "Trae CN", "User", "mcp.json"),
     join(home, "Library", "Application Support", "TRAE CN", "User", "mcp.json"),
     join(home, "Library", "Application Support", "Trae", "User", "mcp.json"),
+    join(home, ".trae", "mcp.json"),
+  ];
+}
+
+function getWindowsGlobalConfigPaths() {
+  const appData = process.env.APPDATA || join(homedir(), "AppData", "Roaming");
+  const userProfile = process.env.USERPROFILE || homedir();
+  return [
+    join(appData, "Trae CN", "User", "mcp.json"),
+    join(appData, "TRAE CN", "User", "mcp.json"),
+    join(appData, "Trae", "User", "mcp.json"),
+    join(appData, "Trae", "User", "settings", "mcp.json"),
+    join(userProfile, ".trae", "mcp.json"),
+  ];
+}
+
+function getLinuxGlobalConfigPaths() {
+  const home = homedir();
+  const xdgConfig = process.env.XDG_CONFIG_HOME || join(home, ".config");
+  return [
+    join(xdgConfig, "Trae CN", "User", "mcp.json"),
+    join(xdgConfig, "Trae", "User", "mcp.json"),
     join(home, ".trae", "mcp.json"),
   ];
 }

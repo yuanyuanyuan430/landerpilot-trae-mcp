@@ -12,6 +12,8 @@ npm install -g github:yuanyuanyuan430/landerpilot-trae-mcp
 
 如果提示没有 GitHub 权限，请把你的 GitHub 用户名发给老师，让老师把你加入私有仓。
 
+Windows 同学如果老师发了 `install-windows.ps1`，可以直接在项目文件夹里右键打开 PowerShell，运行老师给的一键脚本，不用手动敲后面的配置命令。
+
 ## 第二步：配置
 
 进入你的 Trae 项目文件夹，运行：

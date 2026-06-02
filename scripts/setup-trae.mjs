@@ -13,6 +13,7 @@ const cwd = resolve(getArgValue("--project") || process.cwd());
 const projectConfigPath = resolve(cwd, ".trae", "mcp.json");
 const apiKeyArg = getArgValue("--api-key");
 const remoteUrl = getArgValue("--url") || "https://landerpilot.com/api/mcp";
+const targetPlatform = getArgValue("--platform") || process.platform;
 
 const apiKey = apiKeyArg || (await promptApiKey());
 if (!apiKey.trim()) {
@@ -35,7 +36,7 @@ const landerpilotServer = {
 
 const written = [];
 written.push(writeMcpConfig(projectConfigPath, landerpilotServer));
-for (const globalPath of getGlobalConfigPaths()) {
+for (const globalPath of getGlobalConfigPaths(targetPlatform)) {
   written.push(writeMcpConfig(globalPath, landerpilotServer));
 }
 
@@ -86,10 +87,16 @@ async function promptApiKey() {
   }
 }
 
-function getGlobalConfigPaths() {
+function getGlobalConfigPaths(platform) {
   const explicitPath = getArgValue("--global-config");
   if (explicitPath) return [resolve(explicitPath)];
 
+  if (platform === "win32") return getWindowsGlobalConfigPaths();
+  if (platform === "linux") return getLinuxGlobalConfigPaths();
+  return getMacGlobalConfigPaths();
+}
+
+function getMacGlobalConfigPaths() {
   const home = homedir();
   const candidates = uniquePaths([
     join(home, "Library", "Application Support", "Trae CN", "User", "mcp.json"),
@@ -100,6 +107,37 @@ function getGlobalConfigPaths() {
 
   const existing = candidates.filter((filePath) => existsSync(filePath));
   return existing.length > 0 ? existing : [candidates[0]];
+}
+
+function getWindowsGlobalConfigPaths() {
+  const appData = process.env.APPDATA || join(homedir(), "AppData", "Roaming");
+  const userProfile = process.env.USERPROFILE || homedir();
+  const defaultConfigs = [
+    join(appData, "Trae CN", "User", "mcp.json"),
+    join(appData, "Trae", "User", "mcp.json"),
+    join(appData, "Trae", "User", "settings", "mcp.json"),
+  ];
+  const candidates = uniquePaths([
+    ...defaultConfigs,
+    join(appData, "TRAE CN", "User", "mcp.json"),
+    join(userProfile, ".trae", "mcp.json"),
+  ]);
+
+  const existing = candidates.filter((filePath) => existsSync(filePath));
+  return existing.length > 0 ? existing : defaultConfigs;
+}
+
+function getLinuxGlobalConfigPaths() {
+  const home = homedir();
+  const xdgConfig = process.env.XDG_CONFIG_HOME || join(home, ".config");
+  const candidates = uniquePaths([
+    join(xdgConfig, "Trae CN", "User", "mcp.json"),
+    join(xdgConfig, "Trae", "User", "mcp.json"),
+    join(home, ".trae", "mcp.json"),
+  ]);
+
+  const existing = candidates.filter((filePath) => existsSync(filePath));
+  return existing.length > 0 ? existing : [candidates[0], candidates[1]];
 }
 
 function getArgValue(name) {

@@ -32,8 +32,13 @@ try {
   const doctorBinary = join(tempRoot, "bin", "landerpilot-trae-doctor");
   const tempHome = join(tempRoot, "home");
   const tempProject = join(tempRoot, "project");
+  const tempWindowsHome = join(tempRoot, "win-home");
+  const tempWindowsAppData = join(tempWindowsHome, "AppData", "Roaming");
+  const tempWindowsProject = join(tempRoot, "win-project");
   mkdirSync(tempHome, { recursive: true });
   mkdirSync(tempProject, { recursive: true });
+  mkdirSync(tempWindowsAppData, { recursive: true });
+  mkdirSync(tempWindowsProject, { recursive: true });
 
   const smokeScript = join(installedRoot, ".distribution-smoke.mjs");
   writeFileSync(
@@ -95,6 +100,33 @@ await client.close();
   const globalSetupCheck = checkGeneratedConfig(globalConfig, installedRoot);
   const doctor = run(doctorBinary, ["--project", tempProject], packageRoot, { HOME: tempHome });
 
+  run(
+    setupBinary,
+    ["--project", tempWindowsProject, "--platform", "win32", "--api-key", "lp_test_windows"],
+    packageRoot,
+    {
+      APPDATA: tempWindowsAppData,
+      USERPROFILE: tempWindowsHome,
+    }
+  );
+  const windowsProjectConfigPath = join(tempWindowsProject, ".trae", "mcp.json");
+  const windowsCnConfigPath = join(tempWindowsAppData, "Trae CN", "User", "mcp.json");
+  const windowsTraeConfigPath = join(tempWindowsAppData, "Trae", "User", "mcp.json");
+  const windowsTraeSettingsConfigPath = join(tempWindowsAppData, "Trae", "User", "settings", "mcp.json");
+  const windowsProjectConfig = JSON.parse(readFileSync(windowsProjectConfigPath, "utf8"));
+  const windowsCnConfig = JSON.parse(readFileSync(windowsCnConfigPath, "utf8"));
+  const windowsTraeConfig = JSON.parse(readFileSync(windowsTraeConfigPath, "utf8"));
+  const windowsTraeSettingsConfig = JSON.parse(readFileSync(windowsTraeSettingsConfigPath, "utf8"));
+  const windowsDoctor = run(
+    doctorBinary,
+    ["--project", tempWindowsProject, "--platform", "win32"],
+    packageRoot,
+    {
+      APPDATA: tempWindowsAppData,
+      USERPROFILE: tempWindowsHome,
+    }
+  );
+
   rmSync(tarballPath, { force: true });
 
   process.stdout.write(
@@ -114,6 +146,17 @@ await client.close();
           project: setupCheck,
           global: globalSetupCheck,
           doctorMentionsOk: doctor.stdout.includes("OK 项目配置"),
+        },
+        windowsSetup: {
+          projectConfigPath: windowsProjectConfigPath,
+          cnConfigPath: windowsCnConfigPath,
+          traeConfigPath: windowsTraeConfigPath,
+          traeSettingsConfigPath: windowsTraeSettingsConfigPath,
+          project: checkGeneratedConfig(windowsProjectConfig, installedRoot, "lp_test_windows"),
+          cnGlobal: checkGeneratedConfig(windowsCnConfig, installedRoot, "lp_test_windows"),
+          traeGlobal: checkGeneratedConfig(windowsTraeConfig, installedRoot, "lp_test_windows"),
+          traeSettingsGlobal: checkGeneratedConfig(windowsTraeSettingsConfig, installedRoot, "lp_test_windows"),
+          doctorMentionsOk: windowsDoctor.stdout.includes("OK 项目配置"),
         },
       },
       null,
@@ -152,7 +195,7 @@ function run(command, args, cwd, extraEnv = {}) {
   return result;
 }
 
-function checkGeneratedConfig(config, installedRoot) {
+function checkGeneratedConfig(config, installedRoot, expectedApiKey = "lp_test_distribution") {
   const server = config.mcpServers?.landerpilot;
   if (!server) throw new Error("generated config is missing mcpServers.landerpilot");
   const expectedScript = join(installedRoot, "cloud-proxy.mjs");
@@ -161,7 +204,7 @@ function checkGeneratedConfig(config, installedRoot) {
     existsSync(server.command) &&
     existsSync(server.args[0]) &&
     samePath(server.args[0], expectedScript) &&
-    server.env?.LANDERPILOT_API_KEY === "lp_test_distribution";
+    server.env?.LANDERPILOT_API_KEY === expectedApiKey;
   if (!ok) {
     throw new Error(`generated config did not match expected shape: ${JSON.stringify(server, null, 2)}`);
   }

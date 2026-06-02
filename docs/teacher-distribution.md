@@ -40,3 +40,9 @@ landerpilot-trae-doctor
 ```
 
 如果 doctor 也提示失败，让学员重新运行 `landerpilot-trae-setup`，再完全重启 Trae。
+
+## Windows 学员
+
+Windows 可以用一键脚本，见 [windows-one-click.md](windows-one-click.md)。
+
+但要注意：当前包在私有 GitHub 仓库里，所以 Windows 学员仍然需要 GitHub 仓库访问权限。真正“完全傻瓜式、不碰 GitHub”的方案，是把这个包发布到 npm 或放到公开只读仓。

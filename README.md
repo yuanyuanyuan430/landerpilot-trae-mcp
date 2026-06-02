@@ -95,6 +95,7 @@ These local tools do not deploy anything. They inspect/generate local deployment
 Full install guide: [docs/install.md](docs/install.md).
 Student quickstart: [docs/student-trae-quickstart.md](docs/student-trae-quickstart.md).
 Teacher distribution guide: [docs/teacher-distribution.md](docs/teacher-distribution.md).
+Windows one-click guide: [docs/windows-one-click.md](docs/windows-one-click.md).
 
 Recommended path: put this folder in a GitHub repo, then users install it with npm:
 
