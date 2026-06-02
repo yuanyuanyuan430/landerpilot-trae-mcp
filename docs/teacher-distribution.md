@@ -7,25 +7,25 @@
 
 私有仓没有授权时，学员执行安装命令会失败。
 
-## 发给学员的命令
+## 发给学员的两条命令
 
 ```bash
 npm install -g github:yuanyuanyuan430/landerpilot-trae-mcp
 ```
 
-然后让学员在自己的 Trae 项目文件夹里运行：
+让学员进入自己的 Trae 项目文件夹，再运行：
 
 ```bash
 landerpilot-trae-setup
 ```
 
-学员粘贴 API Key 后，脚本会自动写入：
+学员粘贴 API Key 后，脚本会自动写入项目配置和 Trae 全局配置。不要让学员手改 JSON。
+
+最后让学员完全退出 Trae，重新打开项目，在聊天框输入：
 
 ```text
-.trae/mcp.json
+请调用 landerpilot_connection_status 检查连接。
 ```
-
-最后让学员重启 Trae，打开 MCP 面板，确认 `landerpilot` 已启用。
 
 ## 学员常见问题
 
@@ -33,4 +33,10 @@ landerpilot-trae-setup
 
 如果装包时提示没有权限，说明学员 GitHub 账号还没加入私有仓，或本机没有登录 GitHub。
 
-如果 Trae 看不到工具，让学员重新运行 `landerpilot-trae-setup`，再重启 Trae。
+如果 Trae 看不到工具，让学员运行：
+
+```bash
+landerpilot-trae-doctor
+```
+
+如果 doctor 也提示失败，让学员重新运行 `landerpilot-trae-setup`，再完全重启 Trae。

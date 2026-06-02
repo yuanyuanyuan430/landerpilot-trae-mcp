@@ -17,6 +17,7 @@ landerpilot-trae-setup
 ```
 
 Paste the LanderPilot API Key. The setup writes `.trae/mcp.json`.
+It also writes Trae CN's global `User/mcp.json`, because some Trae builds do not auto-load project MCP config immediately.
 
 Manual Trae MCP config:
 
@@ -24,8 +25,8 @@ Manual Trae MCP config:
 {
   "mcpServers": {
     "landerpilot": {
-      "command": "landerpilot-cloud-mcp",
-      "args": [],
+      "command": "/absolute/path/to/node",
+      "args": ["/absolute/path/to/landerpilot-trae-mcp/cloud-proxy.mjs"],
       "env": {
         "LANDERPILOT_API_KEY": "粘贴你的 LanderPilot API Key"
       }
@@ -34,16 +35,19 @@ Manual Trae MCP config:
 }
 ```
 
-Restart Trae, open the MCP panel, and enable/import the project `.trae/mcp.json` config if Trae asks.
+Fully quit and reopen Trae. Then ask Trae:
+
+```text
+请调用 landerpilot_connection_status 检查连接。
+```
 
 Verify the installed commands:
 
 ```bash
-landerpilot-cloud-mcp
-landerpilot-local-mcp
+landerpilot-trae-doctor
 ```
 
-These commands are stdio MCP servers, so they wait for MCP JSON-RPC messages. Use Trae, or run this inside the package during development:
+For development checks inside the package:
 
 ```bash
 npm run inspect

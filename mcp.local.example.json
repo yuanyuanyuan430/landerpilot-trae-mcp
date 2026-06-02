@@ -1,15 +1,15 @@
 {
   "mcpServers": {
     "landerpilot": {
-      "command": "landerpilot-cloud-mcp",
-      "args": [],
+      "command": "/absolute/path/to/node",
+      "args": ["/absolute/path/to/landerpilot-trae-mcp/cloud-proxy.mjs"],
       "env": {
         "LANDERPILOT_API_KEY": "粘贴你的 LanderPilot API Key"
       }
     },
     "landerpilot_local_tools": {
-      "command": "landerpilot-local-mcp",
-      "args": []
+      "command": "/absolute/path/to/node",
+      "args": ["/absolute/path/to/landerpilot-trae-mcp/server.mjs"]
     }
   }
 }

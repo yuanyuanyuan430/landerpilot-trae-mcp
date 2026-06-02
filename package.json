@@ -1,6 +1,6 @@
 {
   "name": "landerpilot-trae-mcp",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Trae-friendly LanderPilot stdio MCP bridge and setup helper.",
   "type": "module",
   "private": true,
@@ -26,7 +26,8 @@
   "bin": {
     "landerpilot-local-mcp": "./server.mjs",
     "landerpilot-cloud-mcp": "./cloud-proxy.mjs",
-    "landerpilot-trae-setup": "./scripts/setup-trae.mjs"
+    "landerpilot-trae-setup": "./scripts/setup-trae.mjs",
+    "landerpilot-trae-doctor": "./scripts/doctor-trae.mjs"
   },
   "scripts": {
     "start": "node server.mjs",

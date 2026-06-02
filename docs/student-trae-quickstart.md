@@ -1,6 +1,6 @@
-# Trae 学员三步安装
+# Trae 学员傻瓜式安装
 
-## 1. 安装
+## 第一步：安装
 
 打开终端，运行老师给你的安装命令：
 
@@ -12,7 +12,7 @@ npm install -g github:yuanyuanyuan430/landerpilot-trae-mcp
 
 如果提示没有 GitHub 权限，请把你的 GitHub 用户名发给老师，让老师把你加入私有仓。
 
-## 2. 配置 API Key
+## 第二步：配置
 
 进入你的 Trae 项目文件夹，运行：
 
@@ -20,30 +20,38 @@ npm install -g github:yuanyuanyuan430/landerpilot-trae-mcp
 landerpilot-trae-setup
 ```
 
-看到提示后，粘贴老师/平台给你的 LanderPilot API Key，然后回车。
+看到提示后，粘贴老师给你的 LanderPilot API Key，然后回车。粘贴时屏幕不会显示，这是正常的。
 
-它会自动生成：
+它会自动写好 Trae 需要的配置，不用你手动改 JSON。
+
+## 第三步：重启 Trae
+
+完全退出 Trae，再重新打开你的项目。
+
+在 Trae 聊天框里发：
 
 ```text
-.trae/mcp.json
+请调用 landerpilot_connection_status 检查连接。
 ```
 
-## 3. 打开 Trae
+看到连接成功后，就可以继续发：
 
-重启 Trae，打开项目。
-
-进入 Trae 的 MCP 面板，确认 `landerpilot` 已启用。如果 Trae 提示是否导入项目 MCP 配置，选择导入/启用。
+```text
+请使用 LanderPilot MCP 帮我把当前网站部署上线，并把访问链接发给我。
+```
 
 ## 出问题怎么办
 
-如果 Trae 里看不到工具：
+先运行：
 
-1. 确认已经重启 Trae。
-2. 确认当前项目里有 `.trae/mcp.json`。
-3. 重新运行：
+```bash
+landerpilot-trae-doctor
+```
+
+如果它提示没有配置，重新运行：
 
 ```bash
 landerpilot-trae-setup
 ```
 
-如果 API Key 写错，也重新运行上面的命令覆盖即可。
+如果 API Key 写错，也重新运行 `landerpilot-trae-setup` 覆盖即可。

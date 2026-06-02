@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -28,6 +28,13 @@ try {
   const installedRoot = join(tempRoot, "lib", "node_modules", packageJson.name);
   const localBinary = join(tempRoot, "bin", "landerpilot-local-mcp");
   const cloudBinary = join(tempRoot, "bin", "landerpilot-cloud-mcp");
+  const setupBinary = join(tempRoot, "bin", "landerpilot-trae-setup");
+  const doctorBinary = join(tempRoot, "bin", "landerpilot-trae-doctor");
+  const tempHome = join(tempRoot, "home");
+  const tempProject = join(tempRoot, "project");
+  mkdirSync(tempHome, { recursive: true });
+  mkdirSync(tempProject, { recursive: true });
+
   const smokeScript = join(installedRoot, ".distribution-smoke.mjs");
   writeFileSync(
     smokeScript,
@@ -51,6 +58,7 @@ await client.close();
 `
   );
   const smoke = node([smokeScript], installedRoot);
+
   const cloudSmokeScript = join(installedRoot, ".distribution-cloud-smoke.mjs");
   writeFileSync(
     cloudSmokeScript,
@@ -72,6 +80,21 @@ await client.close();
 `
   );
   const cloudSmoke = node([cloudSmokeScript], installedRoot);
+
+  run(
+    setupBinary,
+    ["--project", tempProject, "--api-key", "lp_test_distribution"],
+    packageRoot,
+    { HOME: tempHome }
+  );
+  const projectConfigPath = join(tempProject, ".trae", "mcp.json");
+  const globalConfigPath = join(tempHome, "Library", "Application Support", "Trae CN", "User", "mcp.json");
+  const projectConfig = JSON.parse(readFileSync(projectConfigPath, "utf8"));
+  const globalConfig = JSON.parse(readFileSync(globalConfigPath, "utf8"));
+  const setupCheck = checkGeneratedConfig(projectConfig, installedRoot);
+  const globalSetupCheck = checkGeneratedConfig(globalConfig, installedRoot);
+  const doctor = run(doctorBinary, ["--project", tempProject], packageRoot, { HOME: tempHome });
+
   rmSync(tarballPath, { force: true });
 
   process.stdout.write(
@@ -85,6 +108,13 @@ await client.close();
         },
         smoke: JSON.parse(smoke.stdout),
         cloudBridgeWithoutKey: JSON.parse(cloudSmoke.stdout),
+        setup: {
+          projectConfigPath,
+          globalConfigPath,
+          project: setupCheck,
+          global: globalSetupCheck,
+          doctorMentionsOk: doctor.stdout.includes("OK 项目配置"),
+        },
       },
       null,
       2
@@ -102,13 +132,14 @@ function node(args, cwd) {
   return run(process.execPath, args, cwd);
 }
 
-function run(command, args, cwd) {
+function run(command, args, cwd, extraEnv = {}) {
   const result = spawnSync(command, args, {
     cwd,
     encoding: "utf8",
     stdio: ["ignore", "pipe", "pipe"],
     env: {
       ...process.env,
+      ...extraEnv,
       FORCE_COLOR: "0",
       NO_COLOR: "1",
     },
@@ -119,4 +150,28 @@ function run(command, args, cwd) {
     );
   }
   return result;
+}
+
+function checkGeneratedConfig(config, installedRoot) {
+  const server = config.mcpServers?.landerpilot;
+  if (!server) throw new Error("generated config is missing mcpServers.landerpilot");
+  const expectedScript = join(installedRoot, "cloud-proxy.mjs");
+  const ok =
+    typeof server.command === "string" &&
+    existsSync(server.command) &&
+    existsSync(server.args[0]) &&
+    samePath(server.args[0], expectedScript) &&
+    server.env?.LANDERPILOT_API_KEY === "lp_test_distribution";
+  if (!ok) {
+    throw new Error(`generated config did not match expected shape: ${JSON.stringify(server, null, 2)}`);
+  }
+  return {
+    command: server.command,
+    script: server.args[0],
+    apiKeyConfigured: true,
+  };
+}
+
+function samePath(left, right) {
+  return realpathSync(left) === realpathSync(right);
 }

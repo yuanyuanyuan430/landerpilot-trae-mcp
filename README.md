@@ -22,18 +22,31 @@ Then open the Trae project folder in Terminal and run:
 landerpilot-trae-setup
 ```
 
-Paste the LanderPilot API Key when prompted. The setup writes:
+Paste the LanderPilot API Key when prompted. The key is hidden while typing/pasting.
+
+The setup writes both places Trae may read:
 
 ```text
 .trae/mcp.json
+~/Library/Application Support/Trae CN/User/mcp.json
 ```
 
-Restart Trae, open the MCP panel, and enable/import the project MCP config if Trae asks.
+Fully quit and reopen Trae. Then ask Trae:
+
+```text
+请调用 landerpilot_connection_status 检查连接。
+```
+
+If it still cannot see the tool, run:
+
+```bash
+landerpilot-trae-doctor
+```
 
 The Trae MCP server command is:
 
 ```bash
-landerpilot-cloud-mcp
+node /path/to/landerpilot-trae-mcp/cloud-proxy.mjs
 ```
 
 It reads `LANDERPILOT_API_KEY` from `.trae/mcp.json` and forwards Trae's stdio MCP calls to `https://landerpilot.com/api/mcp`.
@@ -95,7 +108,7 @@ For Trae, tell students to run the setup helper:
 landerpilot-trae-setup
 ```
 
-It creates `.trae/mcp.json` for them.
+It creates `.trae/mcp.json` and Trae's global `mcp.json` for them.
 
 If they want to configure JSON manually, use:
 
