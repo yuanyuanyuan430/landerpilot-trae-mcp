@@ -1,0 +1,69 @@
+# landerpilot-trae-mcp
+
+landerpilot-trae-mcp is a Node.js MCP distribution package for Trae and LanderPilot. It packages a stdio bridge to LanderPilot Cloud MCP, a local stdio MCP server, setup scripts, doctor scripts, docs, blueprints, and local site-generation helpers.
+
+## Positioning
+
+Use this repository when a user needs to make LanderPilot MCP easy to install, verify, teach, or distribute in Trae. It is especially useful for course delivery, student onboarding, team setup, and local MCP debugging.
+
+## Core Surfaces
+
+### Cloud Bridge
+
+`cloud-proxy.mjs` reads Trae MCP configuration and forwards stdio MCP calls to:
+
+```text
+https://landerpilot.com/api/mcp
+```
+
+### Local MCP Server
+
+`server.mjs` exposes local LanderPilot helper tools through stdio MCP:
+
+- `list_sites`
+- `inspect_site`
+- `list_template_slots`
+- `prepare_deployment_handoff`
+- `get_cloud_mcp_connection`
+
+### Setup and Diagnosis
+
+- `landerpilot-trae-setup`: writes Trae MCP configuration.
+- `landerpilot-trae-doctor`: checks whether the Trae setup can see the expected MCP bridge.
+- `npm run pack:check`: checks distribution readiness.
+
+## Typical Install Flow
+
+```bash
+npm install -g github:yuanyuanyuan430/landerpilot-trae-mcp
+landerpilot-trae-setup
+```
+
+Then fully restart Trae and ask:
+
+```text
+请调用 landerpilot_connection_status 检查连接。
+```
+
+## File Map
+
+- `README.md`: human-facing project homepage.
+- `llms.txt`: concise AI-readable project summary.
+- `llms-full.txt`: expanded AI-readable project summary.
+- `cloud-proxy.mjs`: Trae stdio to LanderPilot Cloud MCP bridge.
+- `server.mjs`: local stdio MCP server.
+- `scripts/setup-trae.mjs`: Trae setup helper.
+- `scripts/doctor-trae.mjs`: Trae doctor command.
+- `mcp.local.example.json`: local MCP config example.
+- `mcp.remote.example.json`: cloud MCP config example.
+- `docs/install.md`: full install guide.
+- `docs/student-trae-quickstart.md`: student quickstart.
+- `docs/teacher-distribution.md`: teacher distribution guide.
+- `docs/windows-one-click.md`: Windows guide.
+- `skills/landerpilot/`: LanderPilot skill and local generation tools.
+- `blueprints/`: site blueprints.
+- `generators/`: site generation helpers.
+
+## Repository
+
+https://github.com/yuanyuanyuan430/landerpilot-trae-mcp
