@@ -2,6 +2,7 @@
 import Container from "../atoms/Container.astro";
 import Avatar from "../atoms/Avatar.astro";
 import Tag from "../atoms/Tag.astro";
+import { sanitizeBlogHtml } from "../../lib/sanitize-blog-html.mjs";
 
 interface Props {
   title: string;
@@ -16,6 +17,7 @@ interface Props {
 }
 
 const { title, excerpt, category, tags, date, readingTime, author, cover, contentHtml } = Astro.props;
+const safeContentHtml = sanitizeBlogHtml(contentHtml);
 ---
 
 <article class="py-16 md:py-24" data-automation-id="section-blog-post">
@@ -60,8 +62,8 @@ const { title, excerpt, category, tags, date, readingTime, author, cover, conten
       </figure>
     )}
 
-    {contentHtml ? (
-      <div class="lp-prose" set:html={contentHtml} />
+    {safeContentHtml ? (
+      <div class="lp-prose" set:html={safeContentHtml} />
     ) : (
       <div class="lp-prose">
         <slot />

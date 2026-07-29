@@ -7,7 +7,7 @@
   "inputModel": {
     "required": ["site_name"],
     "recommended": ["domain", "category", "official_url", "affiliate_url", "description", "pros", "cons", "price", "score", "faq", "image", "specs", "rating_breakdown"],
-    "notes": "这是数据型模板。AI 入口必须先让用户上传/粘贴品牌或产品数据，或从用户提供的 URL 抽取后整理成 offers[] / raw_text；不要在缺数据时生成假测评。每个 offer 可选补充 specs (key-value 对象) 让 SpecsTable 展示规格，rating_breakdown (数组) 让 RatingBreakdown 展示多维评分。"
+    "notes": "这是数据型模板。AI 入口必须先让用户上传/粘贴品牌或产品数据，或从用户提供的 URL 抽取后整理成 offers[] / raw_text；不要在缺数据时生成假测评。每个 offer 可选补充 specs (key-value 对象) 让 SpecsTable 展示规格，rating_breakdown (数组) 让 RatingBreakdown 展示多维评分。YeahPromos/YP 审核站选择 variant: affiliate-review-yp，生成器会自动加入 YeahPromos 验证 meta。"
   },
   "dataPolicy": {
     "mode": "required",
@@ -17,14 +17,17 @@
     "demoMode": "只有用户明确说先用演示/样例数据时，才允许设置 demo_mode: true。"
   },
   "routes": ["index", "reviews", "reviews/<brand-slug>", "about", "privacy", "terms", "disclosure"],
-  "variants": ["affiliate-brand-hub+review-revneey-golden-v5"],
+  "variants": [
+    "affiliate-brand-hub+review-revneey-golden-v5",
+    "affiliate-review-yp"
+  ],
   "languageSupport": {
     "default": "en",
     "stable": ["en"],
     "mvp": ["zh-CN"],
     "notes": "zh-CN is best-effort for built-in template copy. Agent-authored pages must handle Astro i18n explicitly."
   },
-  "examples": ["examples/basic.json"],
+  "examples": ["examples/basic.json", "examples/yp.json"],
   "theme": {
     "mode": "tailwind-component-layer",
     "tailwind": true,

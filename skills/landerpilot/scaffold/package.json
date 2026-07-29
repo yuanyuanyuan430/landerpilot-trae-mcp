@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
     "dev": "node scripts/ganhuo-preview-server.mjs dev",
     "build": "astro build",
@@ -15,8 +18,9 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.0",
-    "astro": "^5.2.0",
+    "astro": "7.1.5",
     "daisyui": "^5.5.0",
+    "sanitize-html": "2.17.6",
     "tailwindcss": "^4.0.0"
   }
 }

@@ -1,12 +1,15 @@
 {
-  "name": "landerpilot-trae-mcp",
-  "version": "0.1.2",
-  "description": "Trae-friendly LanderPilot stdio MCP bridge and setup helper.",
+  "name": "landerpilot-mcp",
+  "version": "0.2.3",
+  "description": "Universal LanderPilot stdio MCP bridge and agent setup helper.",
   "type": "module",
-  "private": true,
   "license": "UNLICENSED",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
   "engines": {
-    "node": ">=18"
+    "node": ">=22.12.0"
   },
   "files": [
     ".claude-plugin/",
@@ -21,24 +24,41 @@
     "mcp.remote.example.json",
     "cloud-proxy.mjs",
     "server.mjs",
-    "README.md"
+    "README.md",
+    "llms.txt",
+    "llms-full.txt"
   ],
   "bin": {
-    "landerpilot-local-mcp": "./server.mjs",
-    "landerpilot-cloud-mcp": "./cloud-proxy.mjs",
-    "landerpilot-trae-setup": "./scripts/setup-trae.mjs",
-    "landerpilot-trae-doctor": "./scripts/doctor-trae.mjs"
+    "landerpilot-mcp": "scripts/setup-agent.mjs",
+    "landerpilot-local-mcp": "server.mjs",
+    "landerpilot-cloud-mcp": "cloud-proxy.mjs",
+    "landerpilot-mcp-setup": "scripts/setup-agent.mjs",
+    "landerpilot-mcp-doctor": "scripts/doctor-agent.mjs",
+    "landerpilot-codewhale-setup": "scripts/setup-agent.mjs",
+    "landerpilot-codewhale-doctor": "scripts/doctor-agent.mjs",
+    "landerpilot-opencode-setup": "scripts/setup-agent.mjs",
+    "landerpilot-opencode-doctor": "scripts/doctor-agent.mjs",
+    "landerpilot-trae-setup": "scripts/setup-trae.mjs",
+    "landerpilot-trae-doctor": "scripts/doctor-trae.mjs"
   },
   "scripts": {
     "start": "node server.mjs",
     "start:cloud": "node cloud-proxy.mjs",
     "inspect": "node scripts/inspect-tools.mjs",
     "smoke": "node scripts/smoke-call.mjs",
-    "pack:check": "npm pack --dry-run",
-    "verify:distribution": "node scripts/verify-distribution.mjs"
+    "test": "node --test tests/*.test.mjs",
+    "pack:check": "node scripts/pack-check.mjs",
+    "verify:distribution": "node scripts/verify-distribution.mjs",
+    "publish:check": "node scripts/publish-check.mjs",
+    "prepublishOnly": "npm run publish:check && npm test && npm run pack:check && npm run verify:distribution",
+    "publish:npm": "npm publish"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.29.0",
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "jsonc-parser": "^3.3.1",
     "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "sanitize-html": "2.17.6"
   }
 }

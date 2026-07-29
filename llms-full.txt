@@ -1,24 +1,46 @@
-# landerpilot-trae-mcp
+# landerpilot-mcp
 
-landerpilot-trae-mcp is a Node.js MCP distribution package for Trae and LanderPilot. It packages a stdio bridge to LanderPilot Cloud MCP, a local stdio MCP server, setup scripts, doctor scripts, docs, blueprints, and local site-generation helpers.
+`landerpilot-mcp@0.2.3` is a universal Node.js MCP distribution for LanderPilot. It packages a stdio-to-cloud bridge, a local helper server, multi-client setup/doctor commands, site blueprints, and LanderPilot generation skills.
 
-## Positioning
+## Cloud bridge
 
-Use this repository when a user needs to make LanderPilot MCP easy to install, verify, teach, or distribute in Trae. It is especially useful for course delivery, student onboarding, team setup, and local MCP debugging.
-
-## Core Surfaces
-
-### Cloud Bridge
-
-`cloud-proxy.mjs` reads Trae MCP configuration and forwards stdio MCP calls to:
+`cloud-proxy.mjs` forwards stdio MCP calls to:
 
 ```text
 https://landerpilot.com/api/mcp
 ```
 
-### Local MCP Server
+It reads `LANDERPILOT_API_KEY` and optional `LANDERPILOT_MCP_URL`. `landerpilot_connection_status` performs a real remote `listTools` request. A rejected connection or remote call clears the cached session so the next request can reconnect.
 
-`server.mjs` exposes local LanderPilot helper tools through stdio MCP:
+## Installation and configuration
+
+Persistent configuration uses a global package installation:
+
+```bash
+npm install -g landerpilot-mcp
+landerpilot-mcp-setup --client cursor
+landerpilot-mcp-doctor --client cursor
+```
+
+The setup command refuses npm temporary-cache installs because generated configs contain an absolute path to `cloud-proxy.mjs`.
+
+Supported clients:
+
+- Trae: user-level config by default; compatibility commands are `landerpilot-trae-setup` and `landerpilot-trae-doctor`.
+- Cursor, Claude Desktop, Codex, CodeWhale, OpenCode: user-level config by default.
+- Generic, Claude Code, VS Code/Copilot: project-level config.
+
+Project and custom targets store a plaintext API Key and are refused unless `--allow-project-secret` is explicit. An explicit `--global-config` override is treated as custom. Setup does not edit `.gitignore` or place old-Key backups beside project/custom configs. Default global configs and their timestamped backups are chmod `0600` where supported.
+
+The official `https://landerpilot.com` origin is trusted by default. A custom HTTPS or loopback endpoint requires both `--url` and `--allow-custom-url`; non-loopback HTTP is always rejected.
+
+Setup reads the API Key from a hidden prompt by default. Command-line `--api-key` is rejected because process arguments and shell history can expose it. Automation may inject `LANDERPILOT_SETUP_API_KEY` into the setup process environment.
+
+OpenCode keeps the V1 `mcp.<name>` shape that is compatible with official V2. If `opencode.jsonc` already exists beside the default `opencode.json`, setup uses the JSONC file and edits only the target node, preserving comments and trailing commas.
+
+## Local MCP
+
+`server.mjs` exposes:
 
 - `list_sites`
 - `inspect_site`
@@ -26,44 +48,44 @@ https://landerpilot.com/api/mcp
 - `prepare_deployment_handoff`
 - `get_cloud_mcp_connection`
 
-### Setup and Diagnosis
+These tools inspect or generate local handoff data; they do not deploy by themselves.
 
-- `landerpilot-trae-setup`: writes Trae MCP configuration.
-- `landerpilot-trae-doctor`: checks whether the Trae setup can see the expected MCP bridge.
-- `npm run pack:check`: checks distribution readiness.
+## Blueprints and data policy
 
-## Typical Install Flow
+- `affiliate-review-yp` adds exactly one YeahPromos verification meta to every generated page. The default affiliate-review variant adds none.
+- `affiliate-review`, `cashback`, and `blog` fail when required real data is missing.
+- `blog` requires at least one post with title, content, and date. Explicit `demo_mode: true` permits only one placeholder post.
+
+## Distribution checks
 
 ```bash
-npm install -g github:yuanyuanyuan430/landerpilot-trae-mcp
-landerpilot-trae-setup
+npm test
+npm run pack:check
+npm run verify:distribution
+npm run publish:check
 ```
 
-Then fully restart Trae and ask:
+`verify:distribution` packs the tarball, performs `npm install -g <tarball> --prefix <temp>`, runs MCP/config smoke tests from the installed prefix, and removes the tarball in `finally`.
 
-```text
-请调用 landerpilot_connection_status 检查连接。
-```
+`publish:check` queries the exact `landerpilot-mcp@0.2.3` registry version and runs `npm publish --dry-run`. It exits with status `2` after successful checks when npm authentication is missing. `prepublishOnly` runs tests, pack checks, and distribution verification without recursively invoking `publish:check`.
 
-## File Map
+## File map
 
-- `README.md`: human-facing project homepage.
-- `llms.txt`: concise AI-readable project summary.
-- `llms-full.txt`: expanded AI-readable project summary.
-- `cloud-proxy.mjs`: Trae stdio to LanderPilot Cloud MCP bridge.
-- `server.mjs`: local stdio MCP server.
-- `scripts/setup-trae.mjs`: Trae setup helper.
-- `scripts/doctor-trae.mjs`: Trae doctor command.
-- `mcp.local.example.json`: local MCP config example.
-- `mcp.remote.example.json`: cloud MCP config example.
-- `docs/install.md`: full install guide.
-- `docs/student-trae-quickstart.md`: student quickstart.
-- `docs/teacher-distribution.md`: teacher distribution guide.
-- `docs/windows-one-click.md`: Windows guide.
+- `README.md`: human-facing overview and security notes.
+- `llms.txt`: concise AI-readable summary.
+- `llms-full.txt`: this expanded summary.
+- `cloud-proxy.mjs`: cloud stdio bridge.
+- `server.mjs`: local helper MCP.
+- `scripts/shared/agent-config.mjs`: target resolution, JSONC merge, secret policy, permissions.
+- `scripts/shared/remote-session.mjs`: retryable remote session and status probe.
+- `scripts/setup-agent.mjs`: universal setup.
+- `scripts/doctor-agent.mjs`: universal doctor.
+- `scripts/verify-distribution.mjs`: real tarball installation smoke test.
+- `docs/`: install, student, teacher, Agent, Windows, and deployment guides.
 - `skills/landerpilot/`: LanderPilot skill and local generation tools.
-- `blueprints/`: site blueprints.
-- `generators/`: site generation helpers.
+- `blueprints/`: site blueprint producers.
+- `generators/`: shared Astro/site generation helpers.
 
-## Repository
+## License
 
-https://github.com/yuanyuanyuan430/landerpilot-trae-mcp
+The project is UNLICENSED. Dependency license entries do not grant this project an MIT license.
