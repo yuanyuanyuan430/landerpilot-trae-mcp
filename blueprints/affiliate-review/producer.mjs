@@ -20,11 +20,19 @@ import {
 import { resolveIndustryTheme } from "../../generators/shared/industry-themes/index.mjs";
 
 const blueprintRoot = dirname(fileURLToPath(import.meta.url));
+const defaultVariant = "affiliate-brand-hub+review-revneey-golden-v5";
+const yeahPromosVariant = "affiliate-review-yp";
+const variants = new Set([defaultVariant, yeahPromosVariant]);
+const yeahPromosVerificationMeta =
+  '<meta name="verify-yeahpromos" content="ac599e312f5c">';
 
 export async function produce({ input = {} } = {}) {
   const language = normalizeLanguage(input);
   const t = loadBlueprintI18n(blueprintRoot, language);
   const zh = isChineseLanguage(language);
+  const variant = chooseVariant(input.variant, input.template_variant, input.template);
+  const extraHeadTags =
+    variant === yeahPromosVariant ? [yeahPromosVerificationMeta] : [];
   const profile = mergeRecords(input.company, input.business, input.publisher);
   const siteName = text(input.site_name, input.siteName, profile.name, "Affiliate Review Site");
   const siteUrl = siteUrlFromDomain(
@@ -105,6 +113,7 @@ export async function produce({ input = {} } = {}) {
       dateDisplay,
       author,
       hubDescription,
+      extraHeadTags,
       t,
       zh,
     });
@@ -158,6 +167,7 @@ export async function produce({ input = {} } = {}) {
       title: `${title} - ${siteName}`,
       description: supportDescription,
       canonicalUrl: `${siteUrl}/${route}/`,
+      extraTags: extraHeadTags,
     });
 
     const astroBody = renderAstroPage({
@@ -191,6 +201,7 @@ export async function produce({ input = {} } = {}) {
       url: `${siteUrl}/`,
       description: hubDescription,
     }),
+    extraTags: extraHeadTags,
   });
 
   const indexAstro = renderAstroPage({
@@ -207,6 +218,7 @@ export async function produce({ input = {} } = {}) {
     title: `${siteName} ${t.reviews}`,
     description: hubDescription,
     canonicalUrl: `${siteUrl}/reviews/`,
+    extraTags: extraHeadTags,
   });
   const reviewsIndexAstro = renderAstroPage({
     lang: language,
@@ -232,7 +244,7 @@ export async function produce({ input = {} } = {}) {
 
   return {
     blueprint: "affiliate-review",
-    variant: "affiliate-brand-hub+review-revneey-golden-v5",
+    variant,
     title: siteName,
     description: hubDescription,
     pages,
@@ -418,7 +430,7 @@ function buildReviewsIndexSections({ siteName, offers, navLinks, announcement, d
 // Per-review page
 // =============================================================================
 
-function buildReviewPage({ offer, related, siteName, siteUrl, language, dataTheme, navLinks, announcement, disclosureText, currentYear, dateIso, dateDisplay, author, hubDescription, t, zh }) {
+function buildReviewPage({ offer, related, siteName, siteUrl, language, dataTheme, navLinks, announcement, disclosureText, currentYear, dateIso, dateDisplay, author, hubDescription, extraHeadTags, t, zh }) {
   const canonicalUrl = `${siteUrl}/reviews/${offer.slug}/`;
   const reviewTitle = zh ? `${offer.brand} 测评 ${currentYear}` : `${offer.brand} Review ${currentYear}`;
   const verdict = zh
@@ -562,6 +574,7 @@ function buildReviewPage({ offer, related, siteName, siteUrl, language, dataThem
       },
       datePublished: dateIso,
     }),
+    extraTags: extraHeadTags,
   });
 
   const astroBody = renderAstroPage({
@@ -750,6 +763,14 @@ function normalizeAnnouncement(input, t) {
 
 function mergeRecords(...values) {
   return Object.assign({}, ...values.filter(isRecord));
+}
+
+function chooseVariant(...values) {
+  for (const value of values) {
+    const variant = text(value);
+    if (variants.has(variant)) return variant;
+  }
+  return defaultVariant;
 }
 
 function isRecord(v) {

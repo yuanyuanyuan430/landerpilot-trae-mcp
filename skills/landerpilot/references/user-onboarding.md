@@ -149,6 +149,7 @@ LanderPilot 面向小白用户，启动阶段要给清晰选择，不要把用�
 
 - 公司/产品官网 -> CLI `--type corporate`，输入 JSON 里 SaaS/科技产品优先 `template: "corporate-saas"`，极简介绍页用 `template: "corporate-minimal"`。
 - 联盟测评站 -> `type: "affiliate-review"`。
+- YeahPromos/YP 审核站 -> `type: "affiliate-review"` 且 `variant: "affiliate-review-yp"`。
 - 返现/优惠券目录站 -> `type: "cashback"`。
 
 视觉方向映射：

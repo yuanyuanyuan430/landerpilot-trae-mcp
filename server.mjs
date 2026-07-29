@@ -20,7 +20,7 @@ const pluginManifestPath = resolve(packageRoot, "ganhuo-plugin.json");
 const server = new McpServer(
   {
     name: "landerpilot-local-mcp",
-    version: "0.1.0",
+    version: "0.2.3",
   },
   {
     capabilities: {

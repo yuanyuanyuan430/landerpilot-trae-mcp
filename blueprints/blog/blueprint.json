@@ -7,7 +7,7 @@
   "inputModel": {
     "required": ["site_name", "posts"],
     "recommended": ["domain", "site_description", "posts[].author", "posts[].category"],
-    "notes": "Each post needs at minimum { slug, title, contentHtml, date }. Pass contentHtml as ready-to-render HTML (markdown rendering happens upstream of producer)."
+    "notes": "Each post needs at minimum { slug, title, contentHtml, date }. Pass contentHtml as ready-to-render HTML (markdown rendering happens upstream of producer); the scaffold sanitizes it before rendering."
   },
   "dataPolicy": {
     "mode": "strict",

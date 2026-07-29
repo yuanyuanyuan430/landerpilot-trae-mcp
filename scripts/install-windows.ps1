@@ -1,7 +1,6 @@
 param(
   [string]$ProjectPath = (Get-Location).Path,
-  [string]$Repo = "github:yuanyuanyuan430/landerpilot-trae-mcp",
-  [string]$ApiKey = "",
+  [string]$Package = "landerpilot-mcp",
   [switch]$SkipInstall
 )
 
@@ -32,7 +31,7 @@ function Install-WithWinget($Id, $Name) {
   winget install --id $Id -e --source winget --accept-package-agreements --accept-source-agreements
 }
 
-Write-Host "LanderPilot Trae MCP Windows 一键安装" -ForegroundColor Green
+Write-Host "LanderPilot MCP Windows 一键安装" -ForegroundColor Green
 Write-Host "项目目录：$ProjectPath"
 
 if (-not (Test-Path $ProjectPath)) {
@@ -48,7 +47,7 @@ if (-not (Test-Command npm)) {
   Add-CommonPath "$env:ProgramFiles\nodejs"
 }
 
-if (-not (Test-Command git)) {
+if (($Package -like "github:*") -and -not (Test-Command git)) {
   Install-WithWinget "Git.Git" "Git"
   Add-CommonPath "$env:ProgramFiles\Git\cmd"
   Add-CommonPath "$env:LOCALAPPDATA\Programs\Git\cmd"
@@ -58,38 +57,33 @@ if (-not (Test-Command npm)) {
   throw "npm 仍然不可用。请关闭 PowerShell，重新打开后再运行本脚本。"
 }
 
-if (-not (Test-Command git)) {
+if (($Package -like "github:*") -and -not (Test-Command git)) {
   throw "git 仍然不可用。请关闭 PowerShell，重新打开后再运行本脚本。"
 }
 
 if (-not $SkipInstall) {
-  Write-Step "正在安装 LanderPilot Trae MCP"
-  npm install -g $Repo
+  Write-Step "正在安装 LanderPilot MCP"
+  npm install -g $Package
 }
 
 $npmPrefix = (& npm prefix -g).Trim()
-$setupCmd = Join-Path $npmPrefix "landerpilot-trae-setup.cmd"
-$doctorCmd = Join-Path $npmPrefix "landerpilot-trae-doctor.cmd"
+$setupCmd = Join-Path $npmPrefix "landerpilot-mcp-setup.cmd"
+$doctorCmd = Join-Path $npmPrefix "landerpilot-mcp-doctor.cmd"
 
 if (-not (Test-Path $setupCmd)) {
-  $setupCmd = "landerpilot-trae-setup"
+  $setupCmd = "landerpilot-mcp-setup"
 }
 if (-not (Test-Path $doctorCmd)) {
-  $doctorCmd = "landerpilot-trae-doctor"
+  $doctorCmd = "landerpilot-mcp-doctor"
 }
 
 Write-Step "正在写入 Trae MCP 配置"
-$setupArgs = @("--project", $ProjectPath)
-if ($ApiKey.Trim()) {
-  $setupArgs += @("--api-key", $ApiKey.Trim())
-}
+$setupArgs = @("--client", "trae", "--scope", "global")
 & $setupCmd @setupArgs
 
 Write-Step "正在检查配置"
-& $doctorCmd --project $ProjectPath
+& $doctorCmd --client trae --scope global
 
 Write-Host ""
 Write-Host "完成。现在请完全退出 Trae，再重新打开这个项目。" -ForegroundColor Green
 Write-Host "打开后在 Trae 聊天框输入：请调用 landerpilot_connection_status 检查连接。"
-Write-Host ""
-Write-Host "如果安装阶段提示 GitHub 权限错误，请确认老师已经把你的 GitHub 账号加入私有仓。"

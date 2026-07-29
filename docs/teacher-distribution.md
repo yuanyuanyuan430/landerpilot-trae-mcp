@@ -1,48 +1,75 @@
 # 老师发放说明
 
-## 你需要提前做两件事
-
-1. 把学员的 GitHub 账号加入私有仓 `yuanyuanyuan430/landerpilot-trae-mcp`。
-2. 给学员发 LanderPilot API Key。
-
-私有仓没有授权时，学员执行安装命令会失败。
-
-## 发给学员的两条命令
+## 发布前
 
 ```bash
-npm install -g github:yuanyuanyuan430/landerpilot-trae-mcp
+npm test
+npm run pack:check
+npm run verify:distribution
+npm run publish:check
 ```
 
-让学员进入自己的 Trae 项目文件夹，再运行：
+`verify:distribution` 必须显示真实 tarball 全局安装 smoke test 通过。`publish:check` 未登录时会以状态码 `2` 提醒登录；其他非零状态要先排查。
+
+发布：
 
 ```bash
-landerpilot-trae-setup
+npm run publish:npm
 ```
 
-学员粘贴 API Key 后，脚本会自动写入项目配置和 Trae 全局配置。不要让学员手改 JSON。
+项目许可证是 `UNLICENSED`，不要在课程材料里写 MIT。
 
-最后让学员完全退出 Trae，重新打开项目，在聊天框输入：
+## 发给学员
+
+先统一安装一次：
+
+```bash
+npm install -g landerpilot-mcp
+```
+
+再只运行对应 Agent 的命令：
+
+```bash
+landerpilot-mcp-setup --client trae
+landerpilot-mcp-setup --client cursor
+landerpilot-mcp-setup --client claude-desktop
+landerpilot-mcp-setup --client codex
+landerpilot-mcp-setup --client codewhale
+landerpilot-mcp-setup --client opencode
+```
+
+这些命令默认写用户级配置。配置完成后重启 Agent / IDE，并让学员发送：
 
 ```text
 请调用 landerpilot_connection_status 检查连接。
 ```
 
-## 学员常见问题
+## 项目配置的风险
 
-如果没有 `npm`，让学员安装 Node.js LTS。
-
-如果装包时提示没有权限，说明学员 GitHub 账号还没加入私有仓，或本机没有登录 GitHub。
-
-如果 Trae 看不到工具，让学员运行：
+Generic、Claude Code 和 VS Code/Copilot 主要使用项目配置。它们会在项目文件中保存明文 API Key，因此 setup 默认拒绝。确实需要时：
 
 ```bash
-landerpilot-trae-doctor
+landerpilot-mcp-setup --client claude-code --project /path/to/project --allow-project-secret
+landerpilot-mcp-setup --client vscode --project /path/to/project --allow-project-secret
 ```
 
-如果 doctor 也提示失败，让学员重新运行 `landerpilot-trae-setup`，再完全重启 Trae。
+使用前必须告诉学员：
 
-## Windows 学员
+1. setup 不会替他们修改 `.gitignore`。
+2. 项目/自定义目标不在工作树旁保存含 Key 的备份；默认全局目标的配置与备份会尽可能设为 `0600`。
+3. 运行后要检查版本控制状态，不得把 Key 发到群聊或仓库。
 
-Windows 可以用一键脚本，见 [windows-one-click.md](windows-one-click.md)。
+## 诊断
 
-但要注意：当前包在私有 GitHub 仓库里，所以 Windows 学员仍然需要 GitHub 仓库访问权限。真正“完全傻瓜式、不碰 GitHub”的方案，是把这个包发布到 npm 或放到公开只读仓。
+```bash
+landerpilot-mcp-doctor --client cursor
+```
+
+doctor 检查本地配置；`landerpilot_connection_status` 进一步真实调用远端 `listTools`。连接失败时依次核对 Key、订阅和网络。
+
+Trae 兼容命令仍可使用：
+
+```bash
+landerpilot-trae-setup
+landerpilot-trae-doctor
+```

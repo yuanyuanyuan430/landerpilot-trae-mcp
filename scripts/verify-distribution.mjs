@@ -1,5 +1,13 @@
 #!/usr/bin/env node
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync } from "node:fs";
+import {
+  existsSync,
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  realpathSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -8,6 +16,7 @@ import { spawnSync } from "node:child_process";
 const packageRoot = fileURLToPath(new URL("..", import.meta.url));
 const tempRoot = mkdtempSync(join(tmpdir(), "landerpilot-mcp-dist-"));
 const packageJson = JSON.parse(readFileSync(join(packageRoot, "package.json"), "utf8"));
+let tarballPath = "";
 
 try {
   const packDryRun = npm(["pack", "--dry-run", "--json"], packageRoot);
@@ -22,21 +31,44 @@ try {
   const pack = npm(["pack", "--silent"], packageRoot);
   const tarballName = pack.stdout.trim().split(/\r?\n/).at(-1);
   if (!tarballName) throw new Error("npm pack did not return a tarball name.");
-  const tarballPath = resolve(packageRoot, tarballName);
-  npm(["install", "-g", tarballPath, "--prefix", tempRoot, "--ignore-scripts"], packageRoot);
+  tarballPath = resolve(packageRoot, tarballName);
+  npm(
+    [
+      "install",
+      "-g",
+      tarballPath,
+      "--prefix",
+      tempRoot,
+      "--ignore-scripts",
+      "--no-audit",
+      "--no-fund",
+    ],
+    packageRoot
+  );
 
   const installedRoot = join(tempRoot, "lib", "node_modules", packageJson.name);
+
   const localBinary = join(tempRoot, "bin", "landerpilot-local-mcp");
   const cloudBinary = join(tempRoot, "bin", "landerpilot-cloud-mcp");
+  const universalSetupBinary = join(tempRoot, "bin", "landerpilot-mcp-setup");
+  const universalDoctorBinary = join(tempRoot, "bin", "landerpilot-mcp-doctor");
   const setupBinary = join(tempRoot, "bin", "landerpilot-trae-setup");
   const doctorBinary = join(tempRoot, "bin", "landerpilot-trae-doctor");
   const tempHome = join(tempRoot, "home");
   const tempProject = join(tempRoot, "project");
+  const tempGenericProject = join(tempRoot, "generic-project");
+  const tempCursorHome = join(tempRoot, "cursor-home");
+  const tempCodeWhaleHome = join(tempRoot, "codewhale-home");
+  const tempOpenCodeHome = join(tempRoot, "opencode-home");
   const tempWindowsHome = join(tempRoot, "win-home");
   const tempWindowsAppData = join(tempWindowsHome, "AppData", "Roaming");
   const tempWindowsProject = join(tempRoot, "win-project");
   mkdirSync(tempHome, { recursive: true });
   mkdirSync(tempProject, { recursive: true });
+  mkdirSync(tempGenericProject, { recursive: true });
+  mkdirSync(tempCursorHome, { recursive: true });
+  mkdirSync(tempCodeWhaleHome, { recursive: true });
+  mkdirSync(tempOpenCodeHome, { recursive: true });
   mkdirSync(tempWindowsAppData, { recursive: true });
   mkdirSync(tempWindowsProject, { recursive: true });
 
@@ -87,10 +119,99 @@ await client.close();
   const cloudSmoke = node([cloudSmokeScript], installedRoot);
 
   run(
-    setupBinary,
-    ["--project", tempProject, "--api-key", "lp_test_distribution"],
+    universalSetupBinary,
+    [
+      "--project",
+      tempGenericProject,
+      "--allow-project-secret",
+    ],
+    packageRoot,
+    { HOME: tempHome, LANDERPILOT_SETUP_API_KEY: "lp_test_generic" }
+  );
+  const genericConfigPath = join(tempGenericProject, ".mcp.json");
+  const genericConfig = JSON.parse(readFileSync(genericConfigPath, "utf8"));
+  const genericDoctor = run(
+    universalDoctorBinary,
+    ["--project", tempGenericProject],
     packageRoot,
     { HOME: tempHome }
+  );
+
+  run(
+    universalSetupBinary,
+    ["--client", "cursor", "--allow-project-secret"],
+    packageRoot,
+    { HOME: tempCursorHome, LANDERPILOT_SETUP_API_KEY: "lp_test_cursor" }
+  );
+  const cursorConfigPath = join(tempCursorHome, ".cursor", "mcp.json");
+  const cursorConfig = JSON.parse(readFileSync(cursorConfigPath, "utf8"));
+  const cursorDoctor = run(
+    universalDoctorBinary,
+    ["--client", "cursor"],
+    packageRoot,
+    { HOME: tempCursorHome }
+  );
+
+  run(
+    universalSetupBinary,
+    ["--client", "codewhale", "--allow-project-secret"],
+    packageRoot,
+    { HOME: tempCodeWhaleHome, LANDERPILOT_SETUP_API_KEY: "lp_test_codewhale" }
+  );
+  const codeWhaleConfigPath = join(tempCodeWhaleHome, ".codewhale", "mcp.json");
+  const codeWhaleConfig = JSON.parse(readFileSync(codeWhaleConfigPath, "utf8"));
+  const codeWhaleDoctor = run(
+    universalDoctorBinary,
+    ["--client", "codewhale"],
+    packageRoot,
+    { HOME: tempCodeWhaleHome }
+  );
+
+  run(
+    universalSetupBinary,
+    ["--client", "opencode", "--allow-project-secret"],
+    packageRoot,
+    { HOME: tempOpenCodeHome, LANDERPILOT_SETUP_API_KEY: "lp_test_opencode" }
+  );
+  const openCodeConfigPath = join(tempOpenCodeHome, ".config", "opencode", "opencode.json");
+  const openCodeConfig = JSON.parse(readFileSync(openCodeConfigPath, "utf8"));
+  const openCodeDoctor = run(
+    universalDoctorBinary,
+    ["--client", "opencode"],
+    packageRoot,
+    { HOME: tempOpenCodeHome }
+  );
+
+  run(
+    universalSetupBinary,
+    [
+      "--client",
+      "codex",
+      "--allow-project-secret",
+    ],
+    packageRoot,
+    { HOME: tempHome, LANDERPILOT_SETUP_API_KEY: "lp_test_codex" }
+  );
+  const codexConfigPath = join(tempHome, ".codex", "config.toml");
+  const codexConfig = readFileSync(codexConfigPath, "utf8");
+  const codexDoctor = run(
+    universalDoctorBinary,
+    ["--client", "codex"],
+    packageRoot,
+    { HOME: tempHome }
+  );
+
+  run(
+    setupBinary,
+    [
+      "--scope",
+      "all",
+      "--project",
+      tempProject,
+      "--allow-project-secret",
+    ],
+    packageRoot,
+    { HOME: tempHome, LANDERPILOT_SETUP_API_KEY: "lp_test_distribution" }
   );
   const projectConfigPath = join(tempProject, ".trae", "mcp.json");
   const globalConfigPath = join(tempHome, "Library", "Application Support", "Trae CN", "User", "mcp.json");
@@ -98,15 +219,29 @@ await client.close();
   const globalConfig = JSON.parse(readFileSync(globalConfigPath, "utf8"));
   const setupCheck = checkGeneratedConfig(projectConfig, installedRoot);
   const globalSetupCheck = checkGeneratedConfig(globalConfig, installedRoot);
-  const doctor = run(doctorBinary, ["--project", tempProject], packageRoot, { HOME: tempHome });
+  const doctor = run(
+    doctorBinary,
+    ["--scope", "all", "--project", tempProject],
+    packageRoot,
+    { HOME: tempHome }
+  );
 
   run(
     setupBinary,
-    ["--project", tempWindowsProject, "--platform", "win32", "--api-key", "lp_test_windows"],
+    [
+      "--scope",
+      "all",
+      "--project",
+      tempWindowsProject,
+      "--platform",
+      "win32",
+      "--allow-project-secret",
+    ],
     packageRoot,
     {
       APPDATA: tempWindowsAppData,
       USERPROFILE: tempWindowsHome,
+      LANDERPILOT_SETUP_API_KEY: "lp_test_windows",
     }
   );
   const windowsProjectConfigPath = join(tempWindowsProject, ".trae", "mcp.json");
@@ -119,15 +254,13 @@ await client.close();
   const windowsTraeSettingsConfig = JSON.parse(readFileSync(windowsTraeSettingsConfigPath, "utf8"));
   const windowsDoctor = run(
     doctorBinary,
-    ["--project", tempWindowsProject, "--platform", "win32"],
+    ["--scope", "all", "--project", tempWindowsProject, "--platform", "win32"],
     packageRoot,
     {
       APPDATA: tempWindowsAppData,
       USERPROFILE: tempWindowsHome,
     }
   );
-
-  rmSync(tarballPath, { force: true });
 
   process.stdout.write(
     `${JSON.stringify(
@@ -140,12 +273,29 @@ await client.close();
         },
         smoke: JSON.parse(smoke.stdout),
         cloudBridgeWithoutKey: JSON.parse(cloudSmoke.stdout),
+        universalSetup: {
+          genericConfigPath,
+          generic: checkGeneratedConfig(genericConfig, installedRoot, "lp_test_generic"),
+          genericDoctorMentionsOk: checkDoctorOutput(genericDoctor, "OK 通用项目 MCP 配置"),
+          cursorConfigPath,
+          cursor: checkGeneratedConfig(cursorConfig, installedRoot, "lp_test_cursor"),
+          cursorDoctorMentionsOk: checkDoctorOutput(cursorDoctor, "OK Cursor 全局配置"),
+          codeWhaleConfigPath,
+          codeWhale: checkGeneratedCodeWhaleConfig(codeWhaleConfig, installedRoot, "lp_test_codewhale"),
+          codeWhaleDoctorMentionsOk: checkDoctorOutput(codeWhaleDoctor, "OK CodeWhale 全局配置"),
+          openCodeConfigPath,
+          openCode: checkGeneratedOpenCodeConfig(openCodeConfig, installedRoot, "lp_test_opencode"),
+          openCodeDoctorMentionsOk: checkDoctorOutput(openCodeDoctor, "OK OpenCode 全局配置"),
+          codexConfigPath,
+          codex: checkGeneratedCodexConfig(codexConfig, "lp_test_codex"),
+          codexDoctorMentionsOk: checkDoctorOutput(codexDoctor, "OK Codex 全局配置"),
+        },
         setup: {
           projectConfigPath,
           globalConfigPath,
           project: setupCheck,
           global: globalSetupCheck,
-          doctorMentionsOk: doctor.stdout.includes("OK 项目配置"),
+          doctorMentionsOk: checkDoctorOutput(doctor, "OK Trae 项目配置"),
         },
         windowsSetup: {
           projectConfigPath: windowsProjectConfigPath,
@@ -156,7 +306,7 @@ await client.close();
           cnGlobal: checkGeneratedConfig(windowsCnConfig, installedRoot, "lp_test_windows"),
           traeGlobal: checkGeneratedConfig(windowsTraeConfig, installedRoot, "lp_test_windows"),
           traeSettingsGlobal: checkGeneratedConfig(windowsTraeSettingsConfig, installedRoot, "lp_test_windows"),
-          doctorMentionsOk: windowsDoctor.stdout.includes("OK 项目配置"),
+          doctorMentionsOk: checkDoctorOutput(windowsDoctor, "OK Trae 项目配置"),
         },
       },
       null,
@@ -164,11 +314,12 @@ await client.close();
     )}\n`
   );
 } finally {
+  if (tarballPath) rmSync(tarballPath, { force: true });
   rmSync(tempRoot, { force: true, recursive: true });
 }
 
 function npm(args, cwd) {
-  return run("npm", args, cwd);
+  return run("npm", args, cwd, { npm_config_cache: join(tempRoot, "npm-cache") });
 }
 
 function node(args, cwd) {
@@ -186,7 +337,11 @@ function run(command, args, cwd, extraEnv = {}) {
       FORCE_COLOR: "0",
       NO_COLOR: "1",
     },
+    timeout: 180000,
   });
+  if (result.error) {
+    throw new Error(`${command} ${args.join(" ")} failed: ${result.error.message}`);
+  }
   if (result.status !== 0) {
     throw new Error(
       `${command} ${args.join(" ")} failed with code ${result.status}\n${result.stdout}\n${result.stderr}`
@@ -207,6 +362,74 @@ function checkGeneratedConfig(config, installedRoot, expectedApiKey = "lp_test_d
     server.env?.LANDERPILOT_API_KEY === expectedApiKey;
   if (!ok) {
     throw new Error(`generated config did not match expected shape: ${JSON.stringify(server, null, 2)}`);
+  }
+  return {
+    command: server.command,
+    script: server.args[0],
+    apiKeyConfigured: true,
+  };
+}
+
+function checkDoctorOutput(result, expected) {
+  if (!result.stdout.includes(expected)) {
+    throw new Error(`doctor output is missing ${JSON.stringify(expected)}:\n${result.stdout}`);
+  }
+  return true;
+}
+
+function checkGeneratedCodexConfig(configText, expectedApiKey) {
+  const ok =
+    configText.includes("# BEGIN landerpilot-mcp:landerpilot") &&
+    configText.includes("[mcp_servers.landerpilot]") &&
+    configText.includes("[mcp_servers.landerpilot.env]") &&
+    configText.includes(`LANDERPILOT_API_KEY = "${expectedApiKey}"`) &&
+    configText.includes("cloud-proxy.mjs");
+  if (!ok) {
+    throw new Error(`generated Codex config did not match expected shape:\n${configText}`);
+  }
+  return {
+    markerConfigured: true,
+    apiKeyConfigured: true,
+  };
+}
+
+function checkGeneratedOpenCodeConfig(config, installedRoot, expectedApiKey) {
+  const server = config.mcp?.landerpilot;
+  if (!server) throw new Error("generated config is missing mcp.landerpilot");
+  const expectedScript = join(installedRoot, "cloud-proxy.mjs");
+  const ok =
+    server.type === "local" &&
+    server.enabled === true &&
+    Array.isArray(server.command) &&
+    existsSync(server.command[0]) &&
+    existsSync(server.command[1]) &&
+    samePath(server.command[1], expectedScript) &&
+    server.environment?.LANDERPILOT_API_KEY === expectedApiKey;
+  if (!ok) {
+    throw new Error(`generated OpenCode config did not match expected shape: ${JSON.stringify(server, null, 2)}`);
+  }
+  return {
+    command: server.command[0],
+    script: server.command[1],
+    apiKeyConfigured: true,
+  };
+}
+
+function checkGeneratedCodeWhaleConfig(config, installedRoot, expectedApiKey) {
+  const server = config.servers?.landerpilot;
+  if (!server) throw new Error("generated config is missing servers.landerpilot");
+  const expectedScript = join(installedRoot, "cloud-proxy.mjs");
+  const ok =
+    typeof server.command === "string" &&
+    Array.isArray(server.args) &&
+    existsSync(server.command) &&
+    existsSync(server.args[0]) &&
+    samePath(server.args[0], expectedScript) &&
+    server.env?.LANDERPILOT_API_KEY === expectedApiKey &&
+    server.enabled === true &&
+    server.disabled === false;
+  if (!ok) {
+    throw new Error(`generated CodeWhale config did not match expected shape: ${JSON.stringify(server, null, 2)}`);
   }
   return {
     command: server.command,

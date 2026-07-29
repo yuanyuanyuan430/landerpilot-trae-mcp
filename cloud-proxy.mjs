@@ -7,16 +7,22 @@ import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
+import {
+  createRemoteSession,
+  probeRemoteConnection,
+  validateRemoteUrl,
+} from "./scripts/shared/remote-session.mjs";
 
 const remoteUrl = process.env.LANDERPILOT_MCP_URL || "https://landerpilot.com/api/mcp";
 const apiKey = process.env.LANDERPILOT_API_KEY || process.env.LP_API_KEY || "";
+const allowCustomUrl = process.env.LANDERPILOT_ALLOW_CUSTOM_MCP_URL === "1";
 
-let remoteClientPromise;
+const remoteSession = createRemoteSession(connectRemoteClient);
 
 const server = new Server(
   {
     name: "landerpilot-cloud-stdio-bridge",
-    version: "0.1.0",
+    version: "0.2.3",
   },
   {
     capabilities: {
@@ -25,7 +31,7 @@ const server = new Server(
       },
     },
     instructions:
-      "Trae stdio bridge for LanderPilot cloud MCP. Set LANDERPILOT_API_KEY in the MCP env config.",
+      "Stdio bridge for LanderPilot cloud MCP. Set LANDERPILOT_API_KEY in the MCP env config.",
   }
 );
 
@@ -35,8 +41,7 @@ server.setRequestHandler(ListToolsRequestSchema, async (request) => {
   }
 
   try {
-    const client = await getRemoteClient();
-    const result = await client.listTools(request.params);
+    const result = await remoteSession.run((client) => client.listTools(request.params));
     return {
       ...result,
       tools: [connectionStatusTool("connected"), ...result.tools],
@@ -55,16 +60,17 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
   if (!apiKey.trim()) {
     return toolError(
-      "没有配置 LanderPilot API Key。请在 Trae 项目的 .trae/mcp.json 里设置 env.LANDERPILOT_API_KEY，或重新运行 landerpilot-trae-setup。"
+      "没有配置 LanderPilot API Key。请在当前 agent 的 MCP 配置里设置 env.LANDERPILOT_API_KEY，或重新运行 landerpilot-mcp-setup。"
     );
   }
 
   try {
-    const client = await getRemoteClient();
-    return client.callTool({
-      name: request.params.name,
-      arguments: request.params.arguments,
-    });
+    return await remoteSession.run((client) =>
+      client.callTool({
+        name: request.params.name,
+        arguments: request.params.arguments,
+      })
+    );
   } catch (error) {
     return toolError(
       `调用 LanderPilot 云端 MCP 失败：${errorMessage(error)}\n\n请检查 API Key 是否正确、订阅是否有效，以及网络是否能访问 ${remoteUrl}。`
@@ -75,19 +81,13 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 const transport = new StdioServerTransport();
 await server.connect(transport);
 
-function getRemoteClient() {
-  if (!remoteClientPromise) {
-    remoteClientPromise = connectRemoteClient();
-  }
-  return remoteClientPromise;
-}
-
 async function connectRemoteClient() {
+  const validatedRemoteUrl = validateRemoteUrl(remoteUrl, { allowCustomUrl });
   const client = new Client({
-    name: "landerpilot-trae-cloud-proxy",
-    version: "0.1.0",
+    name: "landerpilot-cloud-stdio-proxy",
+    version: "0.2.3",
   });
-  const transport = new StreamableHTTPClientTransport(new URL(remoteUrl), {
+  const transport = new StreamableHTTPClientTransport(new URL(validatedRemoteUrl), {
     requestInit: {
       headers: {
         Authorization: `Bearer ${apiKey}`,
@@ -121,27 +121,31 @@ function connectionStatusTool(status, detail = "") {
   };
 }
 
-function connectionStatusResult() {
-  const configured = Boolean(apiKey.trim());
+async function connectionStatusResult() {
+  const status = await probeRemoteConnection({
+    apiKey,
+    remoteUrl,
+    session: remoteSession,
+  });
   return {
     content: [
       {
         type: "text",
         text: JSON.stringify(
           {
-            ok: configured,
-            remoteUrl,
-            apiKeyConfigured: configured,
-            setup: configured
-              ? "API Key 已配置。如果云端工具没有出现，请检查 Key、订阅和网络。"
-              : "请在 Trae 项目的 .trae/mcp.json 里设置 env.LANDERPILOT_API_KEY，或在项目目录运行 landerpilot-trae-setup。",
+            ...status,
+            setup: !status.apiKeyConfigured
+              ? "请在当前 agent 的 MCP 配置里设置 env.LANDERPILOT_API_KEY，或运行 landerpilot-mcp-setup。"
+              : status.ok
+                ? "已成功调用云端 listTools。"
+                : `云端连接失败：${status.error}。请检查 Key、订阅和网络。`,
           },
           null,
           2
         ),
       },
     ],
-    isError: !configured,
+    isError: !status.ok,
   };
 }
 

@@ -53,7 +53,7 @@
     "contentHtml": {
       "type": "string",
       "required": false,
-      "hint": "Pre-rendered HTML content. If set, used in place of the default slot. For trusted sources only (rendered with set:html)."
+      "hint": "Pre-rendered HTML content. If set, used in place of the default slot and sanitized against the editorial allowlist before rendering."
     }
   },
   "preview": {

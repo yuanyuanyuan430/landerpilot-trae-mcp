@@ -510,10 +510,40 @@ function postToListEntry(post) {
 
 function normalizePosts(input, t) {
   const raw = firstNonEmptyArray(input.posts, input.articles, input.entries);
+  if (raw.length === 0) {
+    if (input.demo_mode !== true && input.demoMode !== true) {
+      throw new Error(
+        "Blog blueprint requires at least one complete post with title, content, and date. Set demo_mode: true only for an explicit demo placeholder."
+      );
+    }
+    raw.push({
+      slug: "demo-post",
+      title: `[DEMO] ${t.defaults.placeholderPostTitle}`,
+      excerpt: t.defaults.placeholderPostExcerpt,
+      contentHtml: t.defaults.placeholderPostContent,
+      date: "1970-01-01",
+      category: t.defaults.placeholderCategory,
+    });
+  }
+
+  raw.forEach((post, index) => {
+    const missing = [];
+    if (!isRecord(post) || !text(post.title, post.headline)) missing.push("title");
+    if (!isRecord(post) || !text(post.contentHtml, post.content, post.html, post.body)) {
+      missing.push("content");
+    }
+    if (!isRecord(post) || !text(post.date, post.published, post.publishedAt, post.publish_date)) {
+      missing.push("date");
+    }
+    if (missing.length > 0) {
+      throw new Error(
+        `Blog post ${index + 1} is missing required field(s): ${missing.join(", ")}.`
+      );
+    }
+  });
+
   const used = new Set();
-  return raw
-    .map((p, idx) => normalizePost(p, idx, used, t))
-    .filter(Boolean);
+  return raw.map((p, idx) => normalizePost(p, idx, used, t));
 }
 
 function normalizePost(p, idx, usedSlugs, t) {
@@ -567,8 +597,11 @@ function normalizePost(p, idx, usedSlugs, t) {
 
 function blogWarnings(input, posts) {
   const warnings = [];
-  if (!Array.isArray(input.posts) || input.posts.length === 0) {
-    warnings.push("posts-missing: blueprint generated with placeholder posts; replace before publishing.");
+  if (
+    (input.demo_mode === true || input.demoMode === true) &&
+    firstNonEmptyArray(input.posts, input.articles, input.entries).length === 0
+  ) {
+    warnings.push("demo-post: generated one explicit placeholder post; replace before publishing.");
   }
   const drafts = posts.filter((p) => !p.contentHtml || p.contentHtml.includes("Replace this placeholder"));
   if (drafts.length > 0) {
