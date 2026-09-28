@@ -1,6 +1,6 @@
 {
   "name": "landerpilot-trae-mcp",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "LanderPilot 建站与 PW 验证引导，兼容干活宝 AI pi 插件和 Trae MCP。",
   "type": "module",
   "private": true,
@@ -37,7 +37,8 @@
     "inspect": "node scripts/inspect-tools.mjs",
     "smoke": "node scripts/smoke-call.mjs",
     "pack:check": "npm pack --dry-run",
-    "verify:distribution": "node scripts/verify-distribution.mjs"
+    "verify:distribution": "node scripts/verify-distribution.mjs",
+    "verify:ganhuo": "node scripts/verify-ganhuo-runtime.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
