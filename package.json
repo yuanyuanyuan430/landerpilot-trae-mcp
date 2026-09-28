@@ -1,7 +1,7 @@
 {
   "name": "landerpilot-trae-mcp",
-  "version": "0.1.2",
-  "description": "Trae-friendly LanderPilot stdio MCP bridge and setup helper.",
+  "version": "0.2.1",
+  "description": "LanderPilot 建站与 PW 验证引导，兼容干活宝 AI pi 插件和 Trae MCP。",
   "type": "module",
   "private": true,
   "license": "UNLICENSED",
@@ -21,7 +21,8 @@
     "mcp.remote.example.json",
     "cloud-proxy.mjs",
     "server.mjs",
-    "README.md"
+    "README.md",
+    "pi-extension.mjs"
   ],
   "bin": {
     "landerpilot-local-mcp": "./server.mjs",
@@ -30,15 +31,22 @@
     "landerpilot-trae-doctor": "./scripts/doctor-trae.mjs"
   },
   "scripts": {
+    "test:promotion": "node --test generators/shared/partnerwhiz-verification.test.mjs skills/landerpilot/scripts/create-promotion-site.test.mjs pi-extension.test.mjs",
     "start": "node server.mjs",
     "start:cloud": "node cloud-proxy.mjs",
     "inspect": "node scripts/inspect-tools.mjs",
     "smoke": "node scripts/smoke-call.mjs",
     "pack:check": "npm pack --dry-run",
-    "verify:distribution": "node scripts/verify-distribution.mjs"
+    "verify:distribution": "node scripts/verify-distribution.mjs",
+    "verify:ganhuo": "node scripts/verify-ganhuo-runtime.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
     "zod": "^4.3.6"
+  },
+  "pi": {
+    "extensions": [
+      "./pi-extension.mjs"
+    ]
   }
 }

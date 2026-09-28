@@ -1,0 +1,56 @@
+{
+  "promotion": {
+    "siteName": "Everyday Buying Notes",
+    "eyebrow": "Thoughtful shopping · Everyday choices",
+    "headline": "Start with what you need. Choose what fits.",
+    "description": "Practical questions about everyday use, total cost and after-sales support to help you make a more considered purchase.",
+    "nav": { "home": "Home", "guide": "Buying guide", "about": "About", "disclosure": "Affiliate disclosure" },
+    "readGuide": "Read the guide",
+    "rights": "All rights reserved.",
+    "featureTitle": "Focus on what changes your everyday experience",
+    "features": [
+      { "title": "Begin with a real use case", "description": "List what you need at home, at work or on the move. Separate essential functions from extras you would rarely use." },
+      { "title": "Compare the full cost", "description": "Include delivery, supplies, accessories and ongoing subscriptions instead of relying on a discount percentage." },
+      { "title": "Check support after purchase", "description": "Read return windows, warranty limits and service coverage. Save your order and the seller's stated terms." }
+    ],
+    "processTitle": "Three steps before you buy",
+    "steps": [
+      { "title": "Define needs and budget", "description": "Write down your main use case, non-negotiable requirements and the total cost you can afford." },
+      { "title": "Check the original information", "description": "Read manufacturer specifications, seller terms and the checkout page. Confirm the model, dimensions, compatibility and delivery area." },
+      { "title": "Review the final decision", "description": "Confirm the amount due and after-sales terms. It is fine to wait when an important question is still unanswered." }
+    ],
+    "disclosureNote": "This site currently provides general buying guidance, with no product offers or purchase links. If affiliate links are added, any potential commission will be disclosed near that content.",
+    "generationNote": "General buying guidance generated. Check content and site ownership before publishing; a verification tag does not imply PartnerWhiz approval.",
+    "articles": {
+      "guide": {
+        "title": "A buying checklist you can use again",
+        "description": "A comparison method, without product tests, rankings or recommendations for specific products.",
+        "sections": [
+          { "title": "Make the need specific", "paragraphs": ["Describe the problem, how often you will use the item and where it will be used. Measure available space before choosing storage; check device models and ports before choosing computer accessories.", "Group requirements into essential, optional and unnecessary. Eliminate options that miss an essential requirement before comparing looks and extra features."] },
+          { "title": "Compare costs on the same basis", "paragraphs": ["Compare the same specification, quantity and delivery region. Include delivery, taxes, required accessories, consumables and recurring service charges in your budget.", "A crossed-out price, discount percentage or countdown cannot establish value on its own. Check the final checkout amount and terms, and avoid buying unwanted extras to reach a threshold."] },
+          { "title": "Separate specifications, opinions and tests", "paragraphs": ["Manufacturer specifications describe functions. Customer comments reflect individual experiences. Tests need stated conditions and methods. These are different kinds of evidence.", "Look for the use case, length of ownership and recurring problems in reviews. Unverified sales figures, rankings or performance claims should not be your only basis for a decision."] },
+          { "title": "Check support before checkout", "paragraphs": ["Confirm seller identity, delivery coverage, return deadlines, return postage and warranty limits. Ask the seller about uncertain dimensions or compatibility before purchasing.", "Save specifications, the order, payment records and relevant correspondence. Check the model, quantity and condition on arrival and follow the seller's process if something is wrong."] },
+          { "title": "Keep the option to wait", "paragraphs": ["If cost, suitability or support remains unclear, waiting can be a reasonable decision. This checklist helps you judge a purchase; it does not require every visit to end in a transaction."] }
+        ]
+      },
+      "about": {
+        "title": "About this site",
+        "description": "Everyday shopping questions, organized into a checklist you can read and verify.",
+        "sections": [
+          { "title": "What we publish", "paragraphs": ["This site currently offers general consumer information and comparison methods. The guidance does not evaluate a specific brand, seller or model. Use it as a starting point alongside your own needs."] },
+          { "title": "How to read the content", "paragraphs": ["We have not published product tests, deal lists or purchase links. We do not claim a testing laboratory, partner endorsements or verified customer reviews.", "Any future product coverage should distinguish public information, editorial opinion and actual testing, and identify the source and check date for prices and terms."] },
+          { "title": "Limits of general guidance", "paragraphs": ["A general guide cannot account for everyone's circumstances. Confirm current specifications and transaction terms with the brand or seller. Seek appropriate professional advice for personal health, legal or financial questions."] }
+        ]
+      },
+      "disclosure": {
+        "title": "Affiliate links and content disclosure",
+        "description": "Understanding the boundary between editorial content and potential commercial relationships.",
+        "sections": [
+          { "title": "Current site status", "paragraphs": ["This site currently lists no product offers, promotion codes or affiliate purchase links. It provides general buying guidance; navigation links lead to other pages on this site."] },
+          { "title": "If affiliate links are added", "paragraphs": ["The site operator may receive a commission when readers make qualifying purchases through affiliate links. If such links are added, the relationship will be disclosed near that content and this page will be updated.", "Prices, commission conditions, delivery and after-sales terms are determined by the relevant seller or platform. A commission relationship is not a guarantee of product quality or a transaction outcome."] },
+          { "title": "Content and evidence", "paragraphs": ["Commercial relationships should be clearly identified. Hands-on testing requires test records; sales figures, review counts and performance claims require reliable supporting data.", "This page describes the site's content principles. It does not mean an affiliate platform has accepted an application or endorsed this site."] }
+        ]
+      }
+    }
+  }
+}

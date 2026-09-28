@@ -1,14 +1,20 @@
-import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { chmodSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, isAbsolute, join, relative, resolve } from "node:path";
 import { normalizeTheme, renderTailwindGlobalCss } from "./theme.mjs";
 import { normalizeRoute, routeToOutputPage } from "./slug.mjs";
+import { canonicalPartnerWhizInput, injectPartnerWhizMeta, partnerWhizTokenFromInput } from "./partnerwhiz-verification.mjs";
 
 export function writeAstroSite(siteDir, result, options = {}) {
+  const inputPath = join(siteDir, ".ganhuo", "landerpilot-input.json");
+  const suppliedToken = partnerWhizTokenFromInput(options.input);
+  // Explicit input wins; an ordinary regeneration must not silently drop a
+  // previously saved verification token, even when switching blueprints.
+  const savedInput = suppliedToken || !existsSync(inputPath) ? {} : JSON.parse(readFileSync(inputPath, "utf8"));
+  const token = suppliedToken || partnerWhizTokenFromInput(savedInput);
+  const input = canonicalPartnerWhizInput(options.input || savedInput, token);
   const pagesDir = join(siteDir, "src", "pages");
   const pagesRoot = resolve(pagesDir);
-  mkdirSync(pagesDir, { recursive: true });
   const normalizedPages = normalizePages(result.pages || [], pagesDir, pagesRoot);
-  cleanGeneratedPages(pagesDir);
 
   const mergedTheme = mergeThemeSources(result?.theme, options?.theme);
   const theme = normalizeTheme(mergedTheme);
@@ -19,12 +25,16 @@ export function writeAstroSite(siteDir, result, options = {}) {
       // New component-based path: page already carries a complete .astro
       // source string. Section components ship their own scoped styles, so
       // we don't run the legacy extractStyleBlocks → @layer components route.
-      return { ...page, astroBody: page.astroBody };
+      return { ...page, astroBody: token ? injectPartnerWhizMeta(page.astroBody, token) : page.astroBody };
     }
     const extracted = extractStyleBlocks(page.content || "");
     componentCss.push(...extracted.styles);
-    return { ...page, content: ensureDefaultFaviconLink(extracted.html) };
+    const content = ensureDefaultFaviconLink(extracted.html);
+    return { ...page, content: token ? injectPartnerWhizMeta(content, token) : content };
   });
+  // Validate tokens and prepare every page before removing existing output.
+  mkdirSync(pagesDir, { recursive: true });
+  cleanGeneratedPages(pagesDir);
   writeGlobalCss(siteDir, theme, componentCss);
   writeDefaultFavicon(siteDir, result.title || "LanderPilot Site");
 
@@ -51,7 +61,7 @@ export function writeAstroSite(siteDir, result, options = {}) {
     variant: result.variant || "default",
     summary: result.summary || {},
   });
-  writeGenerationArtifacts(siteDir, { result, input: options.input, theme });
+  writeGenerationArtifacts(siteDir, { result, input, theme });
   return { pages, manifest };
 }
 
@@ -235,7 +245,8 @@ function writeGenerationArtifacts(siteDir, value) {
   const dir = join(siteDir, ".ganhuo");
   mkdirSync(dir, { recursive: true });
   if (value.input) {
-    writeFileSync(join(dir, "landerpilot-input.json"), `${JSON.stringify(value.input, null, 2)}\n`);
+    writeFileSync(join(dir, "landerpilot-input.json"), `${JSON.stringify(value.input, null, 2)}\n`, { mode: 0o600 });
+    if (value.input.partnerWhizVerificationToken) chmodSync(join(dir, "landerpilot-input.json"), 0o600);
   }
   writeFileSync(
     join(dir, "site-plan.json"),
