@@ -25,6 +25,17 @@
 | 本地模板开发 | 需要检查站点、模板 slots 和部署交付物 | `server.mjs` 提供本地辅助 tools |
 | 课程分发 | Windows / macOS / Trae 文档容易散 | `docs/` 提供学生、老师、Windows 指南 |
 
+## 干活宝 AI：PW 验证全流程
+
+本包提供标准 Pi 插件入口 `pi-extension.mjs`。在支持 Pi 包的干活宝版本中，执行 `npm pack` 得到 `.tgz`，在插件页“从文件安装”后启用，并新建对话。无需重新打包客户端即可更新此建站与引导能力；运行中的旧对话保留旧版本。
+
+用户说“帮我过 PW 验证”后，`landerpilot_pw(operation: "guide")` 依次引导账号连接、Cloudflare 检查、域名选择、复用或创建网站、发布、添加验证标签和 PW 页面回执。`operation: "create"` 生成四页推广站源文件；没有代码时先生成无标签网站，拿到网址再获取真实代码。后续由 Agent 继续构建与云端工具链，工具返回源文件成功不代表发布成功。
+
+- [完整引导](skills/landerpilot/references/promotion-site.md)
+- 云端部署沿用 LanderPilot 订阅和授权检查。PW 的最终审核由平台处理。
+- 新版干活宝内置账号切换需要对应客户端修复；本插件不读取或改写客户端密钥。旧版可以在设置中安全替换 LanderPilot API Key。
+- 已有站点一键添加标签需要服务端提供 `set_site_verification` / `check_site_verification`；工具尚不可用时使用本地源码构建，不调用不存在的接口。
+
 ## 快速安装
 
 从 GitHub 安装全局命令：

@@ -1,0 +1,22 @@
+{
+  "id": "promotion",
+  "displayName": "购物指南 / Promotion site",
+  "status": "available",
+  "description": "An honest shopping-guide site with guide, about and affiliate disclosure pages; optionally carries a PartnerWhiz verification token.",
+  "entrySkill": "landerpilot",
+  "inputModel": {
+    "required": [],
+    "recommended": ["partnerWhizVerificationToken", "site_name", "language"],
+    "notes": "The create-promotion-site entrypoint requires a verification token, one PartnerWhiz meta tag, or explicit --without-verification for the URL-first flow. Generic blueprint generation can omit verification. No product or company data is required."
+  },
+  "dataPolicy": {
+    "mode": "strict",
+    "reason": "Default content is general shopping guidance and never invents products, offers, reviews, traffic or testimonials.",
+    "minimum": "No commercial claims or product data required.",
+    "acceptedSources": ["PartnerWhiz verification code", "plain-text site name", "language preference"]
+  },
+  "routes": ["index", "guide", "about", "disclosure"],
+  "variants": ["shopping-guide"],
+  "languageSupport": { "default": "zh-CN", "stable": ["zh-CN", "en"] },
+  "theme": { "mode": "tailwind-component-layer", "tailwind": true, "defaultIndustry": "ecommerce" }
+}

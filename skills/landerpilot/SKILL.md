@@ -1,9 +1,11 @@
 ---
 name: landerpilot
-description: 把用户的建站需求变成可预览、可上线的网站：landing page、独立站、营销站、affiliate review site、cashback/coupon directory、corporate/SaaS website。从生成到预览全程在干活AI 内完成。
+description: 把用户的建站需求变成可预览、可上线的网站：landing page、独立站、营销站、affiliate review site、cashback/coupon directory、corporate/SaaS website。支持“过 PW 验证”的账号、Cloudflare、域名、建站、发布与验证引导。
 ---
 
 # LanderPilot 建站
+
+用户说“过 PW 验证”“PartnerWhiz 网站验证”或“生成推广站”时，先读取 `references/promotion-site.md` 并按该完整流程执行。先检查 LanderPilot、Cloudflare 和域名/网站；缺网站则创建。不要只返回标签说明或停在本地预览。需要用户登录或选择时，每次只问当前阻塞项。已有授权覆盖的连续步骤直接完成，真实 PW 页面回执与推广站审核分别报告。
 
 把用户的建站需求，变成一个**构建好、并已在干活AI 里打开预览**的 Astro 静态站点，落到用户工作区里。
 
